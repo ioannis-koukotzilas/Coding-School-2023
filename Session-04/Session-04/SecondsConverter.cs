@@ -11,9 +11,8 @@ namespace Session_04 {
 
         public string GetSeconds() {
 
-            /* Write a C# program that takes an integer representing seconds (for example 45678) 
-             * and converts it to: Minutes, Hours, Days, Years 
-             */
+            /* Write a C# program that takes an integer representing seconds (for example 45678)
+             * and converts it to: Minutes, Hours, Days, Years */
 
             int seconds = 45678;
             float minutes = seconds / 60;
