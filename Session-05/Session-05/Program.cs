@@ -1,8 +1,18 @@
-﻿internal class Program {
+﻿using System;
+using Session_05;
+
+internal class Program {
 
     private static void Main(string[] args) {
 
-        Console.WriteLine("Hello, World!");
+        /* Exercise 1. Reverse string. */
+
+        ReverseString exerOne = new ReverseString();
+
+        Console.WriteLine(exerOne.GetString());
+
+ 
+        Console.ReadLine();
 
     }
 
