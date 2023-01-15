@@ -22,9 +22,15 @@ internal class Program {
 
         /* Exercise 3. Prime numbers. */
 
-        PrimeNumbers exerciseThree = new PrimeNumbers();
+        PrimeNumbers exerThree = new PrimeNumbers();
 
-        Console.WriteLine(exerciseThree.GetUserInput());
+        Console.WriteLine(exerThree.GetUserInput());
+
+        /* Exercise 4. Multiply arrays. */
+
+        MultiplyArrays exerFour = new MultiplyArrays();
+
+        Console.WriteLine(exerFour.GetArrays());
 
 
         Console.ReadLine();
