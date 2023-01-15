@@ -74,7 +74,7 @@ namespace Session_05 {
 
         public string? GetUserInput() {
 
-            Console.Write("Enter your name: ");
+            Console.WriteLine("Enter your name: ");
 
             string? str = Console.ReadLine();
 
