@@ -20,6 +20,12 @@ internal class Program {
 
         Console.WriteLine(exerTwo.GetNumber());
 
+        /* Exercise 3. Prime numbers. */
+
+        PrimeNumbers exerciseThree = new PrimeNumbers();
+
+        Console.WriteLine(exerciseThree.GetUserInput());
+
 
         Console.ReadLine();
 
