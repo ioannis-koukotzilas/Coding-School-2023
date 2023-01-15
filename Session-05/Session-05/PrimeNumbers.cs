@@ -13,7 +13,7 @@ namespace Session_05 {
 
         public int GetUserInput() {
 
-            Console.WriteLine("Enter a number:");
+            Console.WriteLine("Enter a number to find prime numbers:");
 
             int n;
             string? str = Console.ReadLine();
