@@ -9,9 +9,12 @@ internal class Program {
 
         ReverseString exerOne = new ReverseString();
 
-        Console.WriteLine(exerOne.GetString());
+        Console.WriteLine(exerOne.GetStringForLoop());
+        Console.WriteLine(exerOne.GetStringForeachLoop());
+        Console.WriteLine(exerOne.GetStringArrayReverse());
+        Console.WriteLine(exerOne.GetUserInput());
 
- 
+
         Console.ReadLine();
 
     }
