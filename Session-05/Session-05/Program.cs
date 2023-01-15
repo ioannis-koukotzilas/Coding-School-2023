@@ -32,6 +32,11 @@ internal class Program {
 
         Console.WriteLine(exerFour.GetArrays());
 
+        /* Exercise 5. Sort array. */
+
+        SortArray exerFive = new SortArray();
+
+        Console.WriteLine(exerFive.GetArray());
 
         Console.ReadLine();
 
