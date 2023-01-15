@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Session_05 {
 
-    /* Exercise 2. rite a C# program that asks the user for an integer (n) 
+    /* Exercise 2. Write a C# program that asks the user for an integer (n) 
      * and gives them the possibility to choose between computing the sum 
      * and computing the product of 1,...,n. */
 
