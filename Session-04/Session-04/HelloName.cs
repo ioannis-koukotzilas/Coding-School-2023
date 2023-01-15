@@ -11,8 +11,7 @@ namespace Session_04 {
 
         public string GetMessageAndName() {
 
-            /* Write a C# program to print Hello and your name in the same line.
-             */
+            /* Write a C# program to print Hello and your name in the same line. */
 
             string message = "Hello";
             string name = "Ioannis";
