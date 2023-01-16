@@ -10,7 +10,7 @@ namespace Session_06 {
 
         // Properties
 
-        public Guid Id { get; set; }
+        public Guid ID { get; set; }
         public string? Name { get; set; }
         public int Age { get; set; }
 
@@ -19,24 +19,27 @@ namespace Session_06 {
         public Person() { }
 
         public Person(Guid id) : this() {
-            Id = id;
+            ID = id;
         }
 
-        public Person(Guid id, string name ) : this(id) {
+        public Person(Guid id, string name) : this(id) {
             Name = name;
         }
 
         public Person(Guid id, string name, int age ) : this(id, name) {
-            Age = age;
+           Age = age;
         }
 
         // Methods
 
         public void GetName() {}
 
-        public void SetName(string Name) {
-            Console.WriteLine($"Name is: {Name}.");
+        public void SetName(string Name) {}
+
+        public void GetMessage(string Name, int Age) {
+            Console.WriteLine($"Person name is {Name} and is {Age} years old.");
         }
 
     }
+
 }
