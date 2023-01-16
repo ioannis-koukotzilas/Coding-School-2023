@@ -4,6 +4,9 @@ using System.Xml.Linq;
 internal class Program {
     private static void Main(string[] args) {
 
+        Institute institute = new Institute();
+        institute.GetMessage("Epsilon Net", 10);
+
         Person person = new Person();
         person.GetMessage("Petros", 29);
 
