@@ -8,13 +8,9 @@ using System.Xml.Linq;
 namespace Session_06 {
     public class Person {
 
-        // Properties
-
         public Guid ID { get; set; }
         public string? Name { get; set; }
         public int Age { get; set; }
-
-        // Constructors
 
         public Person() { }
 
@@ -29,8 +25,6 @@ namespace Session_06 {
         public Person(Guid id, string name, int age ) : this(id, name) {
            Age = age;
         }
-
-        // Methods
 
         public void GetName() {}
 
