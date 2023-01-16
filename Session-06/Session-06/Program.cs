@@ -13,6 +13,12 @@ internal class Program {
         Student student = new Student();
         student.GetMessage("Ioannis", 34, 8000);
 
+        Grade grade = new Grade();
+        grade.GetMessage(17);
+
+        Course course = new Course();
+        course.GetMessage("Session-06", "C# Classes, Properties, Constructors, Methods");
+
         Console.ReadLine();
 
     }
