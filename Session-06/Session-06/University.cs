@@ -28,7 +28,7 @@ namespace Session_06 {
             Grades = grades;
         }
 
-        public University(string[] students, string[] courses, int[] grades, DateTime[] scheduleCourse) : this(students, courses) {
+        public University(string[] students, string[] courses, int[] grades, DateTime[] scheduleCourse) : this(students, courses, grades) {
             ScheduleCourse = scheduleCourse;
         }
 
