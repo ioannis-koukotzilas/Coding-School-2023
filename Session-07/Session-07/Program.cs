@@ -49,13 +49,13 @@ internal class Program {
             Console.WriteLine(response.Output);
         }
 
-        // Message msg = new Message();
-        // msg.Data = "Message 1";
-        // msg.printMessage();
+        Message msg = new Message();
+        msg.Data = "Message 1";
+        msg.printMessage();
 
-        // Message msg2 = new ErrorMessage();
-        // msg2.Data = "Message 2";
-        // msg2.printMessage();
+        Message msg2 = new ErrorMessage();
+        msg2.Data = "Message 2";
+        msg2.printMessage();
 
         Console.ReadLine();
     }
