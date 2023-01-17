@@ -8,8 +8,11 @@ namespace Session_07 {
 
     public class MessageLogger {
 
+        public string[]? Messages { get; set; }
 
-
+        public void ReadAll() { }
+        public void Clear() { }
+        public void Write(string message) { }
 
     }
 
