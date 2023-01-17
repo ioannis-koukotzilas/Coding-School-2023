@@ -8,11 +8,21 @@ namespace Session_07 {
 
     public class MessageLogger {
 
-        public string[]? Messages { get; set; }
+        public Message[] Messages { get; set; } = new Message[0];
 
-        public void ReadAll() { }
-        public void Clear() { }
-        public void Write(string message) { }
+        public void ReadAll() {
+            foreach (Message msg in Messages) {
+                msg.printMessage();
+            }
+        }
+
+        public void Clear() {
+            Messages = new Message[0];
+        }
+
+        public void Write(Message message) {
+            Messages.Append(message);
+        }
 
     }
 

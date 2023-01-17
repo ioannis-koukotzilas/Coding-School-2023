@@ -11,12 +11,21 @@ namespace Session_07 {
 
         public Guid ID { get; set; } = Guid.NewGuid();
         public DateTime TimeStamp { get; set; } = DateTime.Now;
-        public string? PrintMessage { get; set; }
+        public string? Data { get; set; }
+
+        public virtual void printMessage() {
+            Console.WriteLine(Data);
+        }
 
         public Message() { }
 
-        public void Print() {
-           
+    }
+
+    public class ErrorMessage : Message {
+
+        public override void printMessage() {
+            Console.Write("Error: ");
+            Console.WriteLine(Data);
         }
 
     }
