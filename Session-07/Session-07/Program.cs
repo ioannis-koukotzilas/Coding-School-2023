@@ -44,14 +44,24 @@ public class ActionRequest {
     public string? Input { get; set; }
     public ActionEnum Action { get; set; }
 
+    // CTOR
+    public ActionRequest() {
+        RequestID = Guid.NewGuid();
+    }
+
 }
 
 public class ActionResponse {
 
     // Properties
-    public Guid RequestID { get; set; } = Guid.NewGuid();
-    public Guid ResponseID { get; set; } = Guid.NewGuid();
+    public Guid RequestID { get; set; }
+    public Guid ResponseID { get; set; }
     public string? Output { get; set; } = "This is a response";
+
+    // CTOR
+    public ActionResponse() {
+        ResponseID = Guid.NewGuid();
+    }
 
 }
 
@@ -64,19 +74,21 @@ public class ActionResolver {
     // ActionResponse Execute ActionRequest
     public ActionResponse Execute(ActionRequest request) {
 
-        string output = string.Empty;
+        ActionResponse response = new ActionResponse();
+        response.ResponseID = Guid.NewGuid();
+        response.RequestID = request.RequestID;
 
         try {
 
             switch (request.Action) {
                 case ActionEnum.Convert:
-                    output = Convert(request.Input);
+                    response.Output = Convert(request.Input);
                     break;
                 case ActionEnum.Uppercase:
-                    output = Uppercase(request.Input);
+                    response.Output = Uppercase(request.Input);
                     break;
                 case ActionEnum.Reverse:
-                    output = Reverse(request.Input);
+                    response.Output = Reverse(request.Input);
                     break;
                 default:
                     // TODO: Error msg
@@ -89,7 +101,7 @@ public class ActionResolver {
             throw;
         }
 
-        return null;
+        return response;
     }
 
     public string Convert(string input) {
@@ -114,6 +126,11 @@ public class MessageLogger {
 
     // Properties
     public Message[]? Messages { get; set; }
+
+    // CTOR
+    public MessageLogger() {
+        Messages = new Message[1000];
+    }
 
     // Methods
     public void ReadAll() {
