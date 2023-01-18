@@ -78,8 +78,12 @@ public class ActionResolver {
         response.ResponseID = Guid.NewGuid();
         response.RequestID = request.RequestID;
 
-        try {
+        MessageLogger logger = new MessageLogger();
 
+        Message message = new Message("EXECUTION START");
+        logger.Messages[0] = message;
+
+        try {
             switch (request.Action) {
                 case ActionEnum.Convert:
                     response.Output = Convert(request.Input);
@@ -95,10 +99,12 @@ public class ActionResolver {
                     Console.WriteLine("ERROR");
                     break;
             }
-
         } catch (Exception ex) {
-
-            throw;
+            Message message2 = new Message(ex.Message);
+            logger.Messages[1] = message2;
+        } finally {
+            Message message3 = new Message("EXECUTION END");
+            logger.Messages[2] = message3;
         }
 
         return response;
@@ -151,6 +157,17 @@ public class Message {
     public Guid ID { get; set; }
     public DateTime TimeStamp { get; set; }
     public string? MessageText { get; set; }
+
+    // CTOR
+    public Message() { 
+        ID = Guid.NewGuid();
+    }
+
+    public Message(string text) {
+        ID= Guid.NewGuid();
+        TimeStamp= DateTime.Now;
+        MessageText = text;
+    }
 
 }
 
