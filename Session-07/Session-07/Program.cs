@@ -64,7 +64,48 @@ public class ActionResolver {
     // ActionResponse Execute ActionRequest
     public ActionResponse Execute(ActionRequest request) {
 
+        string output = string.Empty;
+
+        try {
+
+            switch (request.Action) {
+                case ActionEnum.Convert:
+                    output = Convert(request.Input);
+                    break;
+                case ActionEnum.Uppercase:
+                    output = Uppercase(request.Input);
+                    break;
+                case ActionEnum.Reverse:
+                    output = Reverse(request.Input);
+                    break;
+                default:
+                    // TODO: Error msg
+                    Console.WriteLine("ERROR");
+                    break;
+            }
+
+        } catch (Exception ex) {
+
+            throw;
+        }
+
         return null;
+    }
+
+    public string Convert(string input) {
+        // “Convert”youmustcheckiftheInputisadecimalnumberandconvert it to binary.
+        return string.Empty;
+        
+    }
+
+    public string Uppercase(string input) {
+        // “Uppercase”youmustcheckiftheInputisastringandhasmorethan one words (separated by a space), then find the longest word in the Input string and convert it to uppercase.
+        return string.Empty;
+    }
+
+    public string Reverse(string input) {
+        // “Reverse” you must check if the Input is a string and reverse it.
+        return string.Empty;
     }
 
 }
