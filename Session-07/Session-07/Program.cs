@@ -19,21 +19,45 @@ internal class Program {
 
 public class ActionRequest {
 
+    public Guid RequestID { get; set; }
+    public string? Input { get; set; }
+    public ActionEnum Action { get; set; }
+
 }
 
 public class ActionResponse {
+
+    public Guid RequestID { get; set; }
+    public Guid ResponseID { get; set; }
+    public string? Output { get; set; }
 
 }
 
 public class ActionResolver {
 
+    public MessageLogger Logger { get; set; }
+
+    public void Execute(ActionRequest request) {
+
+    }
+
 }
 
 public class MessageLogger {
 
+    public Message[]? Messages { get; set; }
+
+    public void ReadAll() {}
+    public void Clear() { }
+    public void Write(Message message) { }
+
 }
 
 public class Message {
+
+    public Guid ID { get; set; }
+    public DateTime TimeStamp { get; set; }
+    public string? MessageText { get; set; }
 
 }
 
