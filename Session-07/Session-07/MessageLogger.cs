@@ -8,20 +8,23 @@ namespace Session_07 {
 
     public class MessageLogger {
 
-        public Message[] Messages { get; set; } = new Message[0];
+        // PROPERTIES
+        public Message[]? Messages { get; set; }
 
+        // CTOR
+        public MessageLogger() {
+            Messages = new Message[1000];
+        }
+
+        // METHODS
         public void ReadAll() {
-            foreach (Message msg in Messages) {
-                msg.printMessage();
-            }
-        }
 
+        }
         public void Clear() {
-            Messages = new Message[0];
-        }
 
+        }
         public void Write(Message message) {
-            Messages.Append(message);
+
         }
 
     }

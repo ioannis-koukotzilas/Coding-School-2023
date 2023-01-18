@@ -9,23 +9,20 @@ namespace Session_07 {
 
     public class Message {
 
-        public Guid ID { get; set; } = Guid.NewGuid();
-        public DateTime TimeStamp { get; set; } = DateTime.Now;
-        public string? Data { get; set; }
+        // PROPERTIES
+        public Guid ID { get; set; }
+        public DateTime TimeStamp { get; set; }
+        public string? MessageText { get; set; }
 
-        public virtual void printMessage() {
-            Console.WriteLine(Data);
+        // CTOR
+        public Message() {
+            ID = Guid.NewGuid();
         }
 
-        public Message() { }
-
-    }
-
-    public class ErrorMessage : Message {
-
-        public override void printMessage() {
-            Console.Write("Error: ");
-            Console.WriteLine(Data);
+        public Message(string text) {
+            ID = Guid.NewGuid();
+            TimeStamp = DateTime.Now;
+            MessageText = text;
         }
 
     }

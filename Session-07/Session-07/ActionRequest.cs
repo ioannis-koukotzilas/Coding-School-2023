@@ -8,9 +8,15 @@ namespace Session_07 {
 
     public class ActionRequest {
 
-        public Guid RequestID { get; set; } = Guid.NewGuid();
+        // PROPERTIES
+        public Guid RequestID { get; set; }
         public string? Input { get; set; }
         public ActionEnum Action { get; set; }
+
+        // CTOR
+        public ActionRequest() {
+            RequestID = Guid.NewGuid();
+        }
 
     }
 

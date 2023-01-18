@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Session_07 {
+
     public enum ActionEnum {
         Convert,
         Uppercase,
         Reverse
     }
+
 }

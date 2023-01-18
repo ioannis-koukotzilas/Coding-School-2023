@@ -9,9 +9,15 @@ namespace Session_07 {
 
     public class ActionResponse {
 
+        // PROPERTIES
         public Guid RequestID { get; set; }
-        public Guid ResponseID { get; set; } = Guid.NewGuid();
+        public Guid ResponseID { get; set; }
         public string? Output { get; set; }
+
+        // CTOR
+        public ActionResponse() {
+            ResponseID = Guid.NewGuid();
+        }
 
     }
 
