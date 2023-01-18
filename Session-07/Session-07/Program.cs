@@ -7,6 +7,21 @@ internal class Program {
 
         // REWRITE THE PROGRAM!
 
+        ActionRequest request = new ActionRequest();
+
+        ActionResponse response = new ActionResponse();
+
+        Console.WriteLine(response.RequestID);
+        Console.WriteLine(response.ResponseID);
+        Console.WriteLine(response.Output);
+
+        ActionResolver resolver = new ActionResolver();
+
+        // Resolver get requests and returns responses
+        response = resolver.Execute(request);
+
+       
+
         Console.WriteLine("REWRITE THE PROGRAM!");
 
         Console.ReadLine();
@@ -15,10 +30,16 @@ internal class Program {
 
 }
 
+public enum ActionEnum {
+    Convert,
+    Uppercase,
+    Reverse
+}
 
 
 public class ActionRequest {
 
+    // Properties
     public Guid RequestID { get; set; }
     public string? Input { get; set; }
     public ActionEnum Action { get; set; }
@@ -27,39 +48,83 @@ public class ActionRequest {
 
 public class ActionResponse {
 
-    public Guid RequestID { get; set; }
-    public Guid ResponseID { get; set; }
-    public string? Output { get; set; }
+    // Properties
+    public Guid RequestID { get; set; } = Guid.NewGuid();
+    public Guid ResponseID { get; set; } = Guid.NewGuid();
+    public string? Output { get; set; } = "This is a response";
 
 }
 
 public class ActionResolver {
 
-    public MessageLogger Logger { get; set; }
+    // Properties
+    public MessageLogger? Logger { get; set; }
 
-    public void Execute(ActionRequest request) {
+    // Methods
+    // ActionResponse Execute ActionRequest
+    public ActionResponse Execute(ActionRequest request) {
 
+        return null;
     }
 
 }
 
 public class MessageLogger {
 
+    // Properties
     public Message[]? Messages { get; set; }
 
-    public void ReadAll() {}
-    public void Clear() { }
-    public void Write(Message message) { }
+    // Methods
+    public void ReadAll() {
+    
+    }
+    public void Clear() {
+    
+    }
+    public void Write(Message message) {
+    
+    }
 
 }
 
 public class Message {
 
+    // Properties
     public Guid ID { get; set; }
     public DateTime TimeStamp { get; set; }
     public string? MessageText { get; set; }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
