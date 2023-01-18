@@ -22,17 +22,20 @@ namespace Session_07 {
 
             Logger = new MessageLogger();
 
-            Logger.Write(new Message("EXECUTION START"));
+            Log("EXECUTION START");
 
             try {
                 switch (request.Action) {
                     case ActionEnum.Convert:
+                        Log("CONVERT");
                         response.Output = Convert(request.Input);
                         break;
                     case ActionEnum.Uppercase:
+                        Logger.Write(new Message("UPPERCASE"));
                         response.Output = Uppercase(request.Input);
                         break;
                     case ActionEnum.Reverse:
+                        Log("REVERSE");
                         response.Output = Reverse(request.Input);
                         break;
                     default:
@@ -43,10 +46,20 @@ namespace Session_07 {
             } catch (Exception ex) {
                 Logger.Write(new Message(ex.Message));
             } finally {
-                Logger.Write(new Message("EXECUTION END"));
+                Log("EXECUTION END");
             }
 
             return response;
+        }
+
+        private void Log(string text) {
+
+            Logger.Write(new Message("-------------"));
+
+            Message message = new Message(text);
+
+            Logger.Write(message);
+
         }
 
         public string Convert(string input) {
