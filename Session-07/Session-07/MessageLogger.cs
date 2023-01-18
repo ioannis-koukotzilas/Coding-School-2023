@@ -9,7 +9,8 @@ namespace Session_07 {
     public class MessageLogger {
 
         // PROPERTIES
-        public Message[]? Messages { get; set; }
+        public Message[] Messages { get; set; }
+        private int _messageCounter = 0;
 
         // CTOR
         public MessageLogger() {
@@ -24,7 +25,8 @@ namespace Session_07 {
 
         }
         public void Write(Message message) {
-
+            Messages[_messageCounter] = message;
+            _messageCounter++;
         }
 
     }

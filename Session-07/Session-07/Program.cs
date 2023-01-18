@@ -5,24 +5,25 @@ using Session_07;
 internal class Program {
     private static void Main(string[] args) {
 
-        // REWRITE THE PROGRAM!
-
-        ActionRequest request = new ActionRequest();
+        ActionRequest request = new ActionRequest() {
+            Input = "Ioannis",
+            Action = ActionEnum.Reverse
+        };
 
         ActionResponse response = new ActionResponse();
-
-        Console.WriteLine(response.RequestID);
-        Console.WriteLine(response.ResponseID);
-        Console.WriteLine(response.Output);
 
         ActionResolver resolver = new ActionResolver();
 
         // Resolver get requests and returns responses
         response = resolver.Execute(request);
 
-       
+        foreach (Message message in resolver.Logger.Messages) {
 
-        Console.WriteLine("REWRITE THE PROGRAM!");
+            if (message != null) {
+                Console.WriteLine(message.MessageText);
+            }
+
+        }
 
         Console.ReadLine();
 

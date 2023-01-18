@@ -10,7 +10,7 @@ namespace Session_07 {
     public class ActionResolver {
 
         // PROPERTIES
-        public MessageLogger? Logger { get; set; }
+        public MessageLogger Logger { get; set; }
 
         // METHODS
         // ActionResponse Execute ActionRequest
@@ -20,10 +20,9 @@ namespace Session_07 {
             response.ResponseID = Guid.NewGuid();
             response.RequestID = request.RequestID;
 
-            MessageLogger logger = new MessageLogger();
+            Logger = new MessageLogger();
 
-            Message message = new Message("EXECUTION START");
-            logger.Messages[0] = message;
+            Logger.Write(new Message("EXECUTION START"));
 
             try {
                 switch (request.Action) {
@@ -42,11 +41,9 @@ namespace Session_07 {
                         break;
                 }
             } catch (Exception ex) {
-                Message message2 = new Message(ex.Message);
-                logger.Messages[1] = message2;
+                Logger.Write(new Message(ex.Message));
             } finally {
-                Message message3 = new Message("EXECUTION END");
-                logger.Messages[2] = message3;
+                Logger.Write(new Message("EXECUTION END"));
             }
 
             return response;
@@ -55,7 +52,6 @@ namespace Session_07 {
         public string Convert(string input) {
             // "Convert" you must check if the Input is a decimal number and convert it to binary.
             return string.Empty;
-
         }
 
         public string Uppercase(string input) {
