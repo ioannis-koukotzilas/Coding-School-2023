@@ -5,7 +5,19 @@ namespace Session_09 {
         }
 
         private void BtnAdditionClick(object sender, EventArgs e) {
-            Monitor.Text= "+";
+            Monitor.Text= " + ";
+        }
+
+        private void BtnEqualsClick(object sender, EventArgs e) {
+            Monitor.Text = " = ";
+        }
+
+        private void BtnOneClick(object sender, EventArgs e) {
+            Monitor.Text = " 1 ";
+        }
+
+        private void BtnTwoClick(object sender, EventArgs e) {
+            Monitor.Text = " 2 ";
         }
     }
 }
