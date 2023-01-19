@@ -47,6 +47,7 @@
             this.Monitor.Location = new System.Drawing.Point(28, 12);
             this.Monitor.Multiline = true;
             this.Monitor.Name = "Monitor";
+            this.Monitor.ReadOnly = true;
             this.Monitor.Size = new System.Drawing.Size(324, 119);
             this.Monitor.TabIndex = 1;
             // 
