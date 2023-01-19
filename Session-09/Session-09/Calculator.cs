@@ -94,7 +94,7 @@ namespace Session_09 {
                     _result = raiseToPower.Calculate(_value1, _value2);
                     break;
                 case CalcuratorOperation.SquareRoot:
-                    //_result = _value1 / _value2;
+                    //_result = _value1 √;
                     SquareRoot squareRoot = new SquareRoot();
                     _result = squareRoot.Calculate(_value1);
                     break;
@@ -153,10 +153,7 @@ namespace Session_09 {
             AssignValue(9);
         }
 
-    
     }
-
-
 
 }
 
