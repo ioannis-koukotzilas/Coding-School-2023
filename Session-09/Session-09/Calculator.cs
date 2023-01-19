@@ -15,6 +15,16 @@ namespace Session_09 {
             InitializeComponent();
         }
 
+        // METHODS 
+
+        public void AssignValue(decimal i) {
+            if (_value1 == null) {
+                _value1 = i;
+            } else {
+                _value2 = i;
+            }
+        }
+
         // EVENTS
 
         private void BtnAdditionClick(object sender, EventArgs e) {
@@ -47,17 +57,40 @@ namespace Session_09 {
             AssignValue(2);
         }
 
-        // METHODS
-
-        public void AssignValue(decimal i) {
-            if (_value1 == null) {
-                _value1 = i;
-            } else {
-                _value2 = i;
-            }
+        private void BtnThreeClick(object sender, EventArgs e) {
+            Monitor.Text += " 3 ";
+            AssignValue(3);
         }
 
+        private void BtnFourClick(object sender, EventArgs e) {
+            Monitor.Text += " 4 ";
+            AssignValue(4);
+        }
 
+        private void BtnFiveClick(object sender, EventArgs e) {
+            Monitor.Text += " 5 ";
+            AssignValue(5);
+        }
+
+        private void BtnSixClick(object sender, EventArgs e) {
+            Monitor.Text += " 6 ";
+            AssignValue(6);
+        }
+
+        private void BtnSevenClick(object sender, EventArgs e) {
+            Monitor.Text += " 7 ";
+            AssignValue(7);
+        }
+
+        private void BtnEightClick(object sender, EventArgs e) {
+            Monitor.Text += " 8 ";
+            AssignValue(8);
+        }
+
+        private void BtnNineClick(object sender, EventArgs e) {
+            Monitor.Text += " 9 ";
+            AssignValue(9);
+        }
     }
 
 

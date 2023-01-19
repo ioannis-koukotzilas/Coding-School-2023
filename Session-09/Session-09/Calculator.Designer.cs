@@ -30,11 +30,16 @@
             this.BtnThree = new System.Windows.Forms.Button();
             this.BtnFour = new System.Windows.Forms.Button();
             this.BtnEquals = new System.Windows.Forms.Button();
+            this.BtnFive = new System.Windows.Forms.Button();
+            this.BtnSix = new System.Windows.Forms.Button();
+            this.BtnSeven = new System.Windows.Forms.Button();
+            this.BtnEight = new System.Windows.Forms.Button();
+            this.BtnNine = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnAddition
             // 
-            this.BtnAddition.Location = new System.Drawing.Point(356, 338);
+            this.BtnAddition.Location = new System.Drawing.Point(277, 309);
             this.BtnAddition.Name = "BtnAddition";
             this.BtnAddition.Size = new System.Drawing.Size(75, 23);
             this.BtnAddition.TabIndex = 0;
@@ -44,7 +49,7 @@
             // 
             // Monitor
             // 
-            this.Monitor.Location = new System.Drawing.Point(28, 12);
+            this.Monitor.Location = new System.Drawing.Point(28, 120);
             this.Monitor.Multiline = true;
             this.Monitor.Name = "Monitor";
             this.Monitor.ReadOnly = true;
@@ -79,6 +84,7 @@
             this.BtnThree.TabIndex = 4;
             this.BtnThree.Text = "3";
             this.BtnThree.UseVisualStyleBackColor = true;
+            this.BtnThree.Click += new System.EventHandler(this.BtnThreeClick);
             // 
             // BtnFour
             // 
@@ -88,10 +94,11 @@
             this.BtnFour.TabIndex = 5;
             this.BtnFour.Text = "4";
             this.BtnFour.UseVisualStyleBackColor = true;
+            this.BtnFour.Click += new System.EventHandler(this.BtnFourClick);
             // 
             // BtnEquals
             // 
-            this.BtnEquals.Location = new System.Drawing.Point(437, 338);
+            this.BtnEquals.Location = new System.Drawing.Point(277, 338);
             this.BtnEquals.Name = "BtnEquals";
             this.BtnEquals.Size = new System.Drawing.Size(75, 23);
             this.BtnEquals.TabIndex = 6;
@@ -99,11 +106,66 @@
             this.BtnEquals.UseVisualStyleBackColor = true;
             this.BtnEquals.Click += new System.EventHandler(this.BtnEqualsClick);
             // 
+            // BtnFive
+            // 
+            this.BtnFive.Location = new System.Drawing.Point(109, 309);
+            this.BtnFive.Name = "BtnFive";
+            this.BtnFive.Size = new System.Drawing.Size(75, 23);
+            this.BtnFive.TabIndex = 7;
+            this.BtnFive.Text = "5";
+            this.BtnFive.UseVisualStyleBackColor = true;
+            this.BtnFive.Click += new System.EventHandler(this.BtnFiveClick);
+            // 
+            // BtnSix
+            // 
+            this.BtnSix.Location = new System.Drawing.Point(190, 309);
+            this.BtnSix.Name = "BtnSix";
+            this.BtnSix.Size = new System.Drawing.Size(75, 23);
+            this.BtnSix.TabIndex = 8;
+            this.BtnSix.Text = "6";
+            this.BtnSix.UseVisualStyleBackColor = true;
+            this.BtnSix.Click += new System.EventHandler(this.BtnSixClick);
+            // 
+            // BtnSeven
+            // 
+            this.BtnSeven.Location = new System.Drawing.Point(28, 280);
+            this.BtnSeven.Name = "BtnSeven";
+            this.BtnSeven.Size = new System.Drawing.Size(75, 23);
+            this.BtnSeven.TabIndex = 9;
+            this.BtnSeven.Text = "7";
+            this.BtnSeven.UseVisualStyleBackColor = true;
+            this.BtnSeven.Click += new System.EventHandler(this.BtnSevenClick);
+            // 
+            // BtnEight
+            // 
+            this.BtnEight.Location = new System.Drawing.Point(109, 280);
+            this.BtnEight.Name = "BtnEight";
+            this.BtnEight.Size = new System.Drawing.Size(75, 23);
+            this.BtnEight.TabIndex = 10;
+            this.BtnEight.Text = "8";
+            this.BtnEight.UseVisualStyleBackColor = true;
+            this.BtnEight.Click += new System.EventHandler(this.BtnEightClick);
+            // 
+            // BtnNine
+            // 
+            this.BtnNine.Location = new System.Drawing.Point(190, 280);
+            this.BtnNine.Name = "BtnNine";
+            this.BtnNine.Size = new System.Drawing.Size(75, 23);
+            this.BtnNine.TabIndex = 11;
+            this.BtnNine.Text = "9";
+            this.BtnNine.UseVisualStyleBackColor = true;
+            this.BtnNine.Click += new System.EventHandler(this.BtnNineClick);
+            // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BtnNine);
+            this.Controls.Add(this.BtnEight);
+            this.Controls.Add(this.BtnSeven);
+            this.Controls.Add(this.BtnSix);
+            this.Controls.Add(this.BtnFive);
             this.Controls.Add(this.BtnEquals);
             this.Controls.Add(this.BtnFour);
             this.Controls.Add(this.BtnThree);
@@ -127,5 +189,10 @@
         private Button BtnThree;
         private Button BtnFour;
         private Button BtnEquals;
+        private Button BtnFive;
+        private Button BtnSix;
+        private Button BtnSeven;
+        private Button BtnEight;
+        private Button BtnNine;
     }
 }
