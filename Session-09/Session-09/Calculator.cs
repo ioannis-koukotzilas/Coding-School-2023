@@ -78,6 +78,26 @@ namespace Session_09 {
                     Subtraction subtraction = new Subtraction();
                     _result = subtraction.Calculate(_value1, _value2);
                     break;
+                case CalcuratorOperation.Multiplication:
+                    //_result = _value1 * _value2;
+                    Multiplication multiplication = new Multiplication();
+                    _result = multiplication.Calculate(_value1, _value2);
+                    break;
+                case CalcuratorOperation.Division:
+                    //_result = _value1 / _value2;
+                    Division division = new Division();
+                    _result = division.Calculate(_value1, _value2);
+                    break;
+                case CalcuratorOperation.RaiseToPower:
+                    //_result = _value1 ^ _value2;
+                    RaiseToPower raiseToPower = new RaiseToPower();
+                    _result = raiseToPower.Calculate(_value1, _value2);
+                    break;
+                case CalcuratorOperation.SquareRoot:
+                    //_result = _value1 / _value2;
+                    SquareRoot squareRoot = new SquareRoot();
+                    _result = squareRoot.Calculate(_value1);
+                    break;
 
                 default:
                     break;
