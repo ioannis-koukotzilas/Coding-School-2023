@@ -1,3 +1,5 @@
+using CalculatorLibrary;
+
 namespace Session_09 {
     public partial class Calculator : Form {
 
@@ -8,7 +10,12 @@ namespace Session_09 {
         private CalcuratorOperation _calculatorOperation;
 
         enum CalcuratorOperation {
-            Addition
+            Addition,
+            Subtraction,
+            Multiplication,
+            Division,
+            RaiseToPower,
+            SquareRoot
         }
 
         public Calculator() {
@@ -37,7 +44,9 @@ namespace Session_09 {
 
             switch (_calculatorOperation) {
                 case CalcuratorOperation.Addition:
-                    _result = _value1 + _value2;
+                    //_result = _value1 + _value2;
+                    Addition addition = new Addition();
+                    _result = addition.Calculate(_value1, _value2);
                     break;
 
                 default:
