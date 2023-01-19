@@ -215,7 +215,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(404, 407);
             this.Controls.Add(this.BtnDivision);
             this.Controls.Add(this.BtnSquareRoot);
             this.Controls.Add(this.BtnRaiseToPower);

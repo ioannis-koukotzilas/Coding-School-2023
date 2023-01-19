@@ -32,7 +32,7 @@ namespace Session_09 {
             }
         }
 
-        // EVENTS
+        // OPERATIONS EVENTS
 
         private void BtnAdditionClick(object sender, EventArgs e) {
             Monitor.Text += " + ";
@@ -105,6 +105,8 @@ namespace Session_09 {
 
             Monitor.Text += _result;
         }
+
+        // NUMBERS EVENTS
 
         private void BtnOneClick(object sender, EventArgs e) {
             Monitor.Text += " 1 ";
