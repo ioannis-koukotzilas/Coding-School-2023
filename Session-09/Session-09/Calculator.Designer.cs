@@ -35,6 +35,11 @@
             this.BtnSeven = new System.Windows.Forms.Button();
             this.BtnEight = new System.Windows.Forms.Button();
             this.BtnNine = new System.Windows.Forms.Button();
+            this.BtnSubstraction = new System.Windows.Forms.Button();
+            this.BtnMulticipation = new System.Windows.Forms.Button();
+            this.BtnRaiseToPower = new System.Windows.Forms.Button();
+            this.BtnSquareRoot = new System.Windows.Forms.Button();
+            this.BtnDivision = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnAddition
@@ -49,7 +54,7 @@
             // 
             // Monitor
             // 
-            this.Monitor.Location = new System.Drawing.Point(28, 120);
+            this.Monitor.Location = new System.Drawing.Point(28, 126);
             this.Monitor.Multiline = true;
             this.Monitor.Name = "Monitor";
             this.Monitor.ReadOnly = true;
@@ -156,11 +161,66 @@
             this.BtnNine.UseVisualStyleBackColor = true;
             this.BtnNine.Click += new System.EventHandler(this.BtnNineClick);
             // 
+            // BtnSubstraction
+            // 
+            this.BtnSubstraction.Location = new System.Drawing.Point(277, 280);
+            this.BtnSubstraction.Name = "BtnSubstraction";
+            this.BtnSubstraction.Size = new System.Drawing.Size(75, 23);
+            this.BtnSubstraction.TabIndex = 12;
+            this.BtnSubstraction.Text = "-";
+            this.BtnSubstraction.UseVisualStyleBackColor = true;
+            this.BtnSubstraction.Click += new System.EventHandler(this.BtnSubtractionClick);
+            // 
+            // BtnMulticipation
+            // 
+            this.BtnMulticipation.Location = new System.Drawing.Point(277, 251);
+            this.BtnMulticipation.Name = "BtnMulticipation";
+            this.BtnMulticipation.Size = new System.Drawing.Size(75, 23);
+            this.BtnMulticipation.TabIndex = 13;
+            this.BtnMulticipation.Text = "x";
+            this.BtnMulticipation.UseVisualStyleBackColor = true;
+            this.BtnMulticipation.Click += new System.EventHandler(this.BtnMultiplicationClick);
+            // 
+            // BtnRaiseToPower
+            // 
+            this.BtnRaiseToPower.Location = new System.Drawing.Point(109, 251);
+            this.BtnRaiseToPower.Name = "BtnRaiseToPower";
+            this.BtnRaiseToPower.Size = new System.Drawing.Size(75, 23);
+            this.BtnRaiseToPower.TabIndex = 14;
+            this.BtnRaiseToPower.Text = "n2";
+            this.BtnRaiseToPower.UseVisualStyleBackColor = true;
+            this.BtnRaiseToPower.Click += new System.EventHandler(this.BtnRaiseToPowerClick);
+            // 
+            // BtnSquareRoot
+            // 
+            this.BtnSquareRoot.Location = new System.Drawing.Point(28, 251);
+            this.BtnSquareRoot.Name = "BtnSquareRoot";
+            this.BtnSquareRoot.Size = new System.Drawing.Size(75, 23);
+            this.BtnSquareRoot.TabIndex = 15;
+            this.BtnSquareRoot.Text = "√";
+            this.BtnSquareRoot.UseVisualStyleBackColor = true;
+            this.BtnSquareRoot.Click += new System.EventHandler(this.BtnSquareRootClick);
+            // 
+            // BtnDivision
+            // 
+            this.BtnDivision.Location = new System.Drawing.Point(190, 251);
+            this.BtnDivision.Name = "BtnDivision";
+            this.BtnDivision.Size = new System.Drawing.Size(75, 23);
+            this.BtnDivision.TabIndex = 16;
+            this.BtnDivision.Text = "÷";
+            this.BtnDivision.UseVisualStyleBackColor = true;
+            this.BtnDivision.Click += new System.EventHandler(this.BtnDivisionClick);
+            // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BtnDivision);
+            this.Controls.Add(this.BtnSquareRoot);
+            this.Controls.Add(this.BtnRaiseToPower);
+            this.Controls.Add(this.BtnMulticipation);
+            this.Controls.Add(this.BtnSubstraction);
             this.Controls.Add(this.BtnNine);
             this.Controls.Add(this.BtnEight);
             this.Controls.Add(this.BtnSeven);
@@ -194,5 +254,10 @@
         private Button BtnSeven;
         private Button BtnEight;
         private Button BtnNine;
+        private Button BtnSubstraction;
+        private Button BtnMulticipation;
+        private Button BtnRaiseToPower;
+        private Button BtnSquareRoot;
+        private Button BtnDivision;
     }
 }

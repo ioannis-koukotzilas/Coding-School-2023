@@ -1,4 +1,4 @@
-using CalculatorLibrary;
+﻿using CalculatorLibrary;
 
 namespace Session_09 {
     public partial class Calculator : Form {
@@ -39,6 +39,31 @@ namespace Session_09 {
             _calculatorOperation = CalcuratorOperation.Addition;
         }
 
+        private void BtnSubtractionClick(object sender, EventArgs e) {
+            Monitor.Text += " - ";
+            _calculatorOperation = CalcuratorOperation.Subtraction;
+        }
+
+        private void BtnMultiplicationClick(object sender, EventArgs e) {
+            Monitor.Text += " x ";
+            _calculatorOperation = CalcuratorOperation.Multiplication;
+        }
+
+        private void BtnDivisionClick(object sender, EventArgs e) {
+            Monitor.Text += " ÷ ";
+            _calculatorOperation = CalcuratorOperation.Division;
+        }
+
+        private void BtnRaiseToPowerClick(object sender, EventArgs e) {
+            Monitor.Text += " n2 ";
+            _calculatorOperation = CalcuratorOperation.RaiseToPower;
+        }
+
+        private void BtnSquareRootClick(object sender, EventArgs e) {
+            Monitor.Text += " √ ";
+            _calculatorOperation = CalcuratorOperation.SquareRoot;
+        }
+
         private void BtnEqualsClick(object sender, EventArgs e) {
             Monitor.Text += " = ";
 
@@ -47,6 +72,11 @@ namespace Session_09 {
                     //_result = _value1 + _value2;
                     Addition addition = new Addition();
                     _result = addition.Calculate(_value1, _value2);
+                    break;
+                case CalcuratorOperation.Subtraction:
+                    //_result = _value1 - _value2;
+                    Subtraction subtraction = new Subtraction();
+                    _result = subtraction.Calculate(_value1, _value2);
                     break;
 
                 default:
@@ -100,6 +130,8 @@ namespace Session_09 {
             Monitor.Text += " 9 ";
             AssignValue(9);
         }
+
+    
     }
 
 
