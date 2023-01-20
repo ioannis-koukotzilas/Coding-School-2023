@@ -6,23 +6,24 @@ using System.Threading.Tasks;
 
 namespace UniversityLibrary {
 
-
-
     public class University {
 
         public List<Student> Students { get; set; }
         public List<Course> Courses { get; set; }
         public List<Grade> Grades { get; set; }
         public List<ScheduledCourse> ScheduledCourses { get; set; }
-        public string? Name { get; set; }
+        public string? UName { get; set; }
 
         public University() {
             Students = new List<Student>();
+            Courses = new List<Course>();
+            Grades = new List<Grade>();
+            ScheduledCourses = new List<ScheduledCourse>();
         }
 
     }
 
-    public class Student : University {
+    public class Student {
 
         public Guid ID { get; set; }
         public string? Name { get; set; }

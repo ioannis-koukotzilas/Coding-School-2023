@@ -10,9 +10,14 @@ namespace Session_10 {
         }
 
         private void UniversityForm_Load(object sender, EventArgs e) {
+            PopulateData();
 
-            University university = new University() {
-              Name = "Aegean University"
+        }
+
+        private void PopulateData() {
+
+            _university = new University() {
+                UName = "Aegean University"
             };
 
             List<Student> students = new List<Student>() {
@@ -21,7 +26,7 @@ namespace Session_10 {
                     RegistrationNumber = 1,
                     Name = "Ioannis",
                     Surname = "Koukotzilas",
-                    Age = 34, 
+                    Age = 34,
                 },
                  new Student() {
                     RegistrationNumber = 2,
@@ -32,7 +37,7 @@ namespace Session_10 {
 
             };
 
-            university.Students = students;
+            // _university.Students = students;
 
             StudentsGrid.DataSource = students;
 
@@ -47,7 +52,7 @@ namespace Session_10 {
 
             };
 
-            university.Grades = grades;
+            // _university.Grades = grades;
 
             GradesGrid.DataSource = grades;
 
@@ -64,7 +69,7 @@ namespace Session_10 {
 
             };
 
-            university.Courses = courses;
+            // _university.Courses = courses;
 
             CoursesGrid.DataSource = courses;
 
@@ -81,18 +86,9 @@ namespace Session_10 {
 
             };
 
-            university.ScheduledCourses = scheduledCourses;
+            // _university.ScheduledCourses = scheduledCourses;
 
             ScheduledCoursesGrid.DataSource = scheduledCourses;
-
-
-          
-
-
-           
-
-
-
         }
 
         private void BtnSave_Click(object sender, EventArgs e) {
@@ -108,6 +104,8 @@ namespace Session_10 {
 
             Serializer serializer = new Serializer();
             _university = serializer.DeserializeFromFile<University>("university.json");
+
+            MessageBox.Show(_university.UName);
 
         }
     }
