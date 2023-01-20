@@ -23,52 +23,52 @@ namespace UniversityLibrary {
 
     }
 
-    public class Student {
+    public class Person {
 
         public Guid ID { get; set; }
         public string? Name { get; set; }
-        public string? Surname { get; set; }
         public int Age { get; set; }
+
+        public Person() {
+            ID = Guid.NewGuid();
+        }
+
+    }
+
+    public class Student : Person {
+
         public int RegistrationNumber { get; set; }
+        public List<Course> Courses { get; set; }
+
 
         public Student() {
-            ID = Guid.NewGuid();
+            Courses = new List<Course>();
         }
 
     }
 
-    public class Grade {
+    public class Course : Student {
 
-        public Guid ID { get; set; }
-        public int GradeNumber { get; set; }
-
-        public Grade() {
-            ID = Guid.NewGuid();
-        }
-
-    }
-
-    public class Course {
-
-        public Guid ID { get; set; }
+        public Guid CourseID { get; set; }
         public string? Code { get; set; }
         public string? Subject { get; set; }
 
         public Course() {
-            ID = Guid.NewGuid();
+            CourseID = Guid.NewGuid();
         }
 
     }
 
-    public class ScheduledCourse {
+    public class Grade : Course {
 
-        public Guid ID { get; set; }
-        public string? Code { get; set; }
-        public string? Subject { get; set; }
+        public int GradeNumber { get; set; }
 
-        public ScheduledCourse() {
-            ID = Guid.NewGuid();
-        }
+
+    }
+
+    public class ScheduledCourse : Course {
+
+        public string? ExpectedDate { get; set; }
 
     }
 

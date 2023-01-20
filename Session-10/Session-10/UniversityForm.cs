@@ -31,14 +31,12 @@ namespace Session_10 {
 
                 new Student() {
                     RegistrationNumber = 1,
-                    Name = "Ioannis",
-                    Surname = "Koukotzilas",
+                    Name = "Ioannis Koukotzilas",
                     Age = 34,
                 },
                  new Student() {
                     RegistrationNumber = 2,
-                    Name = "Eftichia",
-                    Surname = "Makri",
+                    Name = "Marios Staikopoulos",
                     Age = 27,
                 }
 
@@ -71,12 +69,15 @@ namespace Session_10 {
             List<ScheduledCourse> scheduledCourses = new List<ScheduledCourse>() {
 
                 new ScheduledCourse() {
-                    Code = "#UN",
-                    Subject ="Unknown"
+                    Code = "#IN",
+                    Subject = "Interfaces",
+                    ExpectedDate = "February 2023"
+                    
                 },
                 new ScheduledCourse() {
-                    Code = "#UN",
-                    Subject ="Unknown"
+                    Code = "#BL",
+                    Subject = "Blazor",
+                    ExpectedDate = "February 2023"
                 }
 
             };
@@ -114,7 +115,7 @@ namespace Session_10 {
             Serializer serializer = new Serializer();
             _university = serializer.DeserializeFromFile<University>("university.json");
 
-            MessageBox.Show(_university.UName);
+            MessageBox.Show($"{_university.UName} JSON loaded");
 
         }
     }
