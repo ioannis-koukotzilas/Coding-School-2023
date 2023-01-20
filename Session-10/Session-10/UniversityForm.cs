@@ -21,7 +21,6 @@ namespace Session_10 {
                     Surname = "Koukotzilas",
                     Age = 34, 
                 },
-
                  new Student() {
                     RegistrationNumber = 2,
                     Name = "Eftichia",
@@ -38,32 +37,49 @@ namespace Session_10 {
             List<Grade> grades = new List<Grade>() {
 
                 new Grade() {
-                  
+                    GradeNumber = 8
                 },
+                new Grade() {
+                    GradeNumber = 10
+                }
 
             };
+
+            university.Grades = grades;
 
             GradesGrid.DataSource = grades;
 
             List<Course> courses = new List<Course>() {
 
                 new Course() {
-
+                    Code = "#RF",
+                    Subject ="Recursive Function"
                 },
+                new Course() {
+                    Code = "#DB",
+                    Subject ="Data Binding"
+                }
 
             };
 
-            university.Grades = grades;
+            university.Courses = courses;
 
             CoursesGrid.DataSource = courses;
 
             List<ScheduledCourse> scheduledCourses = new List<ScheduledCourse>() {
 
                 new ScheduledCourse() {
-
+                    Code = "#UN",
+                    Subject ="Unknown"
                 },
+                            new ScheduledCourse() {
+                    Code = "#UN",
+                    Subject ="Unknown"
+                }
 
             };
+
+            university.ScheduledCourses = scheduledCourses;
 
             ScheduledCoursesGrid.DataSource = scheduledCourses;
 

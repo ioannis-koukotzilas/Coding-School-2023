@@ -114,7 +114,7 @@
             // 
             // BtnSave
             // 
-            this.BtnSave.Location = new System.Drawing.Point(523, 459);
+            this.BtnSave.Location = new System.Drawing.Point(713, 427);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(75, 23);
             this.BtnSave.TabIndex = 8;
@@ -124,7 +124,7 @@
             // 
             // BtnLoad
             // 
-            this.BtnLoad.Location = new System.Drawing.Point(358, 454);
+            this.BtnLoad.Location = new System.Drawing.Point(632, 427);
             this.BtnLoad.Name = "BtnLoad";
             this.BtnLoad.Size = new System.Drawing.Size(75, 23);
             this.BtnLoad.TabIndex = 9;
@@ -137,7 +137,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 508);
+            this.ClientSize = new System.Drawing.Size(800, 467);
             this.Controls.Add(this.BtnLoad);
             this.Controls.Add(this.BtnSave);
             this.Controls.Add(this.ScheduledCoursesGrid);

@@ -41,16 +41,18 @@ namespace Session_10 {
 
     }
 
-    internal class Grade : Student {
+    internal class Grade {
 
         public Guid ID { get; set; }
-        public Guid StudentID { get; set; }
-        public Guid CourseID { get; set; }
         public int GradeNumber { get; set; }
+
+        public Grade() { 
+            ID = Guid.NewGuid();
+        }
 
     }
 
-    internal class Course : University {
+    internal class Course {
 
         public Guid ID { get; set; }
         public string? Code { get; set; }
@@ -62,7 +64,7 @@ namespace Session_10 {
 
     }
 
-    internal class ScheduledCourse : Student {
+    internal class ScheduledCourse {
 
         public Guid ID { get; set; }
         public string? Code { get; set; }
