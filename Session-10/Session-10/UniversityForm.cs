@@ -6,15 +6,23 @@ namespace Session_10 {
 
         private void UniversityForm_Load(object sender, EventArgs e) {
 
-            List<Student> students = new List<Student>();
+            List<Student> students = new List<Student>() {
 
-            Student student1 = new Student() {
+                new Student() {
+                    Name = "Ioannis",
+                    Age = 34
+                },
 
-                Name = "Ioannis",
-                Age = 34
-
+                 new Student() {
+                    Name = "Eftichia",
+                    Age = 34
+                }
 
             };
+
+            StudentsGrid.DataSource = students;
+
+      
 
         }
     }

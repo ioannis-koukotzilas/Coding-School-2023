@@ -18,12 +18,12 @@ namespace Session_10 {
 
         public Person() {}
 
-        public Person( string name) {
-            Name = name;
-        }
-
         public Person(Guid id) {
             ID = Guid.NewGuid();
+        }
+
+        public Person( string name) {
+            Name = name;
         }
 
         public Person(int age) {
