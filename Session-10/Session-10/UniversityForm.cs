@@ -22,7 +22,7 @@ namespace Session_10 {
             // Top level object
 
             _university = new University() {
-                UName = "Aegean University"
+                UniversityName = "Aegean University"
             };
 
             // Lists
@@ -106,7 +106,7 @@ namespace Session_10 {
             Serializer serializer = new Serializer();
             serializer.SerializeToFile(_university, "university.json");
 
-            MessageBox.Show($"{_university.UName} JSON export ready");
+            MessageBox.Show($"{_university.UniversityName} JSON export ready");
 
         }
 
@@ -115,7 +115,7 @@ namespace Session_10 {
             Serializer serializer = new Serializer();
             _university = serializer.DeserializeFromFile<University>("university.json");
 
-            MessageBox.Show($"{_university.UName} JSON loaded");
+            MessageBox.Show($"{_university.UniversityName} JSON loaded");
 
         }
     }

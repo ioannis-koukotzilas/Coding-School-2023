@@ -12,7 +12,7 @@ namespace UniversityLibrary {
         public List<Course> Courses { get; set; }
         public List<Grade> Grades { get; set; }
         public List<ScheduledCourse> ScheduledCourses { get; set; }
-        public string? UName { get; set; }
+        public string? UniversityName { get; set; }
 
         public University() {
             Students = new List<Student>();
