@@ -9,20 +9,22 @@ namespace Session_10 {
             List<Student> students = new List<Student>() {
 
                 new Student() {
+                    RegistrationNumber = 1,
                     Name = "Ioannis",
-                    Age = 34
+                    Surname = "Koukotzilas",
+                    Age = 34, 
                 },
 
                  new Student() {
+                    RegistrationNumber = 2,
                     Name = "Eftichia",
-                    Age = 34
+                    Surname = "Makri",
+                    Age = 27,
                 }
 
             };
 
             StudentsGrid.DataSource = students;
-
-      
 
         }
     }
