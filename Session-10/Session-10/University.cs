@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,10 +12,18 @@ namespace Session_10 {
 
     internal class University {
 
-        public Student[]? Students { get; set; }
-        public Course[]? Courses { get; set; }
-        public Grade[]? Grades { get; set; }
-        public ScheduledCourse[]? ScheduledCourses { get; set; }
+        public List<Student> Students { get; set; }
+        public List<Course> Courses { get; set; }
+
+        public List<Grade> Grades { get; set; }
+
+        public List<ScheduledCourse> ScheduledCourses { get; set; }
+
+        public string? Name { get; set; }
+
+        public University() {
+            Students = new List<Student>();
+        }
 
     }
 
@@ -32,6 +41,15 @@ namespace Session_10 {
 
     }
 
+    internal class Grade : Student {
+
+        public Guid ID { get; set; }
+        public Guid StudentID { get; set; }
+        public Guid CourseID { get; set; }
+        public int GradeNumber { get; set; }
+
+    }
+
     internal class Course : University {
 
         public Guid ID { get; set; }
@@ -44,16 +62,7 @@ namespace Session_10 {
 
     }
 
-    internal class Grade : University {
-
-        public Guid ID { get; set; }
-        public Guid StudentID { get; set; }
-        public Guid CourseID { get; set; }
-        public int GradeNumber { get; set; }
-
-    }
-
-    internal class ScheduledCourse : University {
+    internal class ScheduledCourse : Student {
 
         public Guid ID { get; set; }
         public string? Code { get; set; }
@@ -64,5 +73,37 @@ namespace Session_10 {
         }
 
     }
+
+
+
+    public class Serializer {
+
+   
+
+
+        public void SerializeToFile(object obj, string fileName) {
+
+           
+            string jsonString = JsonSerializer.Serialize(obj);
+
+            File.WriteAllText(fileName, jsonString);
+        }
+
+
+        public T DeserializeFromFile<T>(string fileName) {
+
+            string jsonString = File.ReadAllText(fileName);
+
+            T? obj = JsonSerializer.Deserialize<T>(jsonString);
+
+            return obj;
+        }
+
+
+    }
+
+
+
+
 
 }

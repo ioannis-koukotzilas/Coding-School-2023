@@ -31,6 +31,8 @@
             this.CoursesGrid = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.ScheduledCoursesGrid = new System.Windows.Forms.DataGridView();
+            this.BtnSave = new System.Windows.Forms.Button();
+            this.BtnLoad = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.StudentsGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GradesGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CoursesGrid)).BeginInit();
@@ -110,11 +112,34 @@
             this.ScheduledCoursesGrid.Size = new System.Drawing.Size(776, 94);
             this.ScheduledCoursesGrid.TabIndex = 7;
             // 
+            // BtnSave
+            // 
+            this.BtnSave.Location = new System.Drawing.Point(523, 459);
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(75, 23);
+            this.BtnSave.TabIndex = 8;
+            this.BtnSave.Text = "Save";
+            this.BtnSave.UseVisualStyleBackColor = true;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // BtnLoad
+            // 
+            this.BtnLoad.Location = new System.Drawing.Point(358, 454);
+            this.BtnLoad.Name = "BtnLoad";
+            this.BtnLoad.Size = new System.Drawing.Size(75, 23);
+            this.BtnLoad.TabIndex = 9;
+            this.BtnLoad.Text = "Load";
+            this.BtnLoad.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.BtnLoad.UseVisualStyleBackColor = true;
+            this.BtnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
+            // 
             // UniversityForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 508);
+            this.Controls.Add(this.BtnLoad);
+            this.Controls.Add(this.BtnSave);
             this.Controls.Add(this.ScheduledCoursesGrid);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CoursesGrid);
@@ -145,5 +170,7 @@
         private DataGridView CoursesGrid;
         private Label label1;
         private DataGridView ScheduledCoursesGrid;
+        private Button BtnSave;
+        private Button BtnLoad;
     }
 }
