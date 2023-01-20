@@ -18,7 +18,7 @@ namespace UniversityLibrary {
             Students = new List<Student>();
             Courses = new List<Course>();
             Grades = new List<Grade>();
-            ScheduledCourses = new List<ScheduledCourse>();
+            //ScheduledCourses = new List<ScheduledCourse>();
         }
 
     }

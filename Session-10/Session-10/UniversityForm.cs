@@ -3,6 +3,10 @@ using UniversityLibrary;
 namespace Session_10 {
     public partial class UniversityForm : Form {
 
+        /* The entities of Students, Grades, Courses and ScheduledCourses 
+         * (that belong to the University) should be populated with at least
+         * 2 records each and displayed on separate Grid Controls. */
+
         private University _university;
 
         public UniversityForm() {
@@ -11,14 +15,17 @@ namespace Session_10 {
 
         private void UniversityForm_Load(object sender, EventArgs e) {
             PopulateData();
-
         }
 
         private void PopulateData() {
 
+            // Top level object
+
             _university = new University() {
                 UName = "Aegean University"
             };
+
+            // Lists
 
             List<Student> students = new List<Student>() {
 
@@ -37,10 +44,6 @@ namespace Session_10 {
 
             };
 
-            // _university.Students = students;
-
-            StudentsGrid.DataSource = students;
-
             List<Grade> grades = new List<Grade>() {
 
                 new Grade() {
@@ -51,10 +54,6 @@ namespace Session_10 {
                 }
 
             };
-
-            // _university.Grades = grades;
-
-            GradesGrid.DataSource = grades;
 
             List<Course> courses = new List<Course>() {
 
@@ -69,34 +68,44 @@ namespace Session_10 {
 
             };
 
-            // _university.Courses = courses;
-
-            CoursesGrid.DataSource = courses;
-
             List<ScheduledCourse> scheduledCourses = new List<ScheduledCourse>() {
 
                 new ScheduledCourse() {
                     Code = "#UN",
                     Subject ="Unknown"
                 },
-                            new ScheduledCourse() {
+                new ScheduledCourse() {
                     Code = "#UN",
                     Subject ="Unknown"
                 }
 
             };
 
-            // _university.ScheduledCourses = scheduledCourses;
+            // Append objects list into university
 
+            _university.Students = students;
+            _university.Grades = grades;
+            _university.ScheduledCourses = scheduledCourses;
+            _university.Courses = courses;
+
+
+            // Set datasources for grid view
+
+            StudentsGrid.DataSource = students;
+            GradesGrid.DataSource = grades;
+            CoursesGrid.DataSource = courses;
             ScheduledCoursesGrid.DataSource = scheduledCourses;
+
         }
+
+        // Serializer - export to JSON
 
         private void BtnSave_Click(object sender, EventArgs e) {
 
             Serializer serializer = new Serializer();
             serializer.SerializeToFile(_university, "university.json");
 
-            MessageBox.Show("JSON ready!");
+            MessageBox.Show($"{_university.UName} JSON export ready");
 
         }
 
