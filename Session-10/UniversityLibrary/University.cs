@@ -41,13 +41,16 @@ namespace UniversityLibrary {
         public List<Course> Courses { get; set; }
 
 
-        public Student() {
-            Courses = new List<Course>();
+        public Student(string name, int age, int registrationNumber, List<Course> courses) {
+            Name = name;
+            Age = age;
+            RegistrationNumber = registrationNumber;
+            Courses = courses;
         }
 
     }
 
-    public class Course : Student {
+    public class Course {
 
         public Guid CourseID { get; set; }
         public string? Code { get; set; }
@@ -59,7 +62,7 @@ namespace UniversityLibrary {
 
     }
 
-    public class Grade : Course {
+    public class Grade {
 
         public int GradeNumber { get; set; }
 

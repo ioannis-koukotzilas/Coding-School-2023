@@ -1,4 +1,6 @@
+using System.Xml.Linq;
 using UniversityLibrary;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Session_10 {
     public partial class UniversityForm : Form {
@@ -28,20 +30,11 @@ namespace Session_10 {
             // Lists
 
             List<Student> students = new List<Student>() {
-
-                new Student() {
-                    RegistrationNumber = 1,
-                    Name = "Ioannis Koukotzilas",
-                    Age = 34,
-                },
-                 new Student() {
-                    RegistrationNumber = 2,
-                    Name = "Marios Staikopoulos",
-                    Age = 27,
-                }
-
+                new Student("Ioannis Koukotzilas", 34, 444, _university.Courses),
+                new Student("Marios Staikopoulos", 27, 777, _university.Courses),
             };
-
+            
+            
             List<Grade> grades = new List<Grade>() {
 
                 new Grade() {
