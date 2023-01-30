@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeShop.Win", "CoffeeSho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeShop.Models", "CoffeeShop.Models\CoffeeShop.Models.csproj", "{4E430130-19AF-427D-BF0D-29C577BBA44F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeShop.ORM", "CoffeeShop.ORM\CoffeeShop.ORM.csproj", "{17B31857-99F2-4298-B407-FFD577759AC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4E430130-19AF-427D-BF0D-29C577BBA44F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E430130-19AF-427D-BF0D-29C577BBA44F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E430130-19AF-427D-BF0D-29C577BBA44F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B31857-99F2-4298-B407-FFD577759AC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B31857-99F2-4298-B407-FFD577759AC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B31857-99F2-4298-B407-FFD577759AC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B31857-99F2-4298-B407-FFD577759AC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
