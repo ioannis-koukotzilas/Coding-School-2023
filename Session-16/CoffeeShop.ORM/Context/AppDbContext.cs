@@ -7,9 +7,14 @@ using System.Reflection.Emit;
 namespace CoffeeShop.ORM.Context
 {
 
-    public class AppDbContext : DbContext
-    {
+    public class AppDbContext : DbContext {
+
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionLine> TransactionLines { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
