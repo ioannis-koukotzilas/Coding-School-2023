@@ -27,7 +27,5 @@ namespace CoffeeShop.Models {
             Surname = surname;
         }  
 
-        // Test
-
     }
 }
