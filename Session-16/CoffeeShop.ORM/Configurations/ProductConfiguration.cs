@@ -16,6 +16,8 @@ namespace CoffeeShop.ORM.Configurations
             builder.ToTable("Products");
             builder.HasKey(product => product.ID);
             builder.Property(product => product.Code).HasMaxLength(10);
+            builder.Property(product => product.Price).HasColumnType("decimal(18,2)");
+            builder.Property(product => product.Cost).HasColumnType("decimal(18,2)");
 
         }
 

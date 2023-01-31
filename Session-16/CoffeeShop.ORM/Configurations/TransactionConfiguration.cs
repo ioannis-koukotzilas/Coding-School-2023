@@ -14,6 +14,7 @@ namespace CoffeeShop.ORM.Configurations {
 
             builder.ToTable("Transaction");
             builder.HasKey(transaction => transaction.ID);
+            builder.Property(transaction => transaction.TotalPrice).HasColumnType("decimal(18,2)");
 
         }
 

@@ -14,6 +14,7 @@ namespace CoffeeShop.ORM.Configurations {
 
             builder.ToTable("Employees");
             builder.HasKey(employee => employee.ID);
+            builder.Property(employee => employee.SalaryPerMonth).HasColumnType("decimal(18,2)");
 
         }
 
