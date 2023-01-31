@@ -25,7 +25,9 @@ namespace CoffeeShop.Models {
             ID = Guid.NewGuid();
             Name = name;
             Surname = surname;
-        }
+        }  
+
+        // Test
 
     }
 }
