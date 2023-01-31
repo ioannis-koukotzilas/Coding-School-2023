@@ -6,6 +6,8 @@
         public string Description { get; set; }
         public decimal Price { get; set; }
         public decimal Cost { get; set; }
+
+        // Relations
         public Guid ProductCategoryID { get; set; }
 
         public Product(string code, string description) {

@@ -21,7 +21,7 @@ namespace CoffeeShop.Models {
 
         public ProductCategory(string code, string description) {
 
-            ID= Guid.NewGuid();
+            ID = Guid.NewGuid();
             Code = code;
             Description = description;
         

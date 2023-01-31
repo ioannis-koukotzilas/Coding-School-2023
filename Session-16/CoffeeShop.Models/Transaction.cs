@@ -15,10 +15,12 @@ namespace CoffeeShop.Models {
         
         public Guid ID { get; set; }
         public DateTime Date { get; set; }
-        public Guid CustomerID { get; set; }
-        public Guid EmployeeID { get; set; }
         public PaymentMethodEnum PaymentMethod { get; set; }
         public decimal TotalPrice { get; set; }
+
+        // Relations
+        public Guid CustomerID { get; set; }
+        public Guid EmployeeID { get; set; }
 
         public Transaction() {
             ID = Guid.NewGuid();
