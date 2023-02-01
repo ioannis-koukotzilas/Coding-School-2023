@@ -14,6 +14,8 @@ namespace CoffeeShop.Models {
             ID = Guid.NewGuid();
         }
 
+        // Test commit
+
     }
 
 }
