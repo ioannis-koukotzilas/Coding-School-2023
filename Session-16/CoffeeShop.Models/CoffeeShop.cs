@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoffeeShop.Models {
    
-    public abstract class CoffeeShop : ICoffeeShop {
+    public abstract class CoffeeShop {
 
         public int ID { get; set; }
 
