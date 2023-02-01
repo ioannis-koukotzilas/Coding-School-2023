@@ -13,16 +13,14 @@ namespace CoffeeShop.Models {
         Waiter
     }
 
-    public class Employee {
+    public class Employee : CoffeeShop {
 
-        public Guid ID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public EmployeeTypeEnum EmployeeType { get; set; }
         public decimal SalaryPerMonth { get; set; }
 
         public Employee(string name, string surname) {
-            ID = Guid.NewGuid();
             Name = name;
             Surname = surname;
         }  

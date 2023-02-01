@@ -12,16 +12,15 @@ namespace CoffeeShop.Models {
         Food
     }
 
-    public class ProductCategory {
+    public class ProductCategory : CoffeeShop {
 
-        public Guid ID { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
         public ProductTypeEnum ProductType { get; set; }
+        public Product Product { get; set; }
 
         public ProductCategory(string code, string description) {
 
-            ID = Guid.NewGuid();
             Code = code;
             Description = description;
         

@@ -14,6 +14,7 @@ namespace CoffeeShop.ORM.Configurations {
 
             builder.ToTable("Customers");
             builder.HasKey(customer => customer.ID);
+            builder.Property(customer => customer.ID).ValueGeneratedOnAdd();
 
         }
 

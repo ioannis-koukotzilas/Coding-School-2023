@@ -18,12 +18,12 @@ namespace CoffeeShop.ORM.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
-            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+            //modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new ProductCategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
-            modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-            modelBuilder.ApplyConfiguration(new TransactionLineConfiguration());
+            //modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            //modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+            //modelBuilder.ApplyConfiguration(new TransactionLineConfiguration());
 
             base.OnModelCreating(modelBuilder);
 

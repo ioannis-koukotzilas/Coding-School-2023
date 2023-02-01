@@ -13,8 +13,11 @@ namespace CoffeeShop.ORM.Configurations {
 
         public void Configure(EntityTypeBuilder<ProductCategory> builder) {
 
-            builder.ToTable("Product.Category");
-            builder.HasKey(productCategory => productCategory.ID);
+            builder.ToTable("ProductCategories");
+            builder.HasKey(prodCat => prodCat.ID);
+            builder.Property(prodCat => prodCat.ID).ValueGeneratedOnAdd();
+
+           
 
         }
 

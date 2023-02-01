@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CoffeeShop.Models {
 
     public interface ICoffeeShop {
-        public Guid ID { get; set; }
+        int ID { get; set; }
     }
 
 }

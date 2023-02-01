@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace CoffeeShop.Models {
    
-    public abstract class CoffeeShop : ICoffeeShop { 
-    
-        public Guid ID { get; set; }
+    public abstract class CoffeeShop : ICoffeeShop {
 
-        public CoffeeShop() {
-            ID = Guid.NewGuid();
-        }
-
-        // Test commit
+        public int ID { get; set; }
 
     }
 
