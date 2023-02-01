@@ -18,6 +18,10 @@ namespace CoffeeShop.ORM.Configurations {
             builder.Property(TransactionLine => TransactionLine.Price).HasColumnType("decimal(18,2)");
             builder.Property(product => product.TotalPrice).HasColumnType("decimal(18,2)");
 
+            builder.HasOne(transLine => transLine.Product).
+              WithOne(prod => prod.TransactionLine).
+              HasForeignKey<TransactionLine>(transLine => transLine.ProductID);
+
         }
 
     }

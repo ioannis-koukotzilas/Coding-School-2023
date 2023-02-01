@@ -21,6 +21,8 @@ namespace CoffeeShop.Models {
         public EmployeeTypeEnum EmployeeType { get; set; }
         public decimal SalaryPerMonth { get; set; }
 
+        public Transaction Transaction { get; set; } = null!; // Navigation property
+
         public Employee(string name, string surname) {
             Name = name;
             Surname = surname;

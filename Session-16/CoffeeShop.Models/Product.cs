@@ -8,7 +8,9 @@
         public decimal Cost { get; set; }
 
         // Relations
-        public ProductCategory ProductCategory { get; set; }
+        public int ProductCategoryID { get; set; } // Foreign key
+        public ProductCategory ProductCategory { get; set; } = null!; // Navigation property
+        public TransactionLine TransactionLine { get; set; } = null!; // Navigation property
 
         public Product(string code, string description) {
             Code = code;

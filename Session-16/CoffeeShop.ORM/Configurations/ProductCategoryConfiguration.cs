@@ -15,9 +15,7 @@ namespace CoffeeShop.ORM.Configurations {
 
             builder.ToTable("ProductCategories");
             builder.HasKey(prodCat => prodCat.ID);
-            builder.Property(prodCat => prodCat.ID).ValueGeneratedOnAdd();
-
-           
+            builder.Property(prodCat => prodCat.ID).ValueGeneratedOnAdd(); 
 
         }
 

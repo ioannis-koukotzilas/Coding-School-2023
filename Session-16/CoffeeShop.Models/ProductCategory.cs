@@ -19,6 +19,8 @@ namespace CoffeeShop.Models {
         public string Description { get; set; }
         public ProductTypeEnum ProductType { get; set; }
 
+        public Product Product { get; set; } = null!; // Navigation property
+
         public ProductCategory(string code, string description) {
 
             Code = code;

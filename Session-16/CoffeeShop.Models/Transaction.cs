@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeeShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,8 +20,10 @@ namespace CoffeeShop.Models {
         public decimal TotalPrice { get; set; }
 
         // Relations
-        public int CustomerID { get; set; }
-        public int EmployeeID { get; set; }
+        public int CustomerID { get; set; } // Foreign key
+        public Customer Customer { get; set; } = null!; // Navigation property
+        public int EmployeeID { get; set; } // Foreign key
+        public Employee Employee { get; set; } = null!;  // Navigation property
 
         public Transaction() {
             Date = DateTime.Now;

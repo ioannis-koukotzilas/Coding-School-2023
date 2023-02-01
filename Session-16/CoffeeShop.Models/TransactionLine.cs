@@ -14,8 +14,8 @@ namespace CoffeeShop.Models {
         public decimal TotalPrice { get; set; }
 
         // Relations
-        public int ProductID { get; set; }
-
+        public int ProductID { get; set; } // Foreign key
+        public Product Product { get; set; } = null!;  // Navigation property
 
     }
 }

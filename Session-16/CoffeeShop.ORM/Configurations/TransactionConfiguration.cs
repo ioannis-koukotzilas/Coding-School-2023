@@ -13,9 +13,17 @@ namespace CoffeeShop.ORM.Configurations {
         public void Configure(EntityTypeBuilder<Transaction> builder) {
 
             builder.ToTable("Transaction");
-            builder.HasKey(transaction => transaction.ID);
-            builder.Property(transaction => transaction.ID).ValueGeneratedOnAdd();
-            builder.Property(transaction => transaction.TotalPrice).HasColumnType("decimal(18,2)");
+            builder.HasKey(trans => trans.ID);
+            builder.Property(trans => trans.ID).ValueGeneratedOnAdd();
+            builder.Property(trans => trans.TotalPrice).HasColumnType("decimal(18,2)");
+
+            builder.HasOne(trans => trans.Customer).
+                WithOne(cust => cust.Transaction).
+                HasForeignKey<Transaction>(trans => trans.CustomerID);
+
+            builder.HasOne(trans => trans.Employee).
+              WithOne(cust => cust.Transaction).
+              HasForeignKey<Transaction>(trans => trans.EmployeeID);
 
         }
 

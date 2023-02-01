@@ -11,6 +11,9 @@ namespace CoffeeShop.Models {
         public string Code { get; set; }
         public string Description { get; set; }
 
+        // Relations
+        public Transaction Transaction { get; set; } = null!; // Navigation property
+
         public Customer() {
             Code = "001";
             Description = "Retail Customer";
