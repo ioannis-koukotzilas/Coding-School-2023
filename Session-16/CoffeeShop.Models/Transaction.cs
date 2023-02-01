@@ -11,8 +11,9 @@ namespace CoffeeShop.Models {
         CreditCard
     }
 
-    public class Transaction : CoffeeShop {
-        
+    public class Transaction {
+
+        public int ID { get; set; }
         public DateTime Date { get; set; }
         public PaymentMethodEnum PaymentMethod { get; set; }
         public decimal TotalPrice { get; set; }

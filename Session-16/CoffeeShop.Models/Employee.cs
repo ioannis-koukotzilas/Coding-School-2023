@@ -13,8 +13,9 @@ namespace CoffeeShop.Models {
         Waiter
     }
 
-    public class Employee : CoffeeShop {
+    public class Employee {
 
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public EmployeeTypeEnum EmployeeType { get; set; }

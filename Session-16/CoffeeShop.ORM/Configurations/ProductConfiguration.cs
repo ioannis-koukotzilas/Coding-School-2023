@@ -20,7 +20,9 @@ namespace CoffeeShop.ORM.Configurations
             builder.Property(prod => prod.Price).HasColumnType("decimal(18,2)");
             builder.Property(prod => prod.Cost).HasColumnType("decimal(18,2)");
 
-            builder.HasOne(prod => prod.ProductCategory).WithOne(prodCat => prodCat.Product).HasForeignKey<Product>(prod => prod.ProductCategoryID);
+            builder.HasOne(prod => prod.ProductCategory).
+                WithOne(prodCat => prodCat.Product).
+                HasForeignKey<Product>(prod => prod.ProductCategoryID);
 
         }
 
