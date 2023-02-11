@@ -11,7 +11,7 @@ namespace CoffeeShop.Models {
         public decimal Price { get; set; }
         public decimal Cost { get; set; }
 
-        // Relation: Prouct includes the ProductCategoryId
+        // Relation: Product includes the ProductCategoryId
         public ProductCategory ProductCategory { get; set; } = null!;
         public int ProductCategoryId { get; set; }
 

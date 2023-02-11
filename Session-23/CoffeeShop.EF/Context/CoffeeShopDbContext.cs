@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using CoffeeShop.Models;
+using CoffeeShop.EF.Configurations;
 
 namespace CoffeeShop.EF.Context {
 
@@ -14,6 +15,7 @@ namespace CoffeeShop.EF.Context {
         public DbSet<TransactionLine> TransactionLines { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
