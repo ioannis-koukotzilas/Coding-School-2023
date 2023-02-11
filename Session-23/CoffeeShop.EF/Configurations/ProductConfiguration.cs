@@ -22,6 +22,11 @@ namespace CoffeeShop.EF.Configurations {
             builder.Property(p => p.Price).HasPrecision(3, 2).IsRequired();
             builder.Property(p => p.Cost).HasPrecision(3, 2).IsRequired();
 
+            // Relation: Product includes the ProductCategoryId
+            builder.HasOne(p => p.ProductCategory)
+                .WithMany(p => p.Products)
+                .HasForeignKey(p => p.ProductCategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
 

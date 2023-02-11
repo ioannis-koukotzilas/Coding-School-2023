@@ -22,10 +22,20 @@ namespace CoffeeShop.EF.Configurations {
             builder.Property(tl => tl.Price).HasPrecision(3, 2).IsRequired();
             builder.Property(tl => tl.TotalPrice).HasPrecision(9, 2).IsRequired();
 
+            // Relation: TransactionLine includes the TransactionId
+            builder.HasOne(t => t.Transaction)
+                .WithMany(t => t.TransactionLines)
+                .HasForeignKey(t => t.TransactionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relation: TransactionLine includes the ProductId
+            builder.HasOne(t => t.Product)
+                .WithMany(t => t.TransactionLines)
+                .HasForeignKey(t => t.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
 
     }
 
 }
-

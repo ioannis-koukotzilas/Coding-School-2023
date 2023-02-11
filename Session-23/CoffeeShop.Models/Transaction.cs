@@ -33,6 +33,7 @@ namespace CoffeeShop.Models {
             TransactionLines = new List<TransactionLine>();
 
         }
+
     }
 
 }

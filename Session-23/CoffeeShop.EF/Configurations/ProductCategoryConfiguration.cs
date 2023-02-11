@@ -21,7 +21,6 @@ namespace CoffeeShop.EF.Configurations {
             builder.Property(pc => pc.Description).HasMaxLength(200).IsRequired();
             builder.Property(pc => pc.ProductType).IsRequired();
            
-
         }
 
     }
