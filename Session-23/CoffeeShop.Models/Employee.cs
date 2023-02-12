@@ -1,13 +1,7 @@
 ﻿using System;
+using CoffeeShop.Models.Enums;
 
 namespace CoffeeShop.Models {
-
-    public enum EmployeeTypeEnum {
-        Manager,
-        Cashier,
-        Barista,
-        Waiter
-    }
 
     public class Employee {
 

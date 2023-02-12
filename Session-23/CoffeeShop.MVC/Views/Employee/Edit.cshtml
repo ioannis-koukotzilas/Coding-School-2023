@@ -1,0 +1,50 @@
+﻿@using CoffeeShop.Models.Enums;
+@using CoffeeShop.MVC.Models.Employee;
+
+@model EmployeeEditDto
+
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+
+<h1 class="mt-4 mb-4">@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label mb-1"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Surname" class="control-label mb-1"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="SalaryPerMonth" class="control-label mb-1"></label>
+                <input asp-for="SalaryPerMonth" class="form-control" />
+                <span asp-validation-for="SalaryPerMonth" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="EmployeeType" class="control-label mb-1"></label>
+                <select asp-for="EmployeeType" class="form-select" asp-items="Html.GetEnumSelectList<EmployeeTypeEnum>()"></select>
+                <span asp-validation-for="EmployeeType" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<a asp-action="Index">Back</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

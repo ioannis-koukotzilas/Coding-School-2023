@@ -7,21 +7,6 @@ namespace CoffeeShop.EF.Repositories {
 
     public class CustomerRepo : IEntityRepo<Customer> {
 
-        public void Add(Customer entity) {
-            using var context = new CoffeeShopDbContext();
-            context.Add(entity);
-            context.SaveChanges();
-        }
-
-        public void Delete(int id) {
-            using var context = new CoffeeShopDbContext();
-            var dbCustomer = context.Customers.Where(c => c.Id == id).SingleOrDefault();
-            if (dbCustomer is null)
-                return;
-            context.Remove(dbCustomer);
-            context.SaveChanges();
-        }
-
         public IList<Customer> GetAll() {
             using var context = new CoffeeShopDbContext();
             return context.Customers.Include(c => c.Transactions).ToList();
@@ -32,6 +17,12 @@ namespace CoffeeShop.EF.Repositories {
             return context.Customers.Where(c => c.Id == id).Include(c => c.Transactions).SingleOrDefault();
         }
 
+        public void Add(Customer entity) {
+            using var context = new CoffeeShopDbContext();
+            context.Add(entity);
+            context.SaveChanges();
+        }
+
         public void Update(int id, Customer entity) {
             using var context = new CoffeeShopDbContext();
             var dbCustomer = context.Customers.Where(c => c.Id == id).SingleOrDefault();
@@ -40,6 +31,15 @@ namespace CoffeeShop.EF.Repositories {
             dbCustomer.Code = entity.Code;
             dbCustomer.Description = entity.Description;
             dbCustomer.Transactions = entity.Transactions;
+            context.SaveChanges();
+        }
+
+        public void Delete(int id) {
+            using var context = new CoffeeShopDbContext();
+            var dbCustomer = context.Customers.Where(c => c.Id == id).SingleOrDefault();
+            if (dbCustomer is null)
+                return;
+            context.Remove(dbCustomer);
             context.SaveChanges();
         }
 
