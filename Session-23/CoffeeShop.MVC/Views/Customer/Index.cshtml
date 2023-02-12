@@ -1,24 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{}
-
-@model IEnumerable<CoffeeShop.Models.Customer>
+﻿@model IEnumerable<CoffeeShop.Models.Customer>
 
 @{
-    ViewData["Title"] = "Hello world";
+    ViewData["Title"] = "Customer";
 }
 
+<h1>@ViewData["Title"]</h1>
 
+<p><a asp-action="Create">Create New Customer</a></p>
 
-<a asp-action="Create">Create New</a>
+<table class="table">
 
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Code)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+        </tr>
+    </thead>
 
-<h1>@Html.DisplayNameFor(model => model.Description)</h1>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Code)</td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item-id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item-id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item-id">Delete</a>
+                </td>
+            </tr>
 
-@foreach (var item in Model)
-{
+        }
 
-    <h2>@Html.DisplayNameFor(modelItem => item.Description)</h2>
+    </tbody>
 
-}
+</table>

@@ -19,6 +19,7 @@
   <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
     <None Remove="Views\Customer\" />
+    <None Remove="Models\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
@@ -28,5 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Customer\" />
+    <Folder Include="Models\Customer\" />
   </ItemGroup>
 </Project>
