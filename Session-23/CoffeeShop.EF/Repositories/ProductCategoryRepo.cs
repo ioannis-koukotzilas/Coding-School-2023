@@ -49,5 +49,3 @@ namespace CoffeeShop.EF.Repositories {
     }
 
 }
-
-

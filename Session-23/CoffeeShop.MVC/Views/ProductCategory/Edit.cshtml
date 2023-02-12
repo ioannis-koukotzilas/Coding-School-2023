@@ -1,0 +1,45 @@
+﻿@using CoffeeShop.Models.Enums;
+@using CoffeeShop.MVC.Models.ProductCategory;
+
+@model ProductCategoryEditDto
+
+@{
+    ViewData["Title"] = "Edit Product Category";
+}
+
+<h1 class="mt-4 mb-4">@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="Code" class="control-label mb-1"></label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label mb-1"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ProductType" class="control-label mb-1"></label>
+                <select asp-for="ProductType" class="form-select" asp-items="Html.GetEnumSelectList<ProductTypeEnum>()"></select>
+                <span asp-validation-for="ProductType" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<a asp-action="Index">Back</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CoffeeShop.Models.ProductCategory>
+
+@{
+    ViewData["Title"] = "Product Category";
+}
+
+<h1 class="mt-4 mb-4">@ViewData["Title"] List</h1>
+
+<table class="table mb-3">
+
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Code)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+            <th>@Html.DisplayNameFor(model => model.ProductType)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Code)</td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                <td>@Html.DisplayFor(modelItem => item.ProductType)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+
+</table>
+
+<a class="btn btn-primary" asp-action="Create">Add new</a>
