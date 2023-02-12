@@ -4,7 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CoffeeShop.MVC.Models.Customer {
 
-    public class CustomerCreateDto {
+    public class CustomerEditDto {
+
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(20)]

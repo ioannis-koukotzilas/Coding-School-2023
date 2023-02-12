@@ -4,14 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CoffeeShop.MVC.Models.Customer {
 
-    public class CustomerCreateDto {
+    public class CustomerDeleteDto {
 
-        [Required]
-        [MaxLength(20)]
+        public int Id { get; set; }
         public string Code { get; set; } = null!;
-
-        [Required]
-        [MaxLength(150)]
         public string Description { get; set; } = null!;
 
     }
