@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Transactions;
+using CoffeeShop.Models.Enums;
 
 namespace CoffeeShop.Models {
-
-    public enum ProductTypeEnum {
-        Coffee,
-        Beverages,
-        Food
-    }
 
     public class ProductCategory {
 
