@@ -36,8 +36,8 @@ namespace CoffeeShop.MVC.Controllers {
                 return View();
             }
 
-            var dbProductCat = new ProductCategory(productCategory.Code, productCategory.Description, productCategory.ProductType);
-            _productCategoryRepo.Add(dbProductCat);
+            var newProductCat = new ProductCategory(productCategory.Code, productCategory.Description, productCategory.ProductType);
+            _productCategoryRepo.Add(newProductCat);
             return RedirectToAction("Index");
         }
 
@@ -48,13 +48,13 @@ namespace CoffeeShop.MVC.Controllers {
                 return NotFound();
             }
 
-            var viewProductCategory = new ProductCategoryEditDto {
+            var editProductCategory = new ProductCategoryEditDto {
                 Id = dbProductCat.Id,
                 Code = dbProductCat.Code,
                 Description = dbProductCat.Description,
                 ProductType = dbProductCat.ProductType
             };
-            return View(model: viewProductCategory);
+            return View(model: editProductCategory);
         }
 
         // POST: /ProductCategory/Edit
@@ -73,6 +73,7 @@ namespace CoffeeShop.MVC.Controllers {
             dbProductCat.Code = productCategory.Code;
             dbProductCat.Description = productCategory.Description;
             dbProductCat.ProductType = productCategory.ProductType;
+
             _productCategoryRepo.Update(id, dbProductCat);
             return RedirectToAction(nameof(Index));
         }
@@ -84,14 +85,14 @@ namespace CoffeeShop.MVC.Controllers {
                 return NotFound();
             }
 
-            var viewProductCategory = new ProductCategoryDeleteDto {
+            var deleteProductCategory = new ProductCategoryDeleteDto {
                 Id = dbProductCat.Id,
                 Code = dbProductCat.Code,
                 Description = dbProductCat.Description,
                 ProductType = dbProductCat.ProductType
 
             };
-            return View(model: viewProductCategory);
+            return View(model: deleteProductCategory);
         }
 
         // POST: /ProductCategory/Delete

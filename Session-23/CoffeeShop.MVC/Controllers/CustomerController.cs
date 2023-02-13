@@ -36,8 +36,8 @@ namespace CoffeeShop.MVC.Controllers {
                 return View();
             }
 
-            var dbCustomer = new Customer(customer.Code, customer.Description);
-            _customerRepo.Add(dbCustomer);
+            var newCustomer = new Customer(customer.Code, customer.Description);
+            _customerRepo.Add(newCustomer);
             return RedirectToAction("Index");
         }
 
@@ -48,12 +48,12 @@ namespace CoffeeShop.MVC.Controllers {
                 return NotFound();
             }
 
-            var viewCustomer = new CustomerEditDto {
+            var editCustomer = new CustomerEditDto {
                 Id = dbCustomer.Id,
                 Code = dbCustomer.Code,
                 Description = dbCustomer.Description
             };
-            return View(model: viewCustomer);
+            return View(model: editCustomer);
         }
 
         // POST: /Customer/Edit
@@ -82,13 +82,13 @@ namespace CoffeeShop.MVC.Controllers {
                 return NotFound();
             }
 
-            var viewCustomer = new CustomerDeleteDto {
+            var deleteCustomer = new CustomerDeleteDto {
                 Id = dbCustomer.Id,
                 Code = dbCustomer.Code,
                 Description = dbCustomer.Description
 
             };
-            return View(model: viewCustomer);
+            return View(model: deleteCustomer);
         }
 
         // POST: /Customer/Delete

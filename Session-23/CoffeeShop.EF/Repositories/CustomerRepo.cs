@@ -14,23 +14,22 @@ namespace CoffeeShop.EF.Repositories {
 
         public Customer? GetById(int id) {
             using var context = new CoffeeShopDbContext();
-            return context.Customers.Where(c => c.Id == id).Include(c => c.Transactions).SingleOrDefault();
+            return context.Customers.Include(c => c.Transactions).SingleOrDefault(c => c.Id == id);
         }
 
         public void Add(Customer entity) {
             using var context = new CoffeeShopDbContext();
-            context.Add(entity);
+            context.Customers.Add(entity);
             context.SaveChanges();
         }
 
         public void Update(int id, Customer entity) {
             using var context = new CoffeeShopDbContext();
-            var dbCustomer = context.Customers.Where(c => c.Id == id).SingleOrDefault();
+            var dbCustomer = context.Customers.SingleOrDefault(c => c.Id == id);
             if (dbCustomer is null)
                 return;
             dbCustomer.Code = entity.Code;
             dbCustomer.Description = entity.Description;
-            dbCustomer.Transactions = entity.Transactions;
             context.SaveChanges();
         }
 
@@ -39,7 +38,7 @@ namespace CoffeeShop.EF.Repositories {
             var dbCustomer = context.Customers.Where(c => c.Id == id).SingleOrDefault();
             if (dbCustomer is null)
                 return;
-            context.Remove(dbCustomer);
+            context.Customers.Remove(dbCustomer);
             context.SaveChanges();
         }
 

@@ -14,34 +14,33 @@ namespace CoffeeShop.EF.Repositories {
 
         public Employee? GetById(int id) {
             using var context = new CoffeeShopDbContext();
-            return context.Employees.Where(e => e.Id == id).Include(e => e.Transactions).SingleOrDefault();
+            return context.Employees.Include(e => e.Transactions).SingleOrDefault(e => e.Id == id);
         }
 
         public void Add(Employee entity) {
             using var context = new CoffeeShopDbContext();
-            context.Add(entity);
+            context.Employees.Add(entity);
             context.SaveChanges();
         }
 
         public void Update(int id, Employee entity) {
             using var context = new CoffeeShopDbContext();
-            var dbEmployee = context.Employees.Where(e => e.Id == id).SingleOrDefault();
+            var dbEmployee = context.Employees.SingleOrDefault(e => e.Id == id);
             if (dbEmployee is null)
                 return;
             dbEmployee.Name = entity.Name;
             dbEmployee.Surname = entity.Surname;
             dbEmployee.SalaryPerMonth = entity.SalaryPerMonth;
             dbEmployee.EmployeeType = entity.EmployeeType;
-            dbEmployee.Transactions = entity.Transactions;
             context.SaveChanges();
         }
 
         public void Delete(int id) {
             using var context = new CoffeeShopDbContext();
-            var dbEmployee = context.Employees.Where(e => e.Id == id).SingleOrDefault();
+            var dbEmployee = context.Employees.SingleOrDefault(e => e.Id == id);
             if (dbEmployee is null)
                 return;
-            context.Remove(dbEmployee);
+            context.Employees.Remove(dbEmployee);
             context.SaveChanges();
         }
 

@@ -22,6 +22,8 @@
     <None Remove="Models\Customer\" />
     <None Remove="Models\Employee\" />
     <None Remove="Views\Employee\" />
+    <None Remove="Models\Product\" />
+    <None Remove="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
@@ -34,5 +36,7 @@
     <Folder Include="Models\Customer\" />
     <Folder Include="Models\Employee\" />
     <Folder Include="Views\Employee\" />
+    <Folder Include="Models\Product\" />
+    <Folder Include="Views\Product\" />
   </ItemGroup>
 </Project>

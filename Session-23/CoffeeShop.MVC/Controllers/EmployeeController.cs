@@ -36,8 +36,8 @@ namespace CoffeeShop.MVC.Controllers {
                 return View();
             }
 
-            var dbEmployee = new Employee(employee.Name, employee.Surname, employee.SalaryPerMonth, employee.EmployeeType);
-            _employeeRepo.Add(dbEmployee);
+            var newEmployee = new Employee(employee.Name, employee.Surname, employee.SalaryPerMonth, employee.EmployeeType);
+            _employeeRepo.Add(newEmployee);
             return RedirectToAction("Index");
         }
 
@@ -48,14 +48,14 @@ namespace CoffeeShop.MVC.Controllers {
                 return NotFound();
             }
 
-            var viewEmployee = new EmployeeEditDto {
+            var editEmployee = new EmployeeEditDto {
                 Id = dbEmployee.Id,
                 Name = dbEmployee.Name,
                 Surname = dbEmployee.Surname,
                 SalaryPerMonth = dbEmployee.SalaryPerMonth,
                 EmployeeType = dbEmployee.EmployeeType
             };
-            return View(model: viewEmployee);
+            return View(model: editEmployee);
         }
 
         // POST: /Employee/Edit
@@ -75,6 +75,7 @@ namespace CoffeeShop.MVC.Controllers {
             dbEmployee.Surname = employee.Surname;
             dbEmployee.SalaryPerMonth = employee.SalaryPerMonth;
             dbEmployee.EmployeeType = employee.EmployeeType;
+
             _employeeRepo.Update(id, dbEmployee);
             return RedirectToAction(nameof(Index));
         }
@@ -86,7 +87,7 @@ namespace CoffeeShop.MVC.Controllers {
                 return NotFound();
             }
 
-            var viewEmployee = new EmployeeDeleteDto {
+            var deleteEmployee = new EmployeeDeleteDto {
                 Id = dbEmployee.Id,
                 Name = dbEmployee.Name,
                 Surname = dbEmployee.Surname,
@@ -94,7 +95,7 @@ namespace CoffeeShop.MVC.Controllers {
                 EmployeeType = dbEmployee.EmployeeType
 
             };
-            return View(model: viewEmployee);
+            return View(model: deleteEmployee);
         }
 
         // POST: /Employee/Delete
