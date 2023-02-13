@@ -17,6 +17,7 @@ namespace CoffeeShop.MVC.Models.Transaction {
         [Range(1, 1000000)]
         public decimal TotalPrice { get; set; }
 
+        [Display(Name = "Payment Method")]
         public PaymentMethodEnum PaymentMethod { get; set; }
 
         [Display(Name = "Customer ID")]

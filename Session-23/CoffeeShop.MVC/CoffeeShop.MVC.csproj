@@ -25,6 +25,7 @@
     <None Remove="Models\Product\" />
     <None Remove="Views\Product\" />
     <None Remove="Models\Transaction\" />
+    <None Remove="Views\Transaction\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
@@ -40,5 +41,6 @@
     <Folder Include="Models\Product\" />
     <Folder Include="Views\Product\" />
     <Folder Include="Models\Transaction\" />
+    <Folder Include="Views\Transaction\" />
   </ItemGroup>
 </Project>
