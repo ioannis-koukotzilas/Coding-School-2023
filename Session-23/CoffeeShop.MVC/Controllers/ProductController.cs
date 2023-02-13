@@ -107,7 +107,6 @@ namespace CoffeeShop.MVC.Controllers {
                 return View();
             }
 
-
         }
 
         // GET: /Product/Delete
@@ -117,14 +116,14 @@ namespace CoffeeShop.MVC.Controllers {
                 return NotFound();
             }
 
-            var viewProduct = new ProductDeleteDto {
+            var deleteProduct = new ProductDeleteDto {
                 Id = dbProduct.Id,
                 Code = dbProduct.Code,
                 Description = dbProduct.Description,
                 Price = dbProduct.Price,
                 Cost = dbProduct.Cost
             };
-            return View(model: viewProduct);
+            return View(model: deleteProduct);
         }
 
         // POST: /Product/Delete

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Transactions;
+using CoffeeShop.Models.Enums;
 
 namespace CoffeeShop.Models {
-
-    public enum PaymentMethodEnum {
-        Cash,
-        CreditCard
-    }
 
     public class Transaction {
 
@@ -26,7 +22,7 @@ namespace CoffeeShop.Models {
         // Relation (one with many): Transaction Lines per Transaction
         public List<TransactionLine> TransactionLines { get; set; }
 
-        public Transaction(decimal totalPrice, PaymentMethodEnum paymentMethod) {
+        public Transaction(DateTime date, decimal totalPrice, PaymentMethodEnum paymentMethod) {
             Date = DateTime.Now;
             TotalPrice = totalPrice;
             PaymentMethod = paymentMethod;
