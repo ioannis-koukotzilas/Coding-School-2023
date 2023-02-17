@@ -1,11 +1,14 @@
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/bin/Debug/net7.0/CoffeeShop.EF.deps.json
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/bin/Debug/net7.0/CoffeeShop.EF.dll
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/bin/Debug/net7.0/CoffeeShop.EF.pdb
+/Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/bin/Debug/net7.0/CoffeeShop.Models.dll
+/Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/bin/Debug/net7.0/CoffeeShop.Models.pdb
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/obj/Debug/net7.0/CoffeeShop.EF.csproj.AssemblyReference.cache
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/obj/Debug/net7.0/CoffeeShop.EF.GeneratedMSBuildEditorConfig.editorconfig
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/obj/Debug/net7.0/CoffeeShop.EF.AssemblyInfoInputs.cache
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/obj/Debug/net7.0/CoffeeShop.EF.AssemblyInfo.cs
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/obj/Debug/net7.0/CoffeeShop.EF.csproj.CoreCompileInputs.cache
+/Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/obj/Debug/net7.0/CoffeeShop.EF.csproj.CopyComplete
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/obj/Debug/net7.0/CoffeeShop.EF.dll
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/obj/Debug/net7.0/refint/CoffeeShop.EF.dll
 /Users/ioannis/Documents/Coding-School-2023/Session-23/CoffeeShop.EF/obj/Debug/net7.0/CoffeeShop.EF.pdb
