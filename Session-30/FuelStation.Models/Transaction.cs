@@ -9,6 +9,8 @@ namespace FuelStation.Models {
         public PaymentMethod PaymentMethod { get; set; }
         public decimal TotalValue { get; set; }
 
+        public List<TransactionLine> TransactionLines { get; set; }
+
         // Relations
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; } = null!;
@@ -19,6 +21,7 @@ namespace FuelStation.Models {
             Date = date;
             PaymentMethod = paymentMethod;
             TotalValue = totalValue;
+            TransactionLines = new List<TransactionLine>();
         }
 
     }

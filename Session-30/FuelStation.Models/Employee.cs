@@ -12,6 +12,8 @@ namespace FuelStation.Models {
         public decimal SallaryPerMonth { get; set; }
         public EmployeeType EmployeeType { get; set; }
 
+        public List<Transaction> Transactions { get; set; }
+
         public Employee(string name, string surname, DateTime hireDateStart, DateTime hireDateEnd, decimal sallaryPerMonth, EmployeeType employeeType) {
             Name = name;
             Surname = surname;
@@ -19,6 +21,7 @@ namespace FuelStation.Models {
             HireDateEnd = hireDateEnd;
             SallaryPerMonth = sallaryPerMonth;
             EmployeeType = employeeType;
+            Transactions = new List<Transaction>();
         }
 
     }
