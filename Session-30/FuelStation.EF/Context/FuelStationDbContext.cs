@@ -8,9 +8,9 @@ namespace FuelStation.EF.Context {
 
         public DbSet<Customer> Customers { get; set; } = null!;
         public DbSet<Employee> Employees { get; set; } = null!;
-        public DbSet<Item> Items { get; set; } = null!;
-        public DbSet<Transaction> Transactions { get; set; } = null!;
-        public DbSet<TransactionLine> TransactionLines { get; set; } = null!;
+        //public DbSet<Item> Items { get; set; } = null!;
+        //public DbSet<Transaction> Transactions { get; set; } = null!;
+        //public DbSet<TransactionLine> TransactionLines { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
@@ -22,7 +22,13 @@ namespace FuelStation.EF.Context {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 
-            var connectionString = "Data Source = localhost; Initial Catalog = FuelStation; User Id = sa; Password = uU904291$%!";
+            var connectionString =
+                "Data Source = localhost;" +
+                "Initial Catalog = FuelStation;" +
+                "User Id = sa;" +
+                "Password = uU904291$%!;" +
+                "Encrypt = True;" +
+                "TrustServerCertificate = True;";
 
             optionsBuilder.UseSqlServer(connectionString);
 
