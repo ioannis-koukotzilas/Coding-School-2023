@@ -15,6 +15,7 @@ namespace FuelStation.EF.Context {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
             modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
