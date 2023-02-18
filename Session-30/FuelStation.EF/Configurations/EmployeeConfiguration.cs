@@ -9,10 +9,8 @@ namespace FuelStation.EF.Configurations {
         public void Configure(EntityTypeBuilder<Employee> builder) {
 
             builder.ToTable("Employees");
-
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).ValueGeneratedOnAdd();
-
             builder.Property(e => e.Name).IsRequired().HasMaxLength(50);
             builder.Property(e => e.Surname).IsRequired().HasMaxLength(50);
             builder.Property(e => e.HireDateStart).IsRequired();
