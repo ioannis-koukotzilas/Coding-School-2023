@@ -2,6 +2,7 @@
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
 
 @page "/customer"
 
@@ -13,6 +14,8 @@
 }
 else
 {
+
+    <button class="btn btn-primary mb-5" @onclick="Add">Add new customer</button>
 
     <div class="table-responsive">
 
@@ -36,6 +39,7 @@ else
                         <td>@customer.CardNumber</td>
                         <td>
                             <button class="btn btn-warning" @onclick="() => Edit(customer)">Edit</button>
+                            <button class="btn btn-danger" @onclick="() => Delete(customer)">Delete</button>
                         </td>
                     </tr>
                 }
@@ -52,13 +56,35 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        customers = await Http.GetFromJsonAsync<List<CustomerListDto>>("customer");
+        await LoadItemsFromServer();
 
     }
 
-    private void Edit(CustomerListDto customer)
+    private async Task LoadItemsFromServer()
     {
-        navigationManager.NavigateTo($"customer/edit/{customer.Id}");
+        customers = await Http.GetFromJsonAsync<List<CustomerListDto>>("customer");
+    }
+
+    private void Add()
+    {
+        navigationManager.NavigateTo("customer/edit");
+    }
+
+    private void Edit(CustomerListDto entity)
+    {
+        navigationManager.NavigateTo($"customer/edit/{entity.Id}");
+    }
+
+    private async Task Delete(CustomerListDto entity)
+    {
+        var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
+        if (confirm)
+        {
+            var response = await Http.DeleteAsync($"customer/{entity.Id}");
+            response.EnsureSuccessStatusCode();
+            await LoadItemsFromServer();
+        }
+
     }
 
 

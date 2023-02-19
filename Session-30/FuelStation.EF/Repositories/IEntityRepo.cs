@@ -4,9 +4,9 @@
 
         Task<IList<TEntity>> GetAllAsync();
         Task<TEntity?> GetByIdAsync(int id);
-        void Add(TEntity entity);
+        Task AddAsync(TEntity entity);
         void Update(int id, TEntity entity);
-        void Delete(int id);
+        Task DeleteAsync(int id);
 
     }
 

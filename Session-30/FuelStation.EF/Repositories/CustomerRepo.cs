@@ -18,15 +18,15 @@ namespace FuelStation.EF.Repositories {
             return dbCustomer;
         }
 
-        public void Add(Customer entity) {
+        public async Task AddAsync(Customer entity) {
             using var dbContext = new FuelStationDbContext();
 
             if (entity.Id != 0) {
                 throw new ArgumentException("Given entity should not have an ID set", nameof(entity));
             }
 
-            dbContext.Add(entity);
-            dbContext.SaveChanges();   
+            await dbContext.AddAsync(entity);
+            await dbContext.SaveChangesAsync();
         }
 
         public void Update(int id, Customer entity) {
@@ -44,16 +44,16 @@ namespace FuelStation.EF.Repositories {
             dbContext.SaveChanges();
         }
 
-        public void Delete(int id) {
+        public async Task DeleteAsync(int id) {
             using var dbContext = new FuelStationDbContext();
-            var dbCustomer = dbContext.Customers.Where(c => c.Id == id).SingleOrDefault();
+            var dbCustomer = await dbContext.Customers.Where(c => c.Id == id).SingleOrDefaultAsync();
 
             if (dbCustomer == null) {
                 throw new KeyNotFoundException($"Given ID '{id}' was not found in the database");
             }
 
             dbContext.Remove(dbCustomer);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
     }

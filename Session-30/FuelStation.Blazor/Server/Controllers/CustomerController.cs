@@ -58,11 +58,27 @@ namespace FuelStation.Blazor.Server.Controllers {
 
         /* Add new */
 
+        [HttpPost]
+        public async Task Post(CustomerEditDto entity) {
+
+            var dbCustomer = new Customer(
+                entity.Name,
+                entity.Surname,
+                entity.CardNumber
+                );
+
+            await _customerRepo.AddAsync(dbCustomer);
+
+        }
+
         /* Update */
 
         /* Delete */
 
-
+        [HttpDelete("{id}")]
+        public async Task Delete(int id) {
+            await _customerRepo.DeleteAsync(id);
+        }
 
     }
 
