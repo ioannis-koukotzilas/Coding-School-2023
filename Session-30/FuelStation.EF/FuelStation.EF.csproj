@@ -12,6 +12,7 @@
     <None Remove="Configurations\" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
@@ -24,6 +25,7 @@
   <ItemGroup>
     <Folder Include="Context\" />
     <Folder Include="Configurations\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FuelStation.Models\FuelStation.Models.csproj" />
