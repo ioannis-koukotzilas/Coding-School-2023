@@ -6,9 +6,9 @@ namespace FuelStation.EF.Repositories {
 
     public class CustomerRepo : IEntityRepo<Customer> {
 
-        public IList<Customer> GetAll() {
+        public async Task<IList<Customer>> GetAllAsync() {
             using var dbContext = new FuelStationDbContext();
-            var dbCustomer = dbContext.Customers.Include(c => c.Transactions).ToList();
+            var dbCustomer = await dbContext.Customers.Include(c => c.Transactions).ToListAsync();
             return dbCustomer;   
         }
 
