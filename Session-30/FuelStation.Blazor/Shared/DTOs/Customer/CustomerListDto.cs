@@ -1,4 +1,4 @@
-﻿namespace FuelStation.Blazor.Shared.DTOs {
+﻿namespace FuelStation.Blazor.Shared.DTOs.Customer {
 
     public class CustomerListDto {
 

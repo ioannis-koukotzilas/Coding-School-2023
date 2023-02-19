@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FuelStation.EF.Repositories;
 using FuelStation.Models;
-using FuelStation.Blazor.Shared.DTOs;
+using FuelStation.Blazor.Shared.DTOs.Customer;
 
 namespace FuelStation.Blazor.Server.Controllers {
 

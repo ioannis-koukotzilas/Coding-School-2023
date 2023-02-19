@@ -11,8 +11,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="DTOs\" />
+    <None Remove="DTOs\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\" />
+    <Folder Include="DTOs\Customer\" />
   </ItemGroup>
 </Project>

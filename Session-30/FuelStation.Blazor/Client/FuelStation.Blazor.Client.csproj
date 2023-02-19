@@ -21,4 +21,10 @@
     <ProjectReference Include="..\Shared\FuelStation.Blazor.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Pages\Customer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\Customer\" />
+  </ItemGroup>
 </Project>

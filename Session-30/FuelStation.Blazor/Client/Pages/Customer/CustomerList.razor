@@ -1,0 +1,56 @@
+﻿@using FuelStation.Blazor.Shared.DTOs.Customer
+
+@inject HttpClient httpClient
+@inject NavigationManager navigationManager
+
+@page "/customer"
+
+<h3>Customers</h3>
+
+<div class="table-responsive">
+
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Card Number</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var customer in customers)
+            {
+                <tr>
+                    <td>@customer.Name</td>
+                    <td>@customer.Surname</td>
+                    <td>@customer.CardNumber</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+
+
+@code {
+
+    private List<CustomerListDto> customers = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (customers == null)
+        {
+            throw new ArgumentNullException();
+        }
+        await LoadItemsFromServer();
+    }
+
+    private async Task LoadItemsFromServer()
+    {
+        customers = await httpClient.GetFromJsonAsync<List<CustomerListDto>>("customer") ?? new List<CustomerListDto>();
+    }
+
+}
