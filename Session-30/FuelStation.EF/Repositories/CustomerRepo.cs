@@ -29,9 +29,9 @@ namespace FuelStation.EF.Repositories {
             await dbContext.SaveChangesAsync();
         }
 
-        public void Update(int id, Customer entity) {
+        public async Task UpdateAsync(int id, Customer entity) {
             using var dbContext = new FuelStationDbContext();
-            var dbCustomer = dbContext.Customers.Where(c => c.Id == id).SingleOrDefault();
+            var dbCustomer = await dbContext.Customers.Where(c => c.Id == id).SingleOrDefaultAsync();
 
             if (dbCustomer == null) {
                 throw new KeyNotFoundException($"Given ID '{id}' was not found in the database");
@@ -41,7 +41,7 @@ namespace FuelStation.EF.Repositories {
             dbCustomer.Surname = entity.Surname;
             dbCustomer.CardNumber = entity.CardNumber;
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id) {

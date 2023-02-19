@@ -8,7 +8,7 @@
 
 <h3>Customers</h3>
 
-@if (customers == null)
+@if (entities == null)
 {
     <p>Loading...</p>
 }
@@ -23,6 +23,7 @@ else
 
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Card Number</th>
@@ -31,15 +32,16 @@ else
             </thead>
 
             <tbody>
-                @foreach (var customer in customers)
+                @foreach (var e in entities)
                 {
                     <tr>
-                        <td>@customer.Name</td>
-                        <td>@customer.Surname</td>
-                        <td>@customer.CardNumber</td>
+                        <td>@e.Id</td>
+                        <td>@e.Name</td>
+                        <td>@e.Surname</td>
+                        <td>@e.CardNumber</td>
                         <td>
-                            <button class="btn btn-warning" @onclick="() => Edit(customer)">Edit</button>
-                            <button class="btn btn-danger" @onclick="() => Delete(customer)">Delete</button>
+                            <button class="btn btn-warning" @onclick="() => Edit(e)">Edit</button>
+                            <button class="btn btn-danger" @onclick="() => Delete(e)">Delete</button>
                         </td>
                     </tr>
                 }
@@ -52,7 +54,7 @@ else
 
 @code {
 
-    private List<CustomerListDto>? customers;
+    private List<CustomerListDto>? entities;
 
     protected override async Task OnInitializedAsync()
     {
@@ -62,7 +64,7 @@ else
 
     private async Task LoadItemsFromServer()
     {
-        customers = await Http.GetFromJsonAsync<List<CustomerListDto>>("customer");
+        entities = await Http.GetFromJsonAsync<List<CustomerListDto>>("customer");
     }
 
     private void Add()

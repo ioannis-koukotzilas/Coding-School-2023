@@ -15,18 +15,18 @@ namespace FuelStation.Blazor.Server.Controllers {
             _customerRepo = customerRepo;
         }
 
-        /* Get all */
+        /* Get all entities in a list */
 
         [HttpGet]
         public async Task<IEnumerable<CustomerListDto>> GetAll() {
 
-            var dbCustomer = await _customerRepo.GetAllAsync();
+            var dbEntity = await _customerRepo.GetAllAsync();
 
-            var dbResponse = dbCustomer.Select(c => new CustomerListDto {
-                Id = c.Id,
-                Name = c.Name,
-                Surname = c.Surname,
-                CardNumber = c.CardNumber
+            var dbResponse = dbEntity.Select(e => new CustomerListDto {
+                Id = e.Id,
+                Name = e.Name,
+                Surname = e.Surname,
+                CardNumber = e.CardNumber
 
             });
 
@@ -34,46 +34,63 @@ namespace FuelStation.Blazor.Server.Controllers {
 
         }
 
-        /* Get by ID */
+        /* Get entity by ID */
 
         [HttpGet("{id}")]
         public async Task<CustomerEditDto> GetById(int id) {
 
-            var dbCustomer = await _customerRepo.GetByIdAsync(id);
+            var dbEntity = await _customerRepo.GetByIdAsync(id);
 
-            if (dbCustomer == null) {
+            if (dbEntity == null) {
                 throw new ArgumentNullException();
             }
 
             var dbResponse = new CustomerEditDto {
                 Id = id,
-                Name = dbCustomer.Name,
-                Surname = dbCustomer.Surname,
-                CardNumber = dbCustomer.CardNumber
+                Name = dbEntity.Name,
+                Surname = dbEntity.Surname,
+                CardNumber = dbEntity.CardNumber
             };
 
             return dbResponse;
 
         }
 
-        /* Add new */
+        /* Add new entity */
 
         [HttpPost]
         public async Task Post(CustomerEditDto entity) {
 
-            var dbCustomer = new Customer(
+            var dbEntity = new Customer(
                 entity.Name,
                 entity.Surname,
                 entity.CardNumber
                 );
 
-            await _customerRepo.AddAsync(dbCustomer);
+            await _customerRepo.AddAsync(dbEntity);
 
         }
 
-        /* Update */
+        /* Update entity */
 
-        /* Delete */
+        [HttpPut]
+        public async Task Put(CustomerEditDto entity) {
+
+            var dbEntity = await _customerRepo.GetByIdAsync(entity.Id);
+
+            if (dbEntity == null) {
+                throw new ArgumentNullException();
+            }
+
+            dbEntity.Name = entity.Name;
+            dbEntity.Surname = entity.Surname;
+            dbEntity.CardNumber = entity.CardNumber;
+
+            await _customerRepo.UpdateAsync(entity.Id, dbEntity);
+
+        }
+
+        /* Delete Entity */
 
         [HttpDelete("{id}")]
         public async Task Delete(int id) {
