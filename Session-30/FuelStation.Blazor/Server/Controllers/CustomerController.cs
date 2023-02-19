@@ -18,7 +18,7 @@ namespace FuelStation.Blazor.Server.Controllers {
         /* Get all */
 
         [HttpGet]
-        public async Task<IEnumerable<CustomerListDto>> GetAllCustomers() {
+        public async Task<IEnumerable<CustomerListDto>> GetAll() {
 
             var dbCustomer = await _customerRepo.GetAllAsync();
 
@@ -34,7 +34,27 @@ namespace FuelStation.Blazor.Server.Controllers {
 
         }
 
-        /* Edit */
+        /* Get by ID */
+
+        [HttpGet("{id}")]
+        public async Task<CustomerEditDto> GetById(int id) {
+
+            var dbCustomer = await _customerRepo.GetByIdAsync(id);
+
+            if (dbCustomer == null) {
+                throw new ArgumentNullException();
+            }
+
+            var dbResponse = new CustomerEditDto {
+                Id = id,
+                Name = dbCustomer.Name,
+                Surname = dbCustomer.Surname,
+                CardNumber = dbCustomer.CardNumber
+            };
+
+            return dbResponse;
+
+        }
 
         /* Add new */
 

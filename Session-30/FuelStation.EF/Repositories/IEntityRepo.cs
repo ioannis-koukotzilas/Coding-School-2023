@@ -3,7 +3,7 @@
     public interface IEntityRepo<TEntity> {
 
         Task<IList<TEntity>> GetAllAsync();
-        TEntity? GetById(int id);
+        Task<TEntity?> GetByIdAsync(int id);
         void Add(TEntity entity);
         void Update(int id, TEntity entity);
         void Delete(int id);

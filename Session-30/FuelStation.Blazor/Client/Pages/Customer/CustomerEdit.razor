@@ -1,0 +1,97 @@
+﻿@using FuelStation.Blazor.Shared.DTOs.Customer
+
+@page "/customer/edit/{Id:int?}"
+
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+
+<h3>Customer Edit</h3>
+
+
+@if (Customer == null)
+{
+    <p>loading</p>
+}
+else
+{
+    @if (Id == null)
+    {
+        <PageTitle>New Customer - Fuel Station</PageTitle>
+        <h1 class="mb-5">New Customer</h1>
+    }
+    else
+    {
+        <PageTitle>Edit Customer - Fuel Station</PageTitle>
+        <h1 class="mb-5">Edit Customer</h1>
+    }
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Name</label>
+            <input class="form-control" type="text" placeholder="Enter customer's name" @bind=@Customer.Name />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Surname</label>
+            <input class="form-control" type="text" placeholder="Enter customer's surname" @bind=@Customer.Surname />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Phone</label>
+            <input class="form-control" type="text" placeholder="Enter customer's phone" @bind=@Customer.CardNumber />
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-success" @onclick="OnSave">Save</button>
+            <button class="btn btn-warning" @onclick="OnCancel">Cancel</button>
+        </div>
+    </div>
+}
+
+
+@code {
+
+    [Parameter] public int? Id { get; set; }
+
+    CustomerEditDto? Customer { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id == null)
+        {
+            Customer = new();
+        }
+        else
+        {
+            Customer = await Http.GetFromJsonAsync<CustomerEditDto>($"customer/{Id}");
+        }
+    }
+
+    private void OnCancel()
+    {
+        navigationManager.NavigateTo("customer");
+    }
+
+    private async Task OnSave()
+    {
+        HttpResponseMessage? response = null;
+
+        if (Id == null)
+        {
+            response = await Http.PostAsJsonAsync("customer", Customer);
+        }
+        else
+        {
+            response = await Http.PutAsJsonAsync("customer", Customer);
+        }
+
+        response.EnsureSuccessStatusCode();
+        navigationManager.NavigateTo("customer");
+    }
+
+}
+

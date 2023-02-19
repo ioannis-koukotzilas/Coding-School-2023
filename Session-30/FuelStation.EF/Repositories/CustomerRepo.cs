@@ -12,9 +12,9 @@ namespace FuelStation.EF.Repositories {
             return dbCustomer;   
         }
 
-        public Customer? GetById(int id) {
+        public async Task<Customer?> GetByIdAsync(int id) {
             using var dbContext = new FuelStationDbContext();
-            var dbCustomer = dbContext.Customers.Where(c => c.Id == id).Include(c => c.Transactions).SingleOrDefault();
+            var dbCustomer = await dbContext.Customers.Where(c => c.Id == id).Include(c => c.Transactions).SingleOrDefaultAsync();
             return dbCustomer;
         }
 

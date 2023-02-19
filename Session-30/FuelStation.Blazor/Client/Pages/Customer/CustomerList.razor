@@ -1,56 +1,65 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Customer
 
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject NavigationManager navigationManager
 
 @page "/customer"
 
 <h3>Customers</h3>
 
-<div class="table-responsive">
+@if (customers == null)
+{
+    <p>Loading...</p>
+}
+else
+{
 
-    <table class="table table-striped">
+    <div class="table-responsive">
 
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Card Number</th>
-            </tr>
-        </thead>
+        <table class="table table-striped">
 
-        <tbody>
-            @foreach (var customer in customers)
-            {
+            <thead>
                 <tr>
-                    <td>@customer.Name</td>
-                    <td>@customer.Surname</td>
-                    <td>@customer.CardNumber</td>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Card Number</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
+            </thead>
 
-    </table>
+            <tbody>
+                @foreach (var customer in customers)
+                {
+                    <tr>
+                        <td>@customer.Name</td>
+                        <td>@customer.Surname</td>
+                        <td>@customer.CardNumber</td>
+                        <td>
+                            <button class="btn btn-warning" @onclick="() => Edit(customer)">Edit</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
 
-</div>
+        </table>
 
+    </div>
+}
 
 @code {
 
-    private List<CustomerListDto> customers = new();
+    private List<CustomerListDto>? customers;
 
     protected override async Task OnInitializedAsync()
     {
-        if (customers == null)
-        {
-            throw new ArgumentNullException();
-        }
-        await LoadItemsFromServer();
+        customers = await Http.GetFromJsonAsync<List<CustomerListDto>>("customer");
+
     }
 
-    private async Task LoadItemsFromServer()
+    private void Edit(CustomerListDto customer)
     {
-        customers = await httpClient.GetFromJsonAsync<List<CustomerListDto>>("customer") ?? new List<CustomerListDto>();
+        navigationManager.NavigateTo($"customer/edit/{customer.Id}");
     }
+
 
 }
