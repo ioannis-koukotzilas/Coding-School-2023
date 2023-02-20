@@ -1,9 +1,11 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Customer
+@using System.Text;
 
 @page "/customer/edit/{Id:int?}"
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
 
 <h3>Customer Edit</h3>
 
@@ -33,17 +35,17 @@ else
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Name</label>
-                <input class="form-control" type="text" placeholder="Enter customer's name" @bind=@Entity.Name />
+                <input class="form-control" type="text" placeholder="Enter customer's name" @bind-value=@Entity.Name />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Surname</label>
-                <input class="form-control" type="text" placeholder="Enter customer's surname" @bind=@Entity.Surname />
+                <input class="form-control" type="text" placeholder="Enter customer's surname" @bind-value=@Entity.Surname />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Card Number</label>
-                <input class="form-control" type="text" @bind=@Entity.CardNumber />
+                <input class="form-control" type="text" readonly @bind-value=@Entity.CardNumber />
             </div>
 
         </div>
@@ -56,6 +58,9 @@ else
         </div>
 
     </EditForm>
+
+    <button class="btn" @onclick="GenerateNewCode">Generate New Code</button>
+
 }
 
 
@@ -97,6 +102,39 @@ else
 
         response.EnsureSuccessStatusCode();
         navigationManager.NavigateTo("customer");
+    }
+
+    /* Generate a 21-character string starting with the letter "A",
+    where the next 20 digits are randomly selected. If the code already
+    exists in the database, the database will throw an exception. */
+
+    private string code = "";
+
+    private string GenerateCode()
+    {
+        var chars = "0123456789";
+        var random = new Random();
+        code = "A" + new string(Enumerable.Repeat(chars, 20).Select(c => c[random.Next(c.Length)]).ToArray());
+        return code;
+    }
+
+    private async Task GenerateNewCode()
+    {
+        if (Entity != null)
+        {
+            if (Id != null)
+            {
+                var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
+                if (confirm)
+                {
+                    Entity.CardNumber = GenerateCode();
+                }
+            }
+            else
+            {
+                Entity.CardNumber = GenerateCode();
+            }
+        }
     }
 
 }
