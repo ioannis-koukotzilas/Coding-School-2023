@@ -108,13 +108,11 @@ else
     where the next 20 digits are randomly selected. If the code already
     exists in the database, the database will throw an exception. */
 
-    private string code = "";
-
     private string GenerateCode()
     {
         var chars = "0123456789";
         var random = new Random();
-        code = "A" + new string(Enumerable.Repeat(chars, 20).Select(c => c[random.Next(c.Length)]).ToArray());
+        var code = "A" + new string(Enumerable.Repeat(chars, 20).Select(s => s[random.Next(s.Length)]).ToArray());
         return code;
     }
 
@@ -122,15 +120,12 @@ else
     {
         if (Entity != null)
         {
+            bool confirm = true;
             if (Id != null)
             {
-                var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
-                if (confirm)
-                {
-                    Entity.CardNumber = GenerateCode();
-                }
+                confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
             }
-            else
+            if (confirm)
             {
                 Entity.CardNumber = GenerateCode();
             }
