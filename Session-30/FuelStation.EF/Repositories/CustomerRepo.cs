@@ -36,14 +36,10 @@ namespace FuelStation.EF.Repositories {
 
         public async Task UpdateAsync(int id, Customer entity) {
             using var dbContext = new FuelStationDbContext();
-            var dbCustomer = await dbContext.Customers
-                .Where(c => c.Id == id)
-                .Include(c => c.Transactions)
-                .SingleOrDefaultAsync();
 
-            if (dbCustomer == null) {
-                throw new KeyNotFoundException($"Given ID '{id}' was not found in the database");
-            }
+            var dbCustomer = await dbContext.Customers.SingleOrDefaultAsync(c => c.Id == id);
+
+            if (dbCustomer == null) { throw new KeyNotFoundException($"ID: '{id}' was not found in the database"); }
 
             dbCustomer.Name = entity.Name;
             dbCustomer.Surname = entity.Surname;

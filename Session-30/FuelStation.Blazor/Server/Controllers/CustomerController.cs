@@ -48,7 +48,7 @@ namespace FuelStation.Blazor.Server.Controllers {
                 throw new ArgumentNullException();
             }
 
-            var dbTransactions = await _transactionRepo.GetAllAsync();
+            //var dbTransactions = await _transactionRepo.GetAllAsync().Where(t => t.CustomerId == id).ToListAsync();
 
             var dbResponse = new CustomerEditDto {
 
@@ -58,11 +58,11 @@ namespace FuelStation.Blazor.Server.Controllers {
                 CardNumber = dbCustomer.CardNumber,
                 
                 
-                Transactions = dbTransactions.Select(t => new TransactionListDto {
-                    Id = t.Id,
-                    Date = t.Date
+                //Transactions = dbTransactions.Select(t => new TransactionListDto {
+                //    //Id = t.Id,
+                //    Date = t.Date
 
-                }).ToList()
+                //}).ToList()
 
             };
 

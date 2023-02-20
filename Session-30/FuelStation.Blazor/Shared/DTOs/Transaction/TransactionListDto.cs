@@ -1,6 +1,4 @@
-﻿using FuelStation.Blazor.Shared.DTOs.Customer;
-using FuelStation.Blazor.Shared.DTOs.Employee;
-using FuelStation.Models.Enums;
+﻿using FuelStation.Models.Enums;
 
 namespace FuelStation.Blazor.Shared.DTOs.Transaction {
 
@@ -14,8 +12,8 @@ namespace FuelStation.Blazor.Shared.DTOs.Transaction {
         public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
 
-        public List<CustomerListDto> Customers { get; set; } = new();
-        public List<EmployeeListDto> Employees { get; set; } = new();
+        //public List<CustomerListDto> Customers { get; set; } = new();
+        //public List<EmployeeListDto> Employees { get; set; } = new();
 
         
         public string EmployeeName { get; set; } = null!;
