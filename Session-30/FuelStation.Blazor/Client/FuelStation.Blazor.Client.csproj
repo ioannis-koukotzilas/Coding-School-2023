@@ -23,8 +23,10 @@
 
   <ItemGroup>
     <None Remove="Pages\Customer\" />
+    <None Remove="Pages\Transaction\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Customer\" />
+    <Folder Include="Pages\Transaction\" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,94 @@
+﻿@using FuelStation.Blazor.Shared.DTOs.Transaction
+
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+@page "/transaction"
+
+<h3>Transactions</h3>
+
+@if (transactions == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+
+    <div class="table-responsive">
+
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Employee</th>
+                    <th>Customer</th>
+                    <th>Total Value</th>
+                    <th>Payment Method</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var t in transactions)
+                {
+                    <tr>
+                        <td>@t.Id</td>
+                        <td>@t.Date</td>
+                        <td>@t.EmployeeName @t.EmployeeSurname (@t.EmployeeId) (@t.EmployeeType)</td>
+                        <td>@t.CustomerName @t.CustomerSurname (@t.CustomerId)</td>
+                        <td>@t.TotalValue</td>
+                        <td>@t.PaymentMethod</td>
+                        <td>
+                            <button class="btn btn-warning" @onclick="() => Edit(t)">Edit</button>
+                            <button class="btn btn-danger" @onclick="() => Delete(t)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+}
+
+@code {
+
+    private List<TransactionListDto>? transactions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadItemsFromServer();
+
+    }
+
+    private async Task LoadItemsFromServer()
+    {
+        transactions = await Http.GetFromJsonAsync<List<TransactionListDto>>("transaction");
+    }
+
+    private void Add()
+    {
+        navigationManager.NavigateTo("transaction/edit");
+    }
+
+    private void Edit(TransactionListDto transaction)
+    {
+        navigationManager.NavigateTo($"transaction/edit/{transaction.Id}");
+    }
+
+    private async Task Delete(TransactionListDto transaction)
+    {
+        var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
+        if (confirm)
+        {
+            var response = await Http.DeleteAsync($"transaction/{transaction.Id}");
+            response.EnsureSuccessStatusCode();
+            await LoadItemsFromServer();
+        }
+
+    }
+
+}

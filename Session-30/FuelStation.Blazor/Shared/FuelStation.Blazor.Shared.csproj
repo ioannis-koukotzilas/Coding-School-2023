@@ -13,11 +13,13 @@
     <None Remove="DTOs\" />
     <None Remove="DTOs\Customer\" />
     <None Remove="DTOs\Transaction\" />
+    <None Remove="DTOs\Employee\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\" />
     <Folder Include="DTOs\Customer\" />
     <Folder Include="DTOs\Transaction\" />
+    <Folder Include="DTOs\Employee\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FuelStation.Models\FuelStation.Models.csproj" />

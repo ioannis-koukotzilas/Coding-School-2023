@@ -2,7 +2,7 @@
 using FuelStation.EF.Repositories;
 using FuelStation.Models;
 using FuelStation.Blazor.Shared.DTOs.Customer;
-using Microsoft.EntityFrameworkCore;
+using FuelStation.Blazor.Shared.DTOs.Transaction;
 
 namespace FuelStation.Blazor.Server.Controllers {
 
@@ -23,13 +23,13 @@ namespace FuelStation.Blazor.Server.Controllers {
         [HttpGet]
         public async Task<IEnumerable<CustomerListDto>> GetAll() {
 
-            var dbEntity = await _customerRepo.GetAllAsync();
+            var dbCustomer = await _customerRepo.GetAllAsync();
 
-            var dbResponse = dbEntity.Select(e => new CustomerListDto {
-                Id = e.Id,
-                Name = e.Name,
-                Surname = e.Surname,
-                CardNumber = e.CardNumber
+            var dbResponse = dbCustomer.Select(c => new CustomerListDto {
+                Id = c.Id,
+                Name = c.Name,
+                Surname = c.Surname,
+                CardNumber = c.CardNumber
 
             });
 
@@ -42,18 +42,28 @@ namespace FuelStation.Blazor.Server.Controllers {
         [HttpGet("{id}")]
         public async Task<CustomerEditDto> GetById(int id) {
 
-            var dbEntity = await _customerRepo.GetByIdAsync(id);
-            var dbTransactions = _transactionRepo.GetAllAsync().Where(x => x.CustomerId == id);
-
-            if (dbEntity == null) {
+            var dbCustomer = await _customerRepo.GetByIdAsync(id);
+            
+            if (dbCustomer == null) {
                 throw new ArgumentNullException();
             }
 
+            var dbTransactions = await _transactionRepo.GetAllAsync();
+
             var dbResponse = new CustomerEditDto {
+
                 Id = id,
-                Name = dbEntity.Name,
-                Surname = dbEntity.Surname,
-                CardNumber = dbEntity.CardNumber
+                Name = dbCustomer.Name,
+                Surname = dbCustomer.Surname,
+                CardNumber = dbCustomer.CardNumber,
+                
+                
+                Transactions = dbTransactions.Select(t => new TransactionListDto {
+                    Id = t.Id,
+                    Date = t.Date
+
+                }).ToList()
+
             };
 
             return dbResponse;
