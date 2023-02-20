@@ -11,9 +11,11 @@ namespace FuelStation.Blazor.Server.Controllers {
     public class CustomerController : ControllerBase {
 
         private readonly IEntityRepo<Customer> _customerRepo;
+        private readonly IEntityRepo<Transaction> _transactionRepo;
 
-        public CustomerController(IEntityRepo<Customer> customerRepo) {
+        public CustomerController(IEntityRepo<Customer> customerRepo, IEntityRepo<Transaction> transactionRepo) {
             _customerRepo = customerRepo;
+            _transactionRepo = transactionRepo;
         }
 
         /* Get all entities in a list */
@@ -41,6 +43,7 @@ namespace FuelStation.Blazor.Server.Controllers {
         public async Task<CustomerEditDto> GetById(int id) {
 
             var dbEntity = await _customerRepo.GetByIdAsync(id);
+            var dbTransactions = _transactionRepo.GetAllAsync().Where(x => x.CustomerId == id);
 
             if (dbEntity == null) {
                 throw new ArgumentNullException();

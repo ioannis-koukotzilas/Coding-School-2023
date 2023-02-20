@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using FuelStation.Blazor.Shared.DTOs.Transaction;
 
 namespace FuelStation.Blazor.Shared.DTOs.Customer {
 
@@ -11,6 +12,8 @@ namespace FuelStation.Blazor.Shared.DTOs.Customer {
         public string Surname { get; set; } = null!;
         [Required(ErrorMessage = "Required field")]
         public string CardNumber { get; set; } = null!;
+
+        public List<TransactionListDto> Transactions { get; set; } = new();
 
     }
 
