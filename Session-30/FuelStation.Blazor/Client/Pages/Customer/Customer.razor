@@ -1,4 +1,5 @@
-﻿@using FuelStation.Blazor.Shared.DTOs.Customer
+﻿
+@using FuelStation.Blazor.Shared.DTOs.Customer
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
@@ -6,14 +7,16 @@
 
 @page "/customer"
 
-<h3>Customers</h3>
-
-@if (entities == null)
+@if (isLoading)
 {
-    <p>Loading...</p>
+    <Spinner />
 }
 else
 {
+
+    <PageTitle>Customers - Fuel Station</PageTitle>
+
+    <h1 class="mb-5">Customers</h1>
 
     <button class="btn btn-primary mb-5" @onclick="Add">Add new customer</button>
 
@@ -32,17 +35,19 @@ else
             </thead>
 
             <tbody>
-                @foreach (var e in entities)
+                @foreach (var c in customers)
                 {
                     <tr>
-                        <td>@e.Id</td>
-                        <td>@e.Name</td>
-                        <td>@e.Surname</td>
-                        <td>@e.CardNumber</td>
+                        <td>@c.Id</td>
+                        <td>@c.Name</td>
+                        <td>@c.Surname</td>
+                        <td>@c.CardNumber</td>
                         <td>
-                            <button class="btn btn-warning" @onclick="() => Edit(e)">Edit</button>
-                            <button class="btn btn-danger" @onclick="() => Delete(e)">Delete</button>
-                            <button class="btn btn-secondary" @onclick="() => DetailCustomer(e)">Details</button>
+                            <div class="btn-group" role="group" aria-label="Actions">
+                                <button class="btn btn-info" @onclick="() => DetailCustomer(c)">Details</button>
+                                <button class="btn btn-warning" @onclick="() => Edit(c)">Edit</button>
+                                <button class="btn btn-danger" @onclick="() => Delete(c)">Delete</button>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -55,17 +60,29 @@ else
 
 @code {
 
-    private List<CustomerDto>? entities;
+    private List<CustomerDto> customers = new List<CustomerDto>();
+
+    bool isLoading { get; set; } = true;
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadItemsFromServer();
+        await LoadFromServer();
 
+        isLoading = false;
     }
 
-    private async Task LoadItemsFromServer()
+    private async Task LoadFromServer()
     {
-        entities = await Http.GetFromJsonAsync<List<CustomerDto>>("customer");
+        var itemsToLoad = await Http.GetFromJsonAsync<List<CustomerDto>>("customer");
+
+        if (itemsToLoad != null)
+        {
+            customers = itemsToLoad;
+        }
+        else
+        {
+            throw new ArgumentNullException();
+        }
     }
 
     private void Add()
@@ -73,9 +90,9 @@ else
         navigationManager.NavigateTo("customer/edit");
     }
 
-    private void Edit(CustomerDto entity)
+    private void Edit(CustomerDto customer)
     {
-        navigationManager.NavigateTo($"customer/edit/{entity.Id}");
+        navigationManager.NavigateTo($"customer/edit/{customer.Id}");
     }
 
     private void DetailCustomer(CustomerDto customer)
@@ -83,14 +100,14 @@ else
         navigationManager.NavigateTo($"customer/details/{customer.Id}");
     }
 
-    private async Task Delete(CustomerDto entity)
+    private async Task Delete(CustomerDto customer)
     {
-        var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
-        if (confirm)
+        var confirmDeletion = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
+        if (confirmDeletion)
         {
-            var response = await Http.DeleteAsync($"customer/{entity.Id}");
+            var response = await Http.DeleteAsync($"customer/{customer.Id}");
             response.EnsureSuccessStatusCode();
-            await LoadItemsFromServer();
+            await LoadFromServer();
         }
 
     }
