@@ -13,7 +13,7 @@ namespace FuelStation.Blazor.Shared.DTOs.Customer {
         [Required(ErrorMessage = "Required field")]
         public string CardNumber { get; set; } = null!;
 
-        public List<TransactionListDto> Transactions { get; set; } = new();
+        //public List<TransactionDto> Transactions { get; set; } = new();
 
     }
 

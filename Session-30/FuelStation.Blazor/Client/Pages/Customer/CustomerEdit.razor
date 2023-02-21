@@ -1,5 +1,4 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Customer
-@using System.Text;
 
 @page "/customer/edit/{Id:int?}"
 
@@ -78,7 +77,7 @@ else
         }
         else
         {
-            Entity = await Http.GetFromJsonAsync<CustomerEditDto>($"customer/{Id}");
+            Entity = await Http.GetFromJsonAsync<CustomerEditDto>($"customer/edit/{Id}");
         }
     }
 

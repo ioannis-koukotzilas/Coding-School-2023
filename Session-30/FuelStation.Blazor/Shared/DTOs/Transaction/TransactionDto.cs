@@ -2,7 +2,7 @@
 
 namespace FuelStation.Blazor.Shared.DTOs.Transaction {
 
-    public class TransactionListDto {
+    public class TransactionDto {
 
         public int Id { get; set; }
         public DateTime Date { get; set; }
@@ -12,10 +12,10 @@ namespace FuelStation.Blazor.Shared.DTOs.Transaction {
         public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
 
-        //public List<CustomerListDto> Customers { get; set; } = new();
-        //public List<EmployeeListDto> Employees { get; set; } = new();
+        //public List<CustomerDto> Customers { get; set; } = new();
+        //public List<EmployeeDto> Employees { get; set; } = new();
 
-        
+
         public string EmployeeName { get; set; } = null!;
         public string EmployeeSurname { get; set; } = null!;
         public EmployeeType EmployeeType { get; set; }

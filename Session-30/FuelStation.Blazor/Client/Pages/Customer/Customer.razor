@@ -42,6 +42,7 @@ else
                         <td>
                             <button class="btn btn-warning" @onclick="() => Edit(e)">Edit</button>
                             <button class="btn btn-danger" @onclick="() => Delete(e)">Delete</button>
+                            <button class="btn btn-secondary" @onclick="() => DetailCustomer(e)">Details</button>
                         </td>
                     </tr>
                 }
@@ -54,7 +55,7 @@ else
 
 @code {
 
-    private List<CustomerListDto>? entities;
+    private List<CustomerDto>? entities;
 
     protected override async Task OnInitializedAsync()
     {
@@ -64,7 +65,7 @@ else
 
     private async Task LoadItemsFromServer()
     {
-        entities = await Http.GetFromJsonAsync<List<CustomerListDto>>("customer");
+        entities = await Http.GetFromJsonAsync<List<CustomerDto>>("customer");
     }
 
     private void Add()
@@ -72,12 +73,17 @@ else
         navigationManager.NavigateTo("customer/edit");
     }
 
-    private void Edit(CustomerListDto entity)
+    private void Edit(CustomerDto entity)
     {
         navigationManager.NavigateTo($"customer/edit/{entity.Id}");
     }
 
-    private async Task Delete(CustomerListDto entity)
+    private void DetailCustomer(CustomerDto customer)
+    {
+        navigationManager.NavigateTo($"customer/details/{customer.Id}");
+    }
+
+    private async Task Delete(CustomerDto entity)
     {
         var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
         if (confirm)

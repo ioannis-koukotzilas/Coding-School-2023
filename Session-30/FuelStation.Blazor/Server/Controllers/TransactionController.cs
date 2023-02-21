@@ -28,11 +28,11 @@ namespace FuelStation.Blazor.Server.Controllers {
         /* Get all entities in a list */
 
         [HttpGet]
-        public async Task<IEnumerable<TransactionListDto>> GetAll() {
+        public async Task<IEnumerable<TransactionDto>> GetAll() {
 
             var dbEntity = await _transactionRepo.GetAllAsync();
 
-            var dbResponse = dbEntity.Select(e => new TransactionListDto {
+            var dbResponse = dbEntity.Select(e => new TransactionDto {
                 Id = e.Id,
                 Date = e.Date,
                 EmployeeId = e.EmployeeId,

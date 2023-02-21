@@ -21,11 +21,11 @@ namespace FuelStation.Blazor.Server.Controllers {
         /* Get all entities in a list */
 
         [HttpGet]
-        public async Task<IEnumerable<CustomerListDto>> GetAll() {
+        public async Task<IEnumerable<CustomerDto>> GetAll() {
 
             var dbCustomer = await _customerRepo.GetAllAsync();
 
-            var dbResponse = dbCustomer.Select(c => new CustomerListDto {
+            var dbResponse = dbCustomer.Select(c => new CustomerDto {
                 Id = c.Id,
                 Name = c.Name,
                 Surname = c.Surname,
@@ -37,18 +37,16 @@ namespace FuelStation.Blazor.Server.Controllers {
 
         }
 
-        /* Get entity by ID */
+        /* Get entity by ID to edit */
 
-        [HttpGet("{id}")]
+        [HttpGet("edit/{id}")]
         public async Task<CustomerEditDto> GetById(int id) {
 
             var dbCustomer = await _customerRepo.GetByIdAsync(id);
-            
+
             if (dbCustomer == null) {
                 throw new ArgumentNullException();
             }
-
-            //var dbTransactions = await _transactionRepo.GetAllAsync().Where(t => t.CustomerId == id).ToListAsync();
 
             var dbResponse = new CustomerEditDto {
 
@@ -56,19 +54,41 @@ namespace FuelStation.Blazor.Server.Controllers {
                 Name = dbCustomer.Name,
                 Surname = dbCustomer.Surname,
                 CardNumber = dbCustomer.CardNumber,
-                
-                
-                //Transactions = dbTransactions.Select(t => new TransactionListDto {
-                //    //Id = t.Id,
-                //    Date = t.Date
-
-                //}).ToList()
 
             };
 
             return dbResponse;
 
         }
+
+        /* Get entity by ID to list details */
+
+        [HttpGet("details/{id}")]
+        public async Task<CustomerDetailsDto> GetDetailsById(int id) {
+            var dbCustomer = await _customerRepo.GetByIdAsync(id);
+
+            if (dbCustomer == null) {
+                throw new ArgumentNullException();
+            }
+
+            var dbResponse = new CustomerDetailsDto {
+                Id = id,
+                Name = dbCustomer.Name,
+                Surname = dbCustomer.Surname,
+                CardNumber = dbCustomer.CardNumber,
+                Transactions = dbCustomer.Transactions.Select(t => new TransactionDtoCustomer {
+                    Id = t.Id,
+                    Date = t.Date,
+                    PaymentMethod = t.PaymentMethod,
+                    TotalValue = t.TotalValue
+                }).ToList()
+            };
+
+            return dbResponse;
+        }
+
+
+
 
         /* Add new entity */
 

@@ -56,7 +56,7 @@ else
 
 @code {
 
-    private List<TransactionListDto>? transactions;
+    private List<TransactionDto>? transactions;
 
     protected override async Task OnInitializedAsync()
     {
@@ -66,7 +66,7 @@ else
 
     private async Task LoadItemsFromServer()
     {
-        transactions = await Http.GetFromJsonAsync<List<TransactionListDto>>("transaction");
+        transactions = await Http.GetFromJsonAsync<List<TransactionDto>>("transaction");
     }
 
     private void Add()
@@ -74,12 +74,12 @@ else
         navigationManager.NavigateTo("transaction/edit");
     }
 
-    private void Edit(TransactionListDto transaction)
+    private void Edit(TransactionDto transaction)
     {
         navigationManager.NavigateTo($"transaction/edit/{transaction.Id}");
     }
 
-    private async Task Delete(TransactionListDto transaction)
+    private async Task Delete(TransactionDto transaction)
     {
         var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
         if (confirm)

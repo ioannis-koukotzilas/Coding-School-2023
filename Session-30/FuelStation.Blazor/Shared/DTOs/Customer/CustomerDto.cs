@@ -1,6 +1,6 @@
 ﻿namespace FuelStation.Blazor.Shared.DTOs.Customer {
 
-    public class CustomerListDto {
+    public class CustomerDto {
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
