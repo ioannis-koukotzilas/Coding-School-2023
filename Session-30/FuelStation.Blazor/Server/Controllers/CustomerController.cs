@@ -24,7 +24,6 @@ namespace FuelStation.Blazor.Server.Controllers {
         }
 
         /* Get all entities in a list */
-
         [HttpGet]
         public async Task<IEnumerable<CustomerDto>> GetAll() {
 
@@ -144,7 +143,7 @@ namespace FuelStation.Blazor.Server.Controllers {
         /* Implementation of an algorithm that generates a random card number for the customer entity, checks 
          * if it already exists in the database, and repeats the process until a unique card number is generated. */
 
-        [HttpGet("GenerateCardNumber")]
+        [HttpGet("card-generator")]
         public async Task<string> GenerateCardNumberAsync() {
 
             var dbCustomers = await _customerRepo.GetAllAsync();

@@ -83,7 +83,7 @@ else
 
     private void Cancel()
     {
-        navigationManager.NavigateTo("customer");
+        navigationManager.NavigateTo("customers");
     }
 
     private async Task Save()
@@ -100,14 +100,14 @@ else
         }
 
         response.EnsureSuccessStatusCode();
-        navigationManager.NavigateTo("customer");
+        navigationManager.NavigateTo("customers");
     }
 
     private async Task GenerateNewCardNumber()
     {
         if (Customer != null)
         {
-            string generatedCardNumber = await Http.GetStringAsync("/customer/GenerateCardNumber");
+            string generatedCardNumber = await Http.GetStringAsync("/customer/card-generator");
 
             if (Id == null)
             {
