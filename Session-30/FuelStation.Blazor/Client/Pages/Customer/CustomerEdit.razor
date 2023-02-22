@@ -6,31 +6,31 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
 
-<h3>Customer Edit</h3>
-
 
 @if (Customer == null)
 {
-    <p>loading</p>
+    <Spinner />
 }
 else
 {
     @if (Id == null)
     {
         <PageTitle>New Customer - Fuel Station</PageTitle>
-        <h1 class="mb-5">New Customer</h1>
+        <h2 class="mb-5">Add new customer</h2>
     }
     else
     {
-        <PageTitle>Edit Customer - Fuel Station</PageTitle>
-        <h1 class="mb-5">Edit Customer</h1>
+        <PageTitle>Edit Customer @Customer.Name @Customer.Surname - Fuel Station</PageTitle>
+        <h2 class="mb-5">Edit customer: @Customer.Name @Customer.Surname {@Customer.Id}</h2>
     }
+
+    <button class="btn btn-warning mb-5" @onclick="GenerateNewCardNumber">Generate card number</button>
 
     <EditForm Model="Customer" OnValidSubmit="Save">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
-        <div class="row">
+        <div class="row mb-3">
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Name</label>
@@ -44,21 +44,21 @@ else
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Card Number</label>
-                <input class="form-control" type="text" readonly @bind-value=@Customer.CardNumber />
+                <input class="form-control" type="text" placeholder="Click generate button to add a new card number" disabled @bind-value=@Customer.CardNumber />
             </div>
 
         </div>
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-md-6">
-                <button class="btn btn-success" type="submit">Save</button>
-                <button class="btn btn-warning" @onclick="Cancel">Cancel</button>
+                <div class="btn-group" role="group" aria-label="Actions">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                </div>
             </div>
         </div>
 
     </EditForm>
-
-    <button class="btn btn-primary" @onclick="GenerateNewCardNumber">Generate new card number</button>
 
 }
 

@@ -6,11 +6,11 @@ namespace FuelStation.Blazor.Shared.DTOs.Customer {
     public class CustomerEditDto {
 
         public int Id { get; set; }
-        [Required(ErrorMessage = "Customer's name is required field")]
+        [Required(ErrorMessage = "Name is a required field")]
         public string Name { get; set; } = null!;
-        [Required(ErrorMessage = "Customer's surname is required field")]
+        [Required(ErrorMessage = "Surname is a required field")]
         public string Surname { get; set; } = null!;
-        [Required(ErrorMessage = "Required field")]
+        [Required(ErrorMessage = "Card number is a required field")]
         public string CardNumber { get; set; } = null!;
 
         //public List<TransactionDto> Transactions { get; set; } = new();

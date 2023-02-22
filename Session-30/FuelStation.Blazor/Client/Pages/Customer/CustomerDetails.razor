@@ -7,50 +7,61 @@
 
 @if (Customer == null)
 {
-    <p>loading</p>
+    <Spinner />
 }
 else
 {
 
-    <h1 class="mb-5">Details for customer: @Customer.Name @Customer.Surname</h1>
+    <PageTitle>Customer: @Customer.Name @Customer.Surname - Fuel Station</PageTitle>
+    <h2 class="mb-5">Details for customer: @Customer.Name @Customer.Surname</h2>
 
     <div class="row mb-5">
-        <div><strong>ID:</strong> @Customer.Id</div>
-        <div><strong>Card number:</strong> @Customer.CardNumber</div>
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-dark"><strong>Customer ID:</strong> @Customer.Id</li>
+                <li class="list-group-item list-group-item-dark"><strong>Customer card:</strong> @Customer.CardNumber</li>
+            </ul>
+        </div>
     </div>
 
-    <h2 class="mb-3">Transactions</h2>
+    <div class="btn-group mb-5" role="group" aria-label="Actions">
+        <button class="btn btn-secondary" @onclick="Cancel">Back</button>
+        <button class="btn btn-primary" @onclick="Edit">Edit Customer</button>
+    </div>
 
-    <div class="table-responsive">
+    @if (Customer.Transactions.Any())
+    {
+        <h3 class="mb-3">Transactions</h3>
 
-        <table class="table table-dark table-striped">
+        <div class="table-responsive p-3 mb-5">
 
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Payment Method</th>
-                    <th>Total Value</th>
-                </tr>
-            </thead>
+            <table class="table table-dark table-striped table-hover">
 
-            <tbody>
-                @foreach (var transaction in Customer.Transactions)
-                {
+                <thead>
                     <tr>
-                        <td>@transaction.Id</td>
-                        <td>@transaction.Date</td>
-                        <td>@transaction.PaymentMethod</td>
-                        <td>@transaction.TotalValue</td>
-
+                        <th>Transaction ID</th>
+                        <th>Transaction Date</th>
+                        <th>Payment Method</th>
+                        <th>Total Value</th>
                     </tr>
-                }
-            </tbody>
+                </thead>
 
-        </table>
+                <tbody>
+                    @foreach (var transaction in Customer.Transactions)
+                    {
+                        <tr>
+                            <td>@transaction.Id</td>
+                            <td>@transaction.Date</td>
+                            <td>@transaction.PaymentMethod</td>
+                            <td>@transaction.TotalValue</td>
+                        </tr>
+                    }
+                </tbody>
 
-    </div>
+            </table>
 
+        </div>
+    }
 
 }
 
@@ -67,10 +78,18 @@ else
 
     }
 
-    private void OnCancel()
+    private void Cancel()
     {
         navigationManager.NavigateTo("customer");
     }
 
-}
+    private void Edit()
+    {
+        if (Customer != null)
+        {
+            navigationManager.NavigateTo($"customer/edit/{Customer.Id}");
+        }
 
+    }
+
+}

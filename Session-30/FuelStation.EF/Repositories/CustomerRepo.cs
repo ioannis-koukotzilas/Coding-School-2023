@@ -9,7 +9,7 @@ namespace FuelStation.EF.Repositories {
         public async Task<IList<Customer>> GetAllAsync() {
             using var dbContext = new FuelStationDbContext();
             var dbCustomers = await dbContext.Customers
-                //.Include(c => c.Transactions)
+                .Include(c => c.Transactions)
                 .ToListAsync();
             return dbCustomers;   
         }

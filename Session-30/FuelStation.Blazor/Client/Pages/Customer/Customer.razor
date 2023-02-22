@@ -30,6 +30,7 @@ else
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Card Number</th>
+                    <th>Last Active</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -42,10 +43,18 @@ else
                         <td>@c.Name</td>
                         <td>@c.Surname</td>
                         <td>@c.CardNumber</td>
+                        @if (c.Transactions.Any())
+                        {
+                            <td>@c.Transactions.Last().Date</td>
+                        }
+                        else
+                        {
+                            <td>No transactions</td>
+                        }
                         <td>
                             <div class="btn-group" role="group" aria-label="Actions">
                                 <button class="btn btn-info" @onclick="() => DetailCustomer(c)">Details</button>
-                                <button class="btn btn-warning" @onclick="() => Edit(c)">Edit</button>
+                                <button class="btn btn-success" @onclick="() => Edit(c)">Edit</button>
                                 <button class="btn btn-danger" @onclick="() => Delete(c)">Delete</button>
                             </div>
                         </td>

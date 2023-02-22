@@ -12,7 +12,7 @@ namespace FuelStation.Blazor.Server.Controllers {
 
     [ApiController]
     [Route("[controller]")]
-    [Authorize(Policy = "Manager")]
+    //[Authorize(Policy = "Manager")]
     public class CustomerController : ControllerBase {
 
         private readonly IEntityRepo<Customer> _customerRepo;
@@ -28,13 +28,18 @@ namespace FuelStation.Blazor.Server.Controllers {
         [HttpGet]
         public async Task<IEnumerable<CustomerDto>> GetAll() {
 
-            var dbCustomer = await _customerRepo.GetAllAsync();
+            var dbCustomers = await _customerRepo.GetAllAsync();
 
-            var dbResponse = dbCustomer.Select(c => new CustomerDto {
+            var dbResponse = dbCustomers.Select(c => new CustomerDto {
+
                 Id = c.Id,
                 Name = c.Name,
                 Surname = c.Surname,
-                CardNumber = c.CardNumber
+                CardNumber = c.CardNumber,
+
+                Transactions = c.Transactions.Select(t => new TransactionDtoCustomer {
+                    Date = t.Date
+                }).ToList()
 
             });
 
@@ -77,16 +82,19 @@ namespace FuelStation.Blazor.Server.Controllers {
             }
 
             var dbResponse = new CustomerDetailsDto {
+
                 Id = id,
                 Name = dbCustomer.Name,
                 Surname = dbCustomer.Surname,
                 CardNumber = dbCustomer.CardNumber,
+
                 Transactions = dbCustomer.Transactions.Select(t => new TransactionDtoCustomer {
                     Id = t.Id,
                     Date = t.Date,
                     PaymentMethod = t.PaymentMethod,
                     TotalValue = t.TotalValue
                 }).ToList()
+
             };
 
             return dbResponse;
@@ -95,34 +103,34 @@ namespace FuelStation.Blazor.Server.Controllers {
         /* Add new entity */
 
         [HttpPost]
-        public async Task Post(CustomerEditDto entity) {
+        public async Task Post(CustomerEditDto customer) {
 
-            var dbEntity = new Customer(
-                entity.Name,
-                entity.Surname,
-                entity.CardNumber
+            var dbCustomer = new Customer(
+                customer.Name,
+                customer.Surname,
+                customer.CardNumber
                 );
 
-            await _customerRepo.AddAsync(dbEntity);
+            await _customerRepo.AddAsync(dbCustomer);
 
         }
 
         /* Update entity */
 
         [HttpPut]
-        public async Task Put(CustomerEditDto entity) {
+        public async Task Put(CustomerEditDto customer) {
 
-            var dbEntity = await _customerRepo.GetByIdAsync(entity.Id);
+            var dbCustomer = await _customerRepo.GetByIdAsync(customer.Id);
 
-            if (dbEntity == null) {
+            if (dbCustomer == null) {
                 throw new ArgumentNullException();
             }
 
-            dbEntity.Name = entity.Name;
-            dbEntity.Surname = entity.Surname;
-            dbEntity.CardNumber = entity.CardNumber;
+            dbCustomer.Name = customer.Name;
+            dbCustomer.Surname = customer.Surname;
+            dbCustomer.CardNumber = customer.CardNumber;
 
-            await _customerRepo.UpdateAsync(entity.Id, dbEntity);
+            await _customerRepo.UpdateAsync(customer.Id, dbCustomer);
 
         }
 
