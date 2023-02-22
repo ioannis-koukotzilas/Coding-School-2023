@@ -7,7 +7,6 @@
         Task AddAsync(TEntity entity);
         Task UpdateAsync(int id, TEntity entity);
         Task DeleteAsync(int id);
-
     }
 
 }

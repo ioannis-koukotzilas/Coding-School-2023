@@ -21,4 +21,7 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <None Remove="BlazorStrap" />
+  </ItemGroup>
 </Project>

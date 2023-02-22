@@ -3,6 +3,8 @@ using FuelStation.EF.Repositories;
 using FuelStation.Models;
 using FuelStation.Blazor.Shared.DTOs.Customer;
 using FuelStation.Blazor.Shared.DTOs.Transaction;
+using Microsoft.EntityFrameworkCore;
+using FuelStation.EF.Context;
 
 namespace FuelStation.Blazor.Server.Controllers {
 
@@ -87,9 +89,6 @@ namespace FuelStation.Blazor.Server.Controllers {
             return dbResponse;
         }
 
-
-
-
         /* Add new entity */
 
         [HttpPost]
@@ -129,6 +128,37 @@ namespace FuelStation.Blazor.Server.Controllers {
         [HttpDelete("{id}")]
         public async Task Delete(int id) {
             await _customerRepo.DeleteAsync(id);
+        }
+
+        /* Implementation of an algorithm that generates a random card number for the customer entity, checks 
+         * if it already exists in the database, and repeats the process until a unique card number is generated. */
+
+        [HttpGet("GenerateCardNumber")]
+        public async Task<string> GenerateCardNumberAsync() {
+
+            var dbCustomers = await _customerRepo.GetAllAsync();
+
+            if (dbCustomers == null) {
+                throw new ArgumentNullException();
+            }
+
+            Random random = new Random();
+            string numbers = "0123456789";
+            string cardNumber = "";
+
+            bool cardNumberExists = true;
+
+            // Loop runs as long as cardNumberExists is true
+            while (cardNumberExists) {
+                cardNumber = "A" + new string(Enumerable.Repeat(numbers, 16).Select(s => s[random.Next(s.Length)]).ToArray());
+
+                // Check if the card number already exists in the database
+                var existingCardNumber = dbCustomers.FirstOrDefault(c => c.CardNumber == cardNumber);
+
+                cardNumberExists = existingCardNumber != null;
+            }
+
+            return cardNumber;
         }
 
     }

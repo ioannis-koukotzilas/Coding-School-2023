@@ -9,7 +9,7 @@
 <h3>Customer Edit</h3>
 
 
-@if (Entity == null)
+@if (Customer == null)
 {
     <p>loading</p>
 }
@@ -26,7 +26,7 @@ else
         <h1 class="mb-5">Edit Customer</h1>
     }
 
-    <EditForm Model="Entity" OnValidSubmit="Save">
+    <EditForm Model="Customer" OnValidSubmit="Save">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
@@ -34,17 +34,17 @@ else
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Name</label>
-                <input class="form-control" type="text" placeholder="Enter customer's name" @bind-value=@Entity.Name />
+                <input class="form-control" type="text" placeholder="Enter customer's name" @bind-value=@Customer.Name />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Surname</label>
-                <input class="form-control" type="text" placeholder="Enter customer's surname" @bind-value=@Entity.Surname />
+                <input class="form-control" type="text" placeholder="Enter customer's surname" @bind-value=@Customer.Surname />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Card Number</label>
-                <input class="form-control" type="text" readonly @bind-value=@Entity.CardNumber />
+                <input class="form-control" type="text" readonly @bind-value=@Customer.CardNumber />
             </div>
 
         </div>
@@ -58,7 +58,7 @@ else
 
     </EditForm>
 
-    <button class="btn" @onclick="GenerateNewCode">Generate New Code</button>
+    <button class="btn btn-primary" @onclick="GenerateNewCardNumber">Generate new card number</button>
 
 }
 
@@ -67,17 +67,17 @@ else
 
     [Parameter] public int? Id { get; set; }
 
-    CustomerEditDto? Entity { get; set; }
+    CustomerEditDto? Customer { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         if (Id == null)
         {
-            Entity = new();
+            Customer = new();
         }
         else
         {
-            Entity = await Http.GetFromJsonAsync<CustomerEditDto>($"customer/edit/{Id}");
+            Customer = await Http.GetFromJsonAsync<CustomerEditDto>($"customer/edit/{Id}");
         }
     }
 
@@ -92,44 +92,40 @@ else
 
         if (Id == null)
         {
-            response = await Http.PostAsJsonAsync("customer", Entity);
+            response = await Http.PostAsJsonAsync("customer", Customer);
         }
         else
         {
-            response = await Http.PutAsJsonAsync("customer", Entity);
+            response = await Http.PutAsJsonAsync("customer", Customer);
         }
 
         response.EnsureSuccessStatusCode();
         navigationManager.NavigateTo("customer");
     }
 
-    /* Generate a 21-character string starting with the letter "A",
-    where the next 20 digits are randomly selected. If the code already
-    exists in the database, the database will throw an exception. */
-
-    private string GenerateCode()
+    private async Task GenerateNewCardNumber()
     {
-        var chars = "0123456789";
-        var random = new Random();
-        var code = "A" + new string(Enumerable.Repeat(chars, 20).Select(s => s[random.Next(s.Length)]).ToArray());
-        return code;
-    }
-
-    private async Task GenerateNewCode()
-    {
-        if (Entity != null)
+        if (Customer != null)
         {
-            bool confirm = true;
-            if (Id != null)
+            string generatedCardNumber = await Http.GetStringAsync("/customer/GenerateCardNumber");
+
+            if (Id == null)
             {
-                confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
+                Customer.CardNumber = generatedCardNumber;
             }
-            if (confirm)
+            else
             {
-                Entity.CardNumber = GenerateCode();
+                var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm generate a new card number?");
+
+                if (confirm)
+                {
+                    Customer.CardNumber = generatedCardNumber;
+                }
             }
+
         }
     }
 
 }
+
 

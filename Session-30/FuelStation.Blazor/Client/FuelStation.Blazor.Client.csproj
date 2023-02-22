@@ -19,11 +19,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\FuelStation.Blazor.Shared.csproj" />
+    <ProjectReference Include="..\..\FuelStation.EF\FuelStation.EF.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Pages\Customer\" />
     <None Remove="Pages\Transaction\" />
+    <None Remove="BlazorStrap" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Customer\" />
