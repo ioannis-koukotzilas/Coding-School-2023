@@ -5,11 +5,14 @@ using FuelStation.Blazor.Shared.DTOs.Customer;
 using FuelStation.Blazor.Shared.DTOs.Transaction;
 using Microsoft.EntityFrameworkCore;
 using FuelStation.EF.Context;
+using FuelStation.Blazor.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FuelStation.Blazor.Server.Controllers {
 
     [ApiController]
     [Route("[controller]")]
+    [Authorize(Policy = "Manager")]
     public class CustomerController : ControllerBase {
 
         private readonly IEntityRepo<Customer> _customerRepo;

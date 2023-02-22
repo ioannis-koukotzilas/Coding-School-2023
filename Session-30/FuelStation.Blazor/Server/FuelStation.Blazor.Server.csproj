@@ -10,6 +10,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,5 +24,10 @@
 
   <ItemGroup>
     <None Remove="BlazorStrap" />
+    <None Remove="Services\" />
+    <None Remove="Microsoft.AspNetCore.Authorization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 </Project>
