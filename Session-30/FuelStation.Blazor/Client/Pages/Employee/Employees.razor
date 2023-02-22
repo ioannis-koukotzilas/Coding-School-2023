@@ -1,0 +1,123 @@
+﻿@using FuelStation.Blazor.Shared.DTOs.Employee
+
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+@page "/employees"
+
+@if (isLoading)
+{
+    <Spinner />
+}
+else
+{
+
+    <PageTitle>Employees - Fuel Station</PageTitle>
+
+    <h1 class="mb-5">Employees</h1>
+
+    <button class="btn btn-primary mb-5" @onclick="Add">Add new employee</button>
+
+    <div class="table-responsive p-3">
+
+        <table class="table table-dark table-striped table-hover">
+
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Employee Type</th>
+                    <th>Total Sales</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var e in employees)
+                {
+                    <tr>
+                        <td>@e.Id</td>
+                        <td>@e.Name</td>
+                        <td>@e.Surname</td>
+                        <td>@e.EmployeeType</td>
+                        @if (e.Transactions.Any())
+                        {
+                            <td>@e.Transactions.Sum(t => t.TotalValue)</td>
+                        }
+                        else
+                        {
+                            <td>0</td>
+                        }
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Actions">
+                                <button class="btn btn-info" @onclick="() => Details(e)">Details</button>
+                                <button class="btn btn-success" @onclick="() => Edit(e)">Edit</button>
+                                <button class="btn btn-danger" @onclick="() => Delete(e)">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+}
+
+@code {
+
+    private List<EmployeeListDto> employees = new List<EmployeeListDto>();
+
+    bool isLoading { get; set; } = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFromServer();
+
+        isLoading = false;
+    }
+
+    private async Task LoadFromServer()
+    {
+        var itemsToLoad = await Http.GetFromJsonAsync<List<EmployeeListDto>>("employee");
+
+        if (itemsToLoad != null)
+        {
+            employees = itemsToLoad;
+        }
+        else
+        {
+            throw new ArgumentNullException();
+        }
+    }
+
+    private void Add()
+    {
+        navigationManager.NavigateTo("employee/edit");
+    }
+
+    private void Edit(EmployeeListDto employee)
+    {
+        navigationManager.NavigateTo($"employee/edit/{employee.Id}");
+    }
+
+    private void Details(EmployeeListDto employee)
+    {
+        navigationManager.NavigateTo($"employee/details/{employee.Id}");
+    }
+
+    private async Task Delete(EmployeeListDto employee)
+    {
+        var confirmDeletion = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm employee deletion?");
+        if (confirmDeletion)
+        {
+            var response = await Http.DeleteAsync($"employee/{employee.Id}");
+            response.EnsureSuccessStatusCode();
+            await LoadFromServer();
+        }
+
+    }
+
+}

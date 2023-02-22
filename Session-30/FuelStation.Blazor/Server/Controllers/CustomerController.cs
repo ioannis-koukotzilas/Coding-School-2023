@@ -37,7 +37,8 @@ namespace FuelStation.Blazor.Server.Controllers {
                 CardNumber = c.CardNumber,
 
                 Transactions = c.Transactions.Select(t => new TransactionDtoCustomer {
-                    Date = t.Date
+                    Date = t.Date,
+                    TotalValue = t.TotalValue
                 }).ToList()
 
             });

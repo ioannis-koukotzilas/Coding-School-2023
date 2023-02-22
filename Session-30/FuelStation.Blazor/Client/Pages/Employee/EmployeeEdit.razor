@@ -1,0 +1,104 @@
+﻿@using FuelStation.Blazor.Shared.DTOs.Employee
+
+@page "/employee/edit/{Id:int?}"
+
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+
+@if (Employee == null)
+{
+    <Spinner />
+}
+else
+{
+    @if (Id == null)
+    {
+        <PageTitle>New Employee - Fuel Station</PageTitle>
+        <h2 class="mb-5">Add new employee</h2>
+    }
+    else
+    {
+        <PageTitle>Edit Customer @Employee.Name @Employee.Surname - Fuel Station</PageTitle>
+        <h2 class="mb-5">Edit employee: @Employee.Name @Employee.Surname {@Employee.Id}</h2>
+    }
+
+    <EditForm Model="Employee" OnValidSubmit="Save">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="row mb-3">
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Name</label>
+                <input class="form-control" type="text" placeholder="Enter customer's name" @bind-value=@Employee.Name />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Surname</label>
+                <input class="form-control" type="text" placeholder="Enter customer's surname" @bind-value=@Employee.Surname />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Date</label>
+                <input class="form-control" type="date" placeholder="Enter customer's surname" @bind-value=@Employee.HireDateStart />
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="btn-group" role="group" aria-label="Actions">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </EditForm>
+
+}
+
+
+@code {
+
+    [Parameter] public int? Id { get; set; }
+
+    EmployeeEditDto? Employee { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id == null)
+        {
+            Employee = new();
+        }
+        else
+        {
+            Employee = await Http.GetFromJsonAsync<EmployeeEditDto>($"employee/edit/{Id}");
+        }
+    }
+
+    private void Cancel()
+    {
+        navigationManager.NavigateTo("employees");
+    }
+
+    private async Task Save()
+    {
+        HttpResponseMessage? response = null;
+
+        if (Id == null)
+        {
+            response = await Http.PostAsJsonAsync("customer", Employee);
+        }
+        else
+        {
+            response = await Http.PutAsJsonAsync("customer", Employee);
+        }
+
+        response.EnsureSuccessStatusCode();
+        navigationManager.NavigateTo("employees");
+    }
+
+}

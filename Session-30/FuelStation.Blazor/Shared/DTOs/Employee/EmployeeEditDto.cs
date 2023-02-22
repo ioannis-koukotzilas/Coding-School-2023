@@ -1,8 +1,9 @@
-﻿using FuelStation.Models.Enums;
+﻿using FuelStation.Blazor.Shared.DTOs.Transaction;
+using FuelStation.Models.Enums;
 
 namespace FuelStation.Blazor.Shared.DTOs.Employee {
 
-    public class EmployeeDto {
+    public class EmployeeEditDto {
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;

@@ -30,6 +30,7 @@ else
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Card Number</th>
+                    <th>Total Orders</th>
                     <th>Last Active</th>
                     <th>Actions</th>
                 </tr>
@@ -45,10 +46,12 @@ else
                         <td>@c.CardNumber</td>
                         @if (c.Transactions.Any())
                         {
+                            <td>@c.Transactions.Sum(t => t.TotalValue)</td>
                             <td>@c.Transactions.Last().Date</td>
                         }
                         else
                         {
+                            <td>0</td>
                             <td>No transactions</td>
                         }
                         <td>
