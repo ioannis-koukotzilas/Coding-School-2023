@@ -8,58 +8,60 @@ namespace FuelStation.EF.Repositories {
 
         public async Task<IList<Employee>> GetAllAsync() {
             using var dbContext = new FuelStationDbContext();
+
             var dbEmployee = await dbContext.Employees
                 .Include(e => e.Transactions)
                 .ToListAsync();
+
             return dbEmployee;
         }
 
         public async Task<Employee?> GetByIdAsync(int id) {
             using var dbContext = new FuelStationDbContext();
+
             var dbEmployee = await dbContext.Employees
-                .Where(e => e.Id == id)
                 .Include(e => e.Transactions)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(e => e.Id == id);
+
             return dbEmployee;
         }
 
-        public async Task AddAsync(Employee entity) {
+        public async Task AddAsync(Employee employee) {
             using var dbContext = new FuelStationDbContext();
 
-            if (entity.Id != 0) {
-                throw new ArgumentException("Given entity should not have an ID set", nameof(entity));
+            if (employee.Id != 0) {
+                throw new ArgumentException("Given entity should not have an ID set", nameof(employee));
             }
 
-            await dbContext.AddAsync(entity);
+            await dbContext.AddAsync(employee);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(int id, Employee entity) {
+        public async Task UpdateAsync(int id, Employee employee) {
             using var dbContext = new FuelStationDbContext();
+
             var dbEmployee = await dbContext.Employees
-                .Where(e => e.Id == id)
-                .Include(e => e.Transactions)
-                .SingleOrDefaultAsync();
+                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (dbEmployee == null) {
                 throw new KeyNotFoundException($"Given ID '{id}' was not found in the database");
             }
 
-            dbEmployee.Name = entity.Name;
-            dbEmployee.Surname = entity.Surname;
-            dbEmployee.HireDateStart = entity.HireDateStart;
-            dbEmployee.HireDateEnd = entity.HireDateEnd;
-            dbEmployee.SallaryPerMonth = entity.SallaryPerMonth;
-            dbEmployee.EmployeeType = entity.EmployeeType;
+            dbEmployee.Name = employee.Name;
+            dbEmployee.Surname = employee.Surname;
+            dbEmployee.HireDateStart = employee.HireDateStart;
+            dbEmployee.HireDateEnd = employee.HireDateEnd;
+            dbEmployee.SallaryPerMonth = employee.SallaryPerMonth;
+            dbEmployee.EmployeeType = employee.EmployeeType;
            
             await dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id) {
             using var dbContext = new FuelStationDbContext();
+
             var dbEmployee = await dbContext.Employees
-                .Where(e => e.Id == id)
-                .SingleOrDefaultAsync();
+               .SingleOrDefaultAsync(e => e.Id == id);
 
             if (dbEmployee == null) {
                 throw new KeyNotFoundException($"Given ID '{id}' was not found in the database");

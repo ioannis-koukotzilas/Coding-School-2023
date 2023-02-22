@@ -8,43 +8,48 @@ namespace FuelStation.EF.Repositories {
 
         public async Task<IList<Customer>> GetAllAsync() {
             using var dbContext = new FuelStationDbContext();
+
             var dbCustomers = await dbContext.Customers
                 .Include(c => c.Transactions)
                 .ToListAsync();
+
             return dbCustomers;   
         }
 
         public async Task<Customer?> GetByIdAsync(int id) {
             using var dbContext = new FuelStationDbContext();
+
             var dbCustomer = await dbContext.Customers
                 .Include(c => c.Transactions)
                 .SingleOrDefaultAsync(c => c.Id == id);
+
             return dbCustomer;
         }
 
-        public async Task AddAsync(Customer entity) {
+        public async Task AddAsync(Customer customer) {
             using var dbContext = new FuelStationDbContext();
 
-            if (entity.Id != 0) {
-                throw new ArgumentException("Given entity should not have an ID set", nameof(entity));
+            if (customer.Id != 0) {
+                throw new ArgumentException("Given entity should not have an ID set", nameof(customer));
             }
 
-            await dbContext.AddAsync(entity);
+            await dbContext.AddAsync(customer);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(int id, Customer entity) {
+        public async Task UpdateAsync(int id, Customer customer) {
             using var dbContext = new FuelStationDbContext();
 
-            var dbCustomer = await dbContext.Customers.SingleOrDefaultAsync(c => c.Id == id);
+            var dbCustomer = await dbContext.Customers
+                .SingleOrDefaultAsync(c => c.Id == id);
 
             if (dbCustomer == null) {
                 throw new KeyNotFoundException($"ID: '{id}' was not found in the database");
             }
 
-            dbCustomer.Name = entity.Name;
-            dbCustomer.Surname = entity.Surname;
-            dbCustomer.CardNumber = entity.CardNumber;
+            dbCustomer.Name = customer.Name;
+            dbCustomer.Surname = customer.Surname;
+            dbCustomer.CardNumber = customer.CardNumber;
 
             await dbContext.SaveChangesAsync();
         }
