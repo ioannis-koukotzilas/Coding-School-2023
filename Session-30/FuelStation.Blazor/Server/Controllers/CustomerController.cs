@@ -3,10 +3,6 @@ using FuelStation.EF.Repositories;
 using FuelStation.Models;
 using FuelStation.Blazor.Shared.DTOs.Customer;
 using FuelStation.Blazor.Shared.DTOs.Transaction;
-using Microsoft.EntityFrameworkCore;
-using FuelStation.EF.Context;
-using FuelStation.Blazor.Server.Services;
-using Microsoft.AspNetCore.Authorization;
 
 namespace FuelStation.Blazor.Server.Controllers {
 
@@ -16,11 +12,9 @@ namespace FuelStation.Blazor.Server.Controllers {
     public class CustomerController : ControllerBase {
 
         private readonly IEntityRepo<Customer> _customerRepo;
-        private readonly IEntityRepo<Transaction> _transactionRepo;
 
-        public CustomerController(IEntityRepo<Customer> customerRepo, IEntityRepo<Transaction> transactionRepo) {
+        public CustomerController(IEntityRepo<Customer> customerRepo) {
             _customerRepo = customerRepo;
-            _transactionRepo = transactionRepo;
         }
 
         /* Get all entities in a list */

@@ -11,11 +11,9 @@ namespace FuelStation.Blazor.Server.Controllers {
     public class EmployeeController : ControllerBase {
 
         private readonly IEntityRepo<Employee> _employeeRepo;
-        private readonly IEntityRepo<Transaction> _transactionRepo;
 
-        public EmployeeController(IEntityRepo<Employee> employeeRepo, IEntityRepo<Transaction> transactionRepo) {
+        public EmployeeController(IEntityRepo<Employee> employeeRepo) {
             _employeeRepo = employeeRepo;
-            _transactionRepo = transactionRepo;
         }
 
         [HttpGet]
@@ -64,9 +62,78 @@ namespace FuelStation.Blazor.Server.Controllers {
             };
 
             return dbResponse;
+        }
 
+        [HttpGet("details/{id}")]
+        public async Task<EmployeeDetailsDto> GetDetailsById(int id) {
+            var dbEmployee = await _employeeRepo.GetByIdAsync(id);
+
+            if (dbEmployee == null) {
+                throw new ArgumentNullException();
+            }
+
+            var dbResponse = new EmployeeDetailsDto {
+
+                Id = id,
+                Name = dbEmployee.Name,
+                Surname = dbEmployee.Surname,
+                HireDateStart = dbEmployee.HireDateStart,
+                HireDateEnd = dbEmployee.HireDateEnd,
+                SallaryPerMonth = dbEmployee.SallaryPerMonth,
+                EmployeeType = dbEmployee.EmployeeType,
+              
+                Transactions = dbEmployee.Transactions.Select(t => new TransactionDtoEmployee {
+                    Id = t.Id,
+                    Date = t.Date,
+                    PaymentMethod = t.PaymentMethod,
+                    TotalValue = t.TotalValue
+                }).ToList()
+
+            };
+
+            return dbResponse;
+        }
+
+        [HttpPost]
+        public async Task Post(EmployeeEditDto employee) {
+
+            var dbEmployee = new Employee(
+                employee.Name,
+                employee.Surname,
+                employee.HireDateStart,
+                employee.HireDateEnd,
+                employee.SallaryPerMonth,
+                employee.EmployeeType
+                );
+
+            await _employeeRepo.AddAsync(dbEmployee);
+        }
+
+        [HttpPut]
+        public async Task Put(EmployeeEditDto employee) {
+
+            var dbEmployee = await _employeeRepo.GetByIdAsync(employee.Id);
+
+            if (dbEmployee == null) {
+                throw new ArgumentNullException();
+            }
+
+            dbEmployee.Name = employee.Name;
+            dbEmployee.Surname = employee.Surname;
+            dbEmployee.HireDateStart = employee.HireDateStart;
+            dbEmployee.HireDateEnd = employee.HireDateEnd;
+            dbEmployee.SallaryPerMonth = employee.SallaryPerMonth;
+            dbEmployee.EmployeeType = employee.EmployeeType;
+
+            await _employeeRepo.UpdateAsync(employee.Id, dbEmployee);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task Delete(int id) {
+            await _employeeRepo.DeleteAsync(id);
         }
 
     }
 
 }
+

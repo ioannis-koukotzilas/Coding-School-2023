@@ -1,4 +1,5 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Employee
+@using FuelStation.Models.Enums
 
 @page "/employee/edit/{Id:int?}"
 
@@ -20,7 +21,7 @@ else
     }
     else
     {
-        <PageTitle>Edit Customer @Employee.Name @Employee.Surname - Fuel Station</PageTitle>
+        <PageTitle>Edit Employee @Employee.Name @Employee.Surname - Fuel Station</PageTitle>
         <h2 class="mb-5">Edit employee: @Employee.Name @Employee.Surname {@Employee.Id}</h2>
     }
 
@@ -32,17 +33,39 @@ else
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Name</label>
-                <input class="form-control" type="text" placeholder="Enter customer's name" @bind-value=@Employee.Name />
+                <InputText class="form-control" type="text" placeholder="Enter employee's name" @bind-Value="Employee.Name" />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Surname</label>
-                <input class="form-control" type="text" placeholder="Enter customer's surname" @bind-value=@Employee.Surname />
+                <InputText class="form-control" type="text" placeholder="Enter employee's surname" @bind-Value="Employee.Surname" />
             </div>
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Date</label>
-                <input class="form-control" type="date" placeholder="Enter customer's surname" @bind-value=@Employee.HireDateStart />
+                <label class="form-label">Hire Date Start</label>
+                <input class="form-control" type="date" @bind-value="Employee.HireDateStart" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Hire Date End</label>
+                <input class="form-control" type="date" @bind-value="Employee.HireDateEnd" />
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Salary Per Month</label>
+                <input class="form-control" type="text" @bind-value="Employee.SallaryPerMonth" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Employee Type</label>
+                <InputSelect class="form-select" @bind-Value="Employee.EmployeeType">
+                    @foreach (var enumValue in Enum.GetValues<EmployeeType>())
+                    {
+                        <option value="@enumValue">@enumValue</option>
+                    }
+                </InputSelect>
+
             </div>
 
         </div>
@@ -72,6 +95,9 @@ else
         if (Id == null)
         {
             Employee = new();
+            Employee.HireDateStart = DateTime.Today;
+            Employee.HireDateEnd = DateTime.Today;
+            Employee.EmployeeType = EmployeeType.Staff;
         }
         else
         {
@@ -90,11 +116,11 @@ else
 
         if (Id == null)
         {
-            response = await Http.PostAsJsonAsync("customer", Employee);
+            response = await Http.PostAsJsonAsync("employee", Employee);
         }
         else
         {
-            response = await Http.PutAsJsonAsync("customer", Employee);
+            response = await Http.PutAsJsonAsync("employee", Employee);
         }
 
         response.EnsureSuccessStatusCode();

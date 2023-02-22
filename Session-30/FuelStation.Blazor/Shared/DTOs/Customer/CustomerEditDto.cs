@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using FuelStation.Blazor.Shared.DTOs.Transaction;
 
 namespace FuelStation.Blazor.Shared.DTOs.Customer {
 

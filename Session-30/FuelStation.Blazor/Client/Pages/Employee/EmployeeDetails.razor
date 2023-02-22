@@ -1,25 +1,28 @@
-﻿@using FuelStation.Blazor.Shared.DTOs.Customer
+﻿@using FuelStation.Blazor.Shared.DTOs.Employee
 
-@page "/customer/details/{Id:int?}"
+@page "/employee/details/{Id:int?}"
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
 
-@if (Customer == null)
+@if (Employee == null)
 {
     <Spinner />
 }
 else
 {
 
-    <PageTitle>Customer: @Customer.Name @Customer.Surname - Fuel Station</PageTitle>
-    <h2 class="mb-5">Details for customer: @Customer.Name @Customer.Surname</h2>
+    <PageTitle>Employee: @Employee.Name @Employee.Surname - Fuel Station</PageTitle>
+    <h2 class="mb-5">Details for employee: @Employee.Name @Employee.Surname</h2>
 
     <div class="row mb-5">
         <div class="col-md-6">
             <ul class="list-group">
-                <li class="list-group-item list-group-item-dark"><strong>Customer ID:</strong> @Customer.Id</li>
-                <li class="list-group-item list-group-item-dark"><strong>Customer card:</strong> @Customer.CardNumber</li>
+                <li class="list-group-item list-group-item-dark"><strong>Employee ID:</strong> @Employee.Id</li>
+                <li class="list-group-item list-group-item-dark"><strong>Hire date start:</strong> @Employee.HireDateStart</li>
+                <li class="list-group-item list-group-item-dark"><strong>Hire date end:</strong> @Employee.HireDateEnd</li>
+                <li class="list-group-item list-group-item-dark"><strong>Sallary per month:</strong> @Employee.SallaryPerMonth</li>
+                <li class="list-group-item list-group-item-dark"><strong>Employee type:</strong> @Employee.EmployeeType</li>
             </ul>
         </div>
     </div>
@@ -29,7 +32,7 @@ else
         <button class="btn btn-primary" @onclick="Edit">Edit Employee</button>
     </div>
 
-    @if (Customer.Transactions.Any())
+    @if (Employee.Transactions.Any())
     {
         <h3 class="mb-3">Transactions</h3>
 
@@ -47,7 +50,7 @@ else
                 </thead>
 
                 <tbody>
-                    @foreach (var t in Customer.Transactions)
+                    @foreach (var t in Employee.Transactions)
                     {
                         <tr>
                             <td>@t.Id</td>
@@ -70,24 +73,24 @@ else
 
     [Parameter] public int? Id { get; set; }
 
-    CustomerDetailsDto? Customer { get; set; }
+    EmployeeDetailsDto? Employee { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Customer = await Http.GetFromJsonAsync<CustomerDetailsDto>($"customer/details/{Id}");
+        Employee = await Http.GetFromJsonAsync<EmployeeDetailsDto>($"employee/details/{Id}");
 
     }
 
     private void Cancel()
     {
-        navigationManager.NavigateTo("customers");
+        navigationManager.NavigateTo("employees");
     }
 
     private void Edit()
     {
-        if (Customer != null)
+        if (Employee != null)
         {
-            navigationManager.NavigateTo($"customer/edit/{Customer.Id}");
+            navigationManager.NavigateTo($"employee/edit/{Employee.Id}");
         }
 
     }
