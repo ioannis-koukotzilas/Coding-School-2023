@@ -13,6 +13,7 @@ builder.Services.AddRazorPages();
 // Add repositories to the container.
 builder.Services.AddScoped<IEntityRepo<Customer>, CustomerRepo>();
 builder.Services.AddScoped<IEntityRepo<Employee>, EmployeeRepo>();
+builder.Services.AddScoped<IEntityRepo<Item>, ItemRepo>();
 builder.Services.AddScoped<IEntityRepo<Transaction>, TranactionRepo>();
 
 // Add authorization policies to the container.

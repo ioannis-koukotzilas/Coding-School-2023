@@ -29,10 +29,12 @@
     <None Remove="Pages\Transaction\" />
     <None Remove="BlazorStrap" />
     <None Remove="Pages\Employee\" />
+    <None Remove="Pages\Item\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Customer\" />
     <Folder Include="Pages\Transaction\" />
     <Folder Include="Pages\Employee\" />
+    <Folder Include="Pages\Item\" />
   </ItemGroup>
 </Project>

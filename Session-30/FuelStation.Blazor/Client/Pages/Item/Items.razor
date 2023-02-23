@@ -1,0 +1,112 @@
+﻿@using FuelStation.Blazor.Shared.DTOs.Item
+
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+@page "/items"
+
+@if (isLoading)
+{
+    <Spinner />
+}
+else
+{
+
+    <PageTitle>Items - Fuel Station</PageTitle>
+
+    <h1 class="mb-5">Items</h1>
+
+    <button class="btn btn-primary mb-5" @onclick="Add">Add new item</button>
+
+    <div class="table-responsive p-3">
+
+        <table class="table table-dark table-striped table-hover">
+
+            <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Item Code</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Cost</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var i in items)
+                {
+                    <tr>
+                        <td>@i.Id</td>
+                        <td>@i.Code</td>
+                        <td>@i.Description</td>
+                        <td>@i.ItemType</td>
+                        <td>@i.Price</td>
+                        <td>@i.Cost</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Actions">
+                                <button class="btn btn-success" @onclick="() => Edit(i)">Edit</button>
+                                <button class="btn btn-danger" @onclick="() => Delete(i)">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+}
+
+@code {
+
+    private List<ItemListDto> items = new List<ItemListDto>();
+
+    bool isLoading { get; set; } = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFromServer();
+
+        isLoading = false;
+    }
+
+    private async Task LoadFromServer()
+    {
+        var itemsToLoad = await Http.GetFromJsonAsync<List<ItemListDto>>("item");
+
+        if (itemsToLoad != null)
+        {
+            items = itemsToLoad;
+        }
+        else
+        {
+            throw new ArgumentNullException();
+        }
+    }
+
+    private void Add()
+    {
+        navigationManager.NavigateTo("item/edit");
+    }
+
+    private void Edit(ItemListDto item)
+    {
+        navigationManager.NavigateTo($"item/edit/{item.Id}");
+    }
+
+    private async Task Delete(ItemListDto item)
+    {
+        var confirmDeletion = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm item deletion?");
+        if (confirmDeletion)
+        {
+            var response = await Http.DeleteAsync($"item/{item.Id}");
+            response.EnsureSuccessStatusCode();
+            await LoadFromServer();
+        }
+
+    }
+
+}
