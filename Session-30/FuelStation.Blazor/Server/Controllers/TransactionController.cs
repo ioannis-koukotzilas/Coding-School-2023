@@ -2,6 +2,7 @@
 using FuelStation.EF.Repositories;
 using FuelStation.Models;
 using FuelStation.Blazor.Shared.DTOs.Transaction;
+using FuelStation.Blazor.Shared.DTOs.Customer;
 
 namespace FuelStation.Blazor.Server.Controllers {
 
@@ -26,11 +27,11 @@ namespace FuelStation.Blazor.Server.Controllers {
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TransactionDto>> GetAll() {
+        public async Task<IEnumerable<TransactionListDto>> GetAll() {
 
             var dbTransactions = await _transactionRepo.GetAllAsync();
 
-            var dbResponse = dbTransactions.Select(t => new TransactionDto {
+            var dbResponse = dbTransactions.Select(t => new TransactionListDto {
 
                 Id = t.Id,
                 Date = t.Date,
@@ -38,13 +39,14 @@ namespace FuelStation.Blazor.Server.Controllers {
                 TotalValue = t.TotalValue,
 
                 EmployeeId = t.EmployeeId,
+                CustomerId = t.Customer.Id,
+
                 EmployeeName = t.Employee.Name,
                 EmployeeSurname = t.Employee.Surname,
                 EmployeeType = t.Employee.EmployeeType,
 
-                CustomerId = t.Customer.Id,
                 CustomerName = t.Customer.Name,
-                CustomerSurname = t.Customer.Surname,
+                CustomerSurname = t.Customer.Surname
 
             });
 
@@ -69,8 +71,21 @@ namespace FuelStation.Blazor.Server.Controllers {
 
                 EmployeeId = dbTransaction.EmployeeId,
                 CustomerId = dbTransaction.CustomerId,
-               
-               // Rest
+
+                // Rest
+
+
+
+                //CustomerName = dbTransaction.Customer.Name,
+                //CustomerSurname = dbTransaction.Customer.Surname,
+
+                //EmployeeName = dbTransaction.Employee.Name,
+                //EmployeeSurname = dbTransaction.Employee.Surname,
+
+
+     
+
+
 
             };
 
@@ -84,13 +99,33 @@ namespace FuelStation.Blazor.Server.Controllers {
                transaction.Date,
                transaction.PaymentMethod,
                transaction.TotalValue
-
+              
                // Rest
 
                 );
 
+            dbTransaction.CustomerId = transaction.CustomerId;
+            dbTransaction.EmployeeId = transaction.EmployeeId;
+
             await _transactionRepo.AddAsync(dbTransaction);
         }
+
+
+
+        //[HttpPost]
+        //public async Task Post(TodoEditDto todo) {
+        //    var newTodo = new Todo(todo.Title);
+        //    foreach (var comment in todo.Comments) {
+        //        newTodo.Comments.Add(new TodoComment(comment.Text));
+        //    }
+
+        //    newTodo.TodoType = todo.TodoType;
+        //    _todoRepo.Add(newTodo);
+        //}
+
+
+
+
 
         [HttpDelete("{id}")]
         public async Task Delete(int id) {

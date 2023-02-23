@@ -72,7 +72,7 @@ else
 
 @code {
 
-    private List<CustomerDto> customers = new List<CustomerDto>();
+    private List<CustomerListDto> customers = new List<CustomerListDto>();
 
     bool isLoading { get; set; } = true;
 
@@ -85,7 +85,7 @@ else
 
     private async Task LoadFromServer()
     {
-        var itemsToLoad = await Http.GetFromJsonAsync<List<CustomerDto>>("customer");
+        var itemsToLoad = await Http.GetFromJsonAsync<List<CustomerListDto>>("customer");
 
         if (itemsToLoad != null)
         {
@@ -102,17 +102,17 @@ else
         navigationManager.NavigateTo("customer/edit");
     }
 
-    private void Edit(CustomerDto customer)
+    private void Edit(CustomerListDto customer)
     {
         navigationManager.NavigateTo($"customer/edit/{customer.Id}");
     }
 
-    private void DetailCustomer(CustomerDto customer)
+    private void DetailCustomer(CustomerListDto customer)
     {
         navigationManager.NavigateTo($"customer/details/{customer.Id}");
     }
 
-    private async Task Delete(CustomerDto customer)
+    private async Task Delete(CustomerListDto customer)
     {
         var confirmDeletion = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
         if (confirmDeletion)

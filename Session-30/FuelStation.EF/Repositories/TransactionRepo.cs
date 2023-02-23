@@ -8,63 +8,65 @@ namespace FuelStation.EF.Repositories {
 
         public async Task<IList<Transaction>> GetAllAsync() {
             using var dbContext = new FuelStationDbContext();
+
             var dbTransaction = await dbContext.Transactions
                 .Include(t => t.Employee)
                 .Include(t => t.Customer)
                 .Include(t => t.TransactionLines)
                 .ToListAsync();
+
             return dbTransaction;
         }
 
         public async Task<Transaction?> GetByIdAsync(int id) {
             using var dbContext = new FuelStationDbContext();
+
             var dbTransaction = await dbContext.Transactions
-                .Where(t => t.Id == id)
                 .Include(t => t.Employee)
                 .Include(t => t.Customer)
                 .Include(t => t.TransactionLines)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(t => t.Id == id);
+
             return dbTransaction;
         }
 
-        public async Task AddAsync(Transaction entity) {
+        public async Task AddAsync(Transaction transaction) {
             using var dbContext = new FuelStationDbContext();
 
-            if (entity.Id != 0) {
-                throw new ArgumentException("Given entity should not have an ID set", nameof(entity));
+            if (transaction.Id != 0) {
+                throw new ArgumentException("Given entity should not have an ID set", nameof(transaction));
             }
 
-            await dbContext.AddAsync(entity);
+            await dbContext.AddAsync(transaction);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(int id, Transaction entity) {
+        public async Task UpdateAsync(int id, Transaction transaction) {
             using var dbContext = new FuelStationDbContext();
             var dbTransaction = await dbContext.Transactions
-                .Where(i => i.Id == id)
-                .Include(t => t.Employee)
-                .Include(t => t.Customer)
-                .Include(t => t.TransactionLines)
-                .SingleOrDefaultAsync();
+                //.Include(t => t.Employee)
+                //.Include(t => t.Customer)
+                //.Include(t => t.TransactionLines)
+                .SingleOrDefaultAsync(t => t.Id == id);
 
             if (dbTransaction == null) {
                 throw new KeyNotFoundException($"Given ID '{id}' was not found in the database");
             }
 
-            dbTransaction.Date = entity.Date;
-            dbTransaction.PaymentMethod = entity.PaymentMethod;
-            dbTransaction.TotalValue = entity.TotalValue;
-            dbTransaction.CustomerId = entity.CustomerId;
-            dbTransaction.EmployeeId = entity.EmployeeId;
+            dbTransaction.Date = transaction.Date;
+            dbTransaction.PaymentMethod = transaction.PaymentMethod;
+            dbTransaction.TotalValue = transaction.TotalValue;
+            //dbTransaction.CustomerId = transaction.CustomerId;
+            //dbTransaction.EmployeeId = transaction.EmployeeId;
         
             await dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id) {
             using var dbContext = new FuelStationDbContext();
+
             var dbTransaction = await dbContext.Transactions.
-                Where(t => t.Id == id).
-                SingleOrDefaultAsync();
+                SingleOrDefaultAsync(t => t.Id == id);
 
             if (dbTransaction == null) {
                 throw new KeyNotFoundException($"Given ID '{id}' was not found in the database");

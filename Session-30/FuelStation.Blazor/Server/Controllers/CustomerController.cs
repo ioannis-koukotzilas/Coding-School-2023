@@ -19,11 +19,11 @@ namespace FuelStation.Blazor.Server.Controllers {
 
         /* Get all entities in a list */
         [HttpGet]
-        public async Task<IEnumerable<CustomerDto>> GetAll() {
+        public async Task<IEnumerable<CustomerListDto>> GetAll() {
 
             var dbCustomers = await _customerRepo.GetAllAsync();
 
-            var dbResponse = dbCustomers.Select(c => new CustomerDto {
+            var dbResponse = dbCustomers.Select(c => new CustomerListDto {
 
                 Id = c.Id,
                 Name = c.Name,

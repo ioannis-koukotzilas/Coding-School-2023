@@ -1,4 +1,6 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Transaction
+@using FuelStation.Blazor.Shared.DTOs.Customer
+@using FuelStation.Blazor.Shared.DTOs.Employee
 @using FuelStation.Models.Enums
 
 @page "/transaction/edit/{Id:int?}"
@@ -8,7 +10,7 @@
 @inject IJSRuntime jsRuntime
 
 
-@if (Transaction == null)
+@if (Transaction == null && Transaction.Customers == null && Transaction.Employees == null)
 {
     <Spinner />
 }
@@ -25,39 +27,87 @@ else
         <h2 class="mb-5">Edit transaction: (@Transaction.Id)</h2>
     }
 
-    <EditForm Model="Transaction" OnValidSubmit="Save">
+    @*<EditForm Model="Transaction" OnValidSubmit="Save">
         <DataAnnotationsValidator />
-        <ValidationSummary />
+        <ValidationSummary />*@
 
-        <div class="row mb-3">
+    <div class="row mb-3">
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Hire Date Start</label>
-                <input class="form-control" type="date" @bind-value="Transaction.Date" />
+        @*<div class="col-md-6 mb-3">
+                <label class="form-label">Customer</label>
+                <select class="form-select" @bind="Transaction.CustomerId">
+
+                        <option value="1">1</option>
+
+                </select>
             </div>
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Item Type</label>
-                <InputSelect class="form-select" @bind-Value="Transaction.PaymentMethod">
-                    @foreach (var pm in Enum.GetValues<PaymentMethod>())
-                    {
-                        <option value="@pm">@pm</option>
-                    }
-                </InputSelect>
-            </div>
+                <label class="form-label">Employee</label>
+                <select class="form-select" @bind="Transaction.EmployeeId">
 
+
+                        <option value="2">2</option>
+
+                </select>
+
+            </div>*@
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Customer</label>
+            <select class="form-select" @bind="Transaction.CustomerId">
+                @foreach (var c in Transaction.Customers)
+                {
+                    <option value="@c.Id">@c.Name @c.Surname</option>
+                }
+            </select>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <div class="btn-group" role="group" aria-label="Actions">
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
-                </div>
-            </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Employee</label>
+            <select class="form-select" @bind="Transaction.EmployeeId">
+                @foreach (var e in Transaction.Employees)
+                {
+                    <option value="@e.Id">@e.Name @e.Surname</option>
+                }
+            </select>
         </div>
 
-    </EditForm>
+
+
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Transaction Date</label>
+            <input class="form-control" type="date" @bind-value="Transaction.Date" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Payment Method</label>
+            <select class="form-select" @bind="Transaction.PaymentMethod">
+                @foreach (var pm in Enum.GetValues<PaymentMethod>())
+                {
+                    <option value="@pm">@pm</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Total Value</label>
+            <input class="form-control" type="number" @bind-value="Transaction.TotalValue" />
+        </div>
+
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="btn-group" role="group" aria-label="Actions">
+                <button class="btn btn-primary" @onclick="Save">Save</button>
+                <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    @*</EditForm>*@
 }
 
 @code {
@@ -66,23 +116,53 @@ else
 
     TransactionEditDto? Transaction { get; set; }
 
+
+
     protected override async Task OnInitializedAsync()
     {
+
         if (Id == null)
         {
             Transaction = new();
+
+            Transaction.Date = DateTime.Today;
+
+            await LoadFromServer();
+
             //Item.ItemType = ItemType.Product;
         }
         else
         {
             Transaction = await Http.GetFromJsonAsync<TransactionEditDto>($"transaction/edit/{Id}");
         }
+
+
+
+
+
     }
+
+    private async Task LoadFromServer()
+    {
+        var cc = await Http.GetFromJsonAsync<List<CustomerEditDto>>("customer");
+        var ee = await Http.GetFromJsonAsync<List<EmployeeEditDto>>("employee");
+
+        if (cc != null && ee != null && Transaction != null)
+        {
+            Transaction.Customers = cc;
+            Transaction.Employees = ee;
+        }
+    }
+
+
+    // OK
 
     private void Cancel()
     {
         navigationManager.NavigateTo("transactions");
     }
+
+    // OK
 
     private async Task Save()
     {
