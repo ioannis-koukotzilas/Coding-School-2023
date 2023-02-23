@@ -72,20 +72,23 @@ namespace FuelStation.Blazor.Server.Controllers {
                 EmployeeId = dbTransaction.EmployeeId,
                 CustomerId = dbTransaction.CustomerId,
 
-                // Rest
+                // Include Transaction Lines
 
-
+                TransactionLines = dbTransaction.TransactionLines.Select(tl => new TransactionLineDto {
+                    Id = tl.Id,
+                    Quantity = tl.Quantity,
+                    ItemPrice = tl.ItemPrice,
+                    NetValue = tl.NetValue,
+                    DiscountPercent = tl.DiscountPercent,
+                    DiscountValue = tl.DiscountValue,
+                    TotalValue = tl.TotalValue
+                }).ToList()
 
                 //CustomerName = dbTransaction.Customer.Name,
                 //CustomerSurname = dbTransaction.Customer.Surname,
 
                 //EmployeeName = dbTransaction.Employee.Name,
                 //EmployeeSurname = dbTransaction.Employee.Surname,
-
-
-     
-
-
 
             };
 
@@ -95,37 +98,34 @@ namespace FuelStation.Blazor.Server.Controllers {
         [HttpPost]
         public async Task Post(TransactionEditDto transaction) {
 
+            // Transaction
+
             var dbTransaction = new Transaction(
                transaction.Date,
                transaction.PaymentMethod,
                transaction.TotalValue
-              
-               // Rest
-
-                );
+               );
 
             dbTransaction.CustomerId = transaction.CustomerId;
             dbTransaction.EmployeeId = transaction.EmployeeId;
 
+            // Transaction Lines
+
+            foreach (var tl in transaction.TransactionLines) {
+
+                dbTransaction.TransactionLines.Add(new TransactionLine(
+                    tl.Quantity,
+                    tl.ItemPrice,
+                    tl.NetValue,
+                    tl.DiscountPercent,
+                    tl.DiscountValue,
+                    tl.TotalValue
+                    ));
+
+            }
+
             await _transactionRepo.AddAsync(dbTransaction);
         }
-
-
-
-        //[HttpPost]
-        //public async Task Post(TodoEditDto todo) {
-        //    var newTodo = new Todo(todo.Title);
-        //    foreach (var comment in todo.Comments) {
-        //        newTodo.Comments.Add(new TodoComment(comment.Text));
-        //    }
-
-        //    newTodo.TodoType = todo.TodoType;
-        //    _todoRepo.Add(newTodo);
-        //}
-
-
-
-
 
         [HttpDelete("{id}")]
         public async Task Delete(int id) {
@@ -135,3 +135,4 @@ namespace FuelStation.Blazor.Server.Controllers {
     }
 
 }
+

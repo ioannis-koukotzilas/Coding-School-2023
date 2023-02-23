@@ -34,6 +34,11 @@ namespace FuelStation.Blazor.Shared.DTOs.Transaction {
 
 
 
+
+        public List<TransactionLineDto> TransactionLines { get; set; } = new();
+
+
+
         //public List<CustomerEditDto> Customers { get; set; } = new List<CustomerEditDto>();
         //public List<EmployeeEditDto> Employees { get; set; } = new List<EmployeeEditDto>();
 
@@ -62,5 +67,17 @@ namespace FuelStation.Blazor.Shared.DTOs.Transaction {
 
 
     }
+
+
+    public class TransactionLineDto {
+        public int Id { get; set; }
+        public int Quantity { get; set; }
+        public decimal ItemPrice { get; set; }
+        public decimal NetValue { get; set; }
+        public decimal DiscountPercent { get; set; }
+        public decimal DiscountValue { get; set; }
+        public decimal TotalValue { get; set; }
+    }
+
 
 }

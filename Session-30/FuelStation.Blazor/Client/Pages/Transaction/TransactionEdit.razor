@@ -27,31 +27,9 @@ else
         <h2 class="mb-5">Edit transaction: (@Transaction.Id)</h2>
     }
 
-    @*<EditForm Model="Transaction" OnValidSubmit="Save">
-        <DataAnnotationsValidator />
-        <ValidationSummary />*@
+    // Transaction
 
-    <div class="row mb-3">
-
-        @*<div class="col-md-6 mb-3">
-                <label class="form-label">Customer</label>
-                <select class="form-select" @bind="Transaction.CustomerId">
-
-                        <option value="1">1</option>
-
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Employee</label>
-                <select class="form-select" @bind="Transaction.EmployeeId">
-
-
-                        <option value="2">2</option>
-
-                </select>
-
-            </div>*@
+    <div class="row mb-5">
 
         <div class="col-md-6 mb-3">
             <label class="form-label">Customer</label>
@@ -98,6 +76,62 @@ else
 
     </div>
 
+
+    // Transaction Lines
+
+    <h3 class="mb-3">Transaction Lines</h3>
+
+    <div class="row mb-4">
+        <div class="input-group">
+            <input class="form-control" placeholder="new..." @bind-value="Test" />
+            <button class="btn btn-warning" @onclick="() => AddTransactionLine()">Add transaction line</button>
+        </div>
+    </div>
+
+    <div class="table-responsive p-3 mb-3">
+
+        <table class="table table-dark table-striped table-hover">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Quantity</th>
+                    <th>Item Price</th>
+                    <th>Net Value</th>
+                    <th>Discount Percent</th>
+                    <th>Discount Value</th>
+                    <th>Total Value</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var tl in Transaction.TransactionLines)
+                {
+                    <tr>
+                        <td>@tl.Id</td>
+                        <td>@tl.Quantity</td>
+                        <td>@tl.ItemPrice</td>
+                        <td>@tl.NetValue</td>
+                        <td>@tl.DiscountPercent</td>
+                        <td>@tl.DiscountValue</td>
+                        <td>@tl.TotalValue</td>
+
+                        <td>
+                            @*<button class="btn btn-warning" @onclick="() => Edit(t)">Edit</button>
+                                <button class="btn btn-danger" @onclick="() => Delete(t)">Delete</button>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+
+
     <div class="row mb-3">
         <div class="col-md-6">
             <div class="btn-group" role="group" aria-label="Actions">
@@ -116,7 +150,7 @@ else
 
     TransactionEditDto? Transaction { get; set; }
 
-
+    decimal Test;
 
     protected override async Task OnInitializedAsync()
     {
@@ -135,10 +169,6 @@ else
         {
             Transaction = await Http.GetFromJsonAsync<TransactionEditDto>($"transaction/edit/{Id}");
         }
-
-
-
-
 
     }
 
@@ -180,5 +210,23 @@ else
         response.EnsureSuccessStatusCode();
         navigationManager.NavigateTo("transactions");
     }
+
+    // TL
+
+
+    private void AddTransactionLine()
+    {
+        Transaction.TransactionLines.Add(new TransactionLineDto
+        {
+            ItemPrice = Test
+
+        });
+    }
+
+    private void DeleteTransactionLine(TransactionLineDto transactionLine)
+    {
+        Transaction.TransactionLines.Remove(transactionLine);
+    }
+
 
 }
