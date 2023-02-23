@@ -84,12 +84,6 @@ namespace FuelStation.Blazor.Server.Controllers {
                     TotalValue = tl.TotalValue
                 }).ToList()
 
-                //CustomerName = dbTransaction.Customer.Name,
-                //CustomerSurname = dbTransaction.Customer.Surname,
-
-                //EmployeeName = dbTransaction.Employee.Name,
-                //EmployeeSurname = dbTransaction.Employee.Surname,
-
             };
 
             return dbResponse;
@@ -98,30 +92,29 @@ namespace FuelStation.Blazor.Server.Controllers {
         [HttpPost]
         public async Task Post(TransactionEditDto transaction) {
 
-            // Transaction
-
             var dbTransaction = new Transaction(
                transaction.Date,
                transaction.PaymentMethod,
                transaction.TotalValue
-               );
+            );
 
             dbTransaction.CustomerId = transaction.CustomerId;
             dbTransaction.EmployeeId = transaction.EmployeeId;
 
-            // Transaction Lines
-
             foreach (var tl in transaction.TransactionLines) {
 
-                dbTransaction.TransactionLines.Add(new TransactionLine(
+                var transactionLine = new TransactionLine(
                     tl.Quantity,
                     tl.ItemPrice,
                     tl.NetValue,
                     tl.DiscountPercent,
                     tl.DiscountValue,
                     tl.TotalValue
-                    ));
+                );
 
+                transactionLine.ItemId = tl.ItemId;
+
+                dbTransaction.TransactionLines.Add(transactionLine);
             }
 
             await _transactionRepo.AddAsync(dbTransaction);

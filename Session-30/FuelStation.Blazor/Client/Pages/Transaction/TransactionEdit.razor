@@ -83,7 +83,16 @@ else
 
     <div class="row mb-4">
         <div class="input-group">
-            <input class="form-control" placeholder="new..." @bind-value="Test" />
+
+            <input class="form-control" @bind-value="TransQuantity" />
+            <input class="form-control" @bind-value="TransItemPrice" />
+            <input class="form-control" @bind-value="TransNetValue" />
+            <input class="form-control" @bind-value="TransDiscountPercent" />
+            <input class="form-control" @bind-value="TransDiscountValue" />
+            <input class="form-control" @bind-value="TransTotalValue" />
+
+            <input class="form-control" @bind-value="TransItemId" />
+
             <button class="btn btn-warning" @onclick="() => AddTransactionLine()">Add transaction line</button>
         </div>
     </div>
@@ -101,6 +110,10 @@ else
                     <th>Discount Percent</th>
                     <th>Discount Value</th>
                     <th>Total Value</th>
+
+                    <th>Item Id</th>
+
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -116,9 +129,12 @@ else
                         <td>@tl.DiscountValue</td>
                         <td>@tl.TotalValue</td>
 
+                        <td>@tl.ItemId</td>
+
                         <td>
                             @*<button class="btn btn-warning" @onclick="() => Edit(t)">Edit</button>
-                                <button class="btn btn-danger" @onclick="() => Delete(t)">Delete</button>*@
+            <button class="btn btn-danger" @onclick="() => Delete(t)">Delete</button>*@
+                            <button class="btn btn-danger" @onclick="() => DeleteTransactionLine(tl)">Delete</button>
                         </td>
                     </tr>
                 }
@@ -150,7 +166,7 @@ else
 
     TransactionEditDto? Transaction { get; set; }
 
-    decimal Test;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -211,15 +227,30 @@ else
         navigationManager.NavigateTo("transactions");
     }
 
-    // TL
+    // TL TESTING
+    int TransQuantity;
+    decimal TransItemPrice;
+    decimal TransNetValue;
+    decimal TransDiscountPercent;
+    decimal TransDiscountValue;
+    decimal TransTotalValue;
 
+    int TransItemId;
 
     private void AddTransactionLine()
     {
         Transaction.TransactionLines.Add(new TransactionLineDto
         {
-            ItemPrice = Test
+            Quantity = TransQuantity,
+            ItemPrice = TransItemPrice,
+            NetValue = TransNetValue,
+            DiscountPercent = TransDiscountPercent,
+            DiscountValue = TransDiscountValue,
+            TotalValue = TransTotalValue,
 
+            ItemId = TransItemId
+
+            
         });
     }
 
