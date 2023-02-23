@@ -1,0 +1,104 @@
+﻿@using FuelStation.Blazor.Shared.DTOs.Transaction
+@using FuelStation.Models.Enums
+
+@page "/transaction/edit/{Id:int?}"
+
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+
+
+@if (Transaction == null)
+{
+    <Spinner />
+}
+else
+{
+    @if (Id == null)
+    {
+        <PageTitle>New Transaction - Fuel Station</PageTitle>
+        <h2 class="mb-5">Add new transaction</h2>
+    }
+    else
+    {
+        <PageTitle>Edit Transaction @Transaction.Id - Fuel Station</PageTitle>
+        <h2 class="mb-5">Edit transaction: (@Transaction.Id)</h2>
+    }
+
+    <EditForm Model="Transaction" OnValidSubmit="Save">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="row mb-3">
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Hire Date Start</label>
+                <input class="form-control" type="date" @bind-value="Transaction.Date" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Item Type</label>
+                <InputSelect class="form-select" @bind-Value="Transaction.PaymentMethod">
+                    @foreach (var pm in Enum.GetValues<PaymentMethod>())
+                    {
+                        <option value="@pm">@pm</option>
+                    }
+                </InputSelect>
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="btn-group" role="group" aria-label="Actions">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </EditForm>
+}
+
+@code {
+
+    [Parameter] public int? Id { get; set; }
+
+    TransactionEditDto? Transaction { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id == null)
+        {
+            Transaction = new();
+            //Item.ItemType = ItemType.Product;
+        }
+        else
+        {
+            Transaction = await Http.GetFromJsonAsync<TransactionEditDto>($"transaction/edit/{Id}");
+        }
+    }
+
+    private void Cancel()
+    {
+        navigationManager.NavigateTo("transactions");
+    }
+
+    private async Task Save()
+    {
+        HttpResponseMessage? response = null;
+
+        if (Id == null)
+        {
+            response = await Http.PostAsJsonAsync("transaction", Transaction);
+        }
+        else
+        {
+            response = await Http.PutAsJsonAsync("transaction", Transaction);
+        }
+
+        response.EnsureSuccessStatusCode();
+        navigationManager.NavigateTo("transactions");
+    }
+
+}

@@ -4,20 +4,23 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
 
-@page "/transaction"
-
-<h3>Transactions</h3>
+@page "/transactions"
 
 @if (transactions == null)
 {
-    <p>Loading...</p>
+    <Spinner />
 }
 else
 {
+    <PageTitle>Transactions - Fuel Station</PageTitle>
 
-    <div class="table-responsive">
+    <h1 class="mb-5">Transactions</h1>
 
-        <table class="table table-striped">
+    <button class="btn btn-primary mb-5" @onclick="Add">Add new transaction</button>
+
+    <div class="table-responsive p-3">
+
+        <table class="table table-dark table-striped table-hover">
 
             <thead>
                 <tr>
@@ -81,7 +84,7 @@ else
 
     private async Task Delete(TransactionDto transaction)
     {
-        var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm customer deletion?");
+        var confirm = await jsRuntime.InvokeAsync<bool>("confirm", "Confirm transaction deletion?");
         if (confirm)
         {
             var response = await Http.DeleteAsync($"transaction/{transaction.Id}");
