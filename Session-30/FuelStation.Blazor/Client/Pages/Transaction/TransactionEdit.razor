@@ -1,6 +1,7 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Transaction
 @using FuelStation.Blazor.Shared.DTOs.Customer
 @using FuelStation.Blazor.Shared.DTOs.Employee
+@using FuelStation.Blazor.Shared.DTOs.Item
 @using FuelStation.Models.Enums
 
 @page "/transaction/edit/{Id:int?}"
@@ -10,10 +11,16 @@
 @inject IJSRuntime jsRuntime
 
 
-@if (Transaction == null && Transaction.Customers == null && Transaction.Employees == null)
+@*@if (Transaction == null && Transaction.Customers == null && Transaction.Employees == null && TransactionLine.Items == null)
+{
+    <Spinner />
+}*@
+
+@if (Transaction == null || Transaction.Customers == null || Transaction.Employees == null || TransactionLine?.Items == null)
 {
     <Spinner />
 }
+
 else
 {
     @if (Id == null)
@@ -93,6 +100,19 @@ else
 
             <input class="form-control" @bind-value="TransItemId" />
 
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">iTEM</label>
+                <select class="form-select" @bind="TransactionLine.ItemId">
+                    @foreach (var i in TransactionLine.Items)
+                    {
+                        <option value="@i.Id">@i.Code @i.Price</option>
+                    }
+                </select>
+            </div>
+
+
+
             <button class="btn btn-warning" @onclick="() => AddTransactionLine()">Add transaction line</button>
         </div>
     </div>
@@ -133,7 +153,7 @@ else
 
                         <td>
                             @*<button class="btn btn-warning" @onclick="() => Edit(t)">Edit</button>
-            <button class="btn btn-danger" @onclick="() => Delete(t)">Delete</button>*@
+                                <button class="btn btn-danger" @onclick="() => Delete(t)">Delete</button>*@
                             <button class="btn btn-danger" @onclick="() => DeleteTransactionLine(tl)">Delete</button>
                         </td>
                     </tr>
@@ -166,6 +186,8 @@ else
 
     TransactionEditDto? Transaction { get; set; }
 
+    // Check
+    TransactionLineDto? TransactionLine { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -192,13 +214,19 @@ else
     {
         var cc = await Http.GetFromJsonAsync<List<CustomerEditDto>>("customer");
         var ee = await Http.GetFromJsonAsync<List<EmployeeEditDto>>("employee");
+        var it = await Http.GetFromJsonAsync<List<ItemEditDto>>("item");
 
-        if (cc != null && ee != null && Transaction != null)
+        if (cc != null && ee != null && Transaction != null && it != null)
         {
             Transaction.Customers = cc;
             Transaction.Employees = ee;
+
+            TransactionLine = new();
+            TransactionLine.Items = it;
         }
     }
+
+
 
 
     // OK
@@ -250,7 +278,7 @@ else
 
             ItemId = TransItemId
 
-            
+
         });
     }
 

@@ -103,7 +103,7 @@ namespace FuelStation.Blazor.Server.Controllers {
 
             foreach (var tl in transaction.TransactionLines) {
 
-                var transactionLine = new TransactionLine(
+                var dbTransactionLine = new TransactionLine(
                     tl.Quantity,
                     tl.ItemPrice,
                     tl.NetValue,
@@ -112,9 +112,9 @@ namespace FuelStation.Blazor.Server.Controllers {
                     tl.TotalValue
                 );
 
-                transactionLine.ItemId = tl.ItemId;
+                dbTransactionLine.ItemId = tl.ItemId;
 
-                dbTransaction.TransactionLines.Add(transactionLine);
+                dbTransaction.TransactionLines.Add(dbTransactionLine);
             }
 
             await _transactionRepo.AddAsync(dbTransaction);

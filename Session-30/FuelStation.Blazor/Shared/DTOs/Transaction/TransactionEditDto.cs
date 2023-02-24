@@ -1,6 +1,7 @@
 ﻿using FuelStation.Blazor.Shared.DTOs.Employee;
 using FuelStation.Blazor.Shared.DTOs.Customer;
 using FuelStation.Models.Enums;
+using FuelStation.Blazor.Shared.DTOs.Item;
 
 namespace FuelStation.Blazor.Shared.DTOs.Transaction {
 
@@ -32,6 +33,8 @@ namespace FuelStation.Blazor.Shared.DTOs.Transaction {
 
         // Check
         public int ItemId { get; set; }
+
+        public List<ItemEditDto> Items { get; set; } = new();
 
     }
 
