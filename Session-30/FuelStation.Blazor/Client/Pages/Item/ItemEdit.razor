@@ -21,44 +21,47 @@ else
     }
     else
     {
-        <PageTitle>Edit Item @Item.Code - Fuel Station</PageTitle>
-        <h2 class="mb-5">Edit item: @Item.Code (@Item.Id)</h2>
+        <PageTitle>Edit Item @Item.Description - Fuel Station</PageTitle>
+        <h2 class="mb-5">Edit item @Item.Id: @Item.Description</h2>
     }
 
     <EditForm Model="Item" OnValidSubmit="Save">
         <DataAnnotationsValidator />
-        <ValidationSummary />
 
         <div class="row mb-3">
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Code</label>
-                <InputText class="form-control" type="text" placeholder="Enter item's code" @bind-Value="Item.Code" />
+                <label class="form-label">Item Code</label>
+                <input class="form-control" type="text" placeholder="Enter item code" @bind-value="Item.Code" />
+                <ValidationMessage For="@(() => Item.Code)" />
             </div>
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Description</label>
-                <InputText class="form-control" type="text" placeholder="Enter item's description" @bind-Value="Item.Description" />
+                <label class="form-label">Item Description</label>
+                <input class="form-control" type="text" placeholder="Enter item description" @bind-value="Item.Description" />
+                <ValidationMessage For="@(() => Item.Description)" />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Item Type</label>
-                <InputSelect class="form-select" @bind-Value="Item.ItemType">
+                <select class="form-select" @bind="Item.ItemType">
                     @foreach (var it in Enum.GetValues<ItemType>())
                     {
                         <option value="@it">@it</option>
                     }
-                </InputSelect>
+                </select>
             </div>
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Price</label>
-                <input class="form-control" type="number" @bind-value="Item.Price" />
+                <label class="form-label">Item Price</label>
+                <input class="form-control" @bind-value="Item.Price" />
+                <ValidationMessage For="@(() => Item.Price)" />
             </div>
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Cost</label>
-                <input class="form-control" type="number" @bind-value="Item.Cost" />
+                <label class="form-label">Item Cost</label>
+                <input class="form-control" @bind-value="Item.Cost" />
+                <ValidationMessage For="@(() => Item.Cost)" />
             </div>
 
         </div>

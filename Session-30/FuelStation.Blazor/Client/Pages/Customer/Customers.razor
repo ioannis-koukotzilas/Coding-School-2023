@@ -1,5 +1,4 @@
-﻿
-@using FuelStation.Blazor.Shared.DTOs.Customer
+﻿@using FuelStation.Blazor.Shared.DTOs.Customer
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
@@ -13,12 +12,11 @@
 }
 else
 {
-
     <PageTitle>Customers - Fuel Station</PageTitle>
 
     <h1 class="mb-5">Customers</h1>
 
-    <button class="btn btn-primary mb-5" @onclick="Add">Add new customer</button>
+    <button class="btn btn-primary mb-5" @onclick="Add">Add New Customer</button>
 
     <div class="table-responsive p-3">
 
@@ -26,7 +24,7 @@ else
 
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Customer ID</th>
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Card Number</th>

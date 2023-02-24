@@ -226,6 +226,7 @@ input[type=number] {
 
 .validation-message {
     color: #ff7b72;
+    margin-top: 0.5rem;
 }
 
 /* Blazor

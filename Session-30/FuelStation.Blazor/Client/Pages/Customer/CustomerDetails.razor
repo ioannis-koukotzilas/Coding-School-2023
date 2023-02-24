@@ -11,7 +11,6 @@
 }
 else
 {
-
     <PageTitle>Customer: @Customer.Name @Customer.Surname - Fuel Station</PageTitle>
     <h2 class="mb-5">Details for customer: @Customer.Name @Customer.Surname</h2>
 
@@ -19,14 +18,14 @@ else
         <div class="col-md-6">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-dark"><strong>Customer ID:</strong> @Customer.Id</li>
-                <li class="list-group-item list-group-item-dark"><strong>Customer card:</strong> @Customer.CardNumber</li>
+                <li class="list-group-item list-group-item-dark"><strong>Card number:</strong> @Customer.CardNumber</li>
             </ul>
         </div>
     </div>
 
     <div class="btn-group mb-5" role="group" aria-label="Actions">
         <button class="btn btn-secondary" @onclick="Cancel">Back</button>
-        <button class="btn btn-primary" @onclick="Edit">Edit Employee</button>
+        <button class="btn btn-primary" @onclick="Edit">Edit Customer</button>
     </div>
 
     @if (Customer.Transactions.Any())

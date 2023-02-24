@@ -7,16 +7,17 @@ namespace FuelStation.Blazor.Shared.DTOs.Employee {
 
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Name is a required field")]
+        [Required(ErrorMessage = "Employee name is a required field")]
         public string Name { get; set; } = null!;
 
-        [Required(ErrorMessage = "Surname is a required field")]
+        [Required(ErrorMessage = "Employee surname is a required field")]
         public string Surname { get; set; } = null!;
 
         public DateTime HireDateStart { get; set; }
         public DateTime HireDateEnd { get; set; }
 
-        public decimal SallaryPerMonth { get; set; } // TODO: Add a regex for negative inputs
+        [Range(0, 99999999.99, ErrorMessage = "Employee's salary must be a positive number (10, 2)")]
+        public decimal SallaryPerMonth { get; set; }
 
         public EmployeeType EmployeeType { get; set; }
 

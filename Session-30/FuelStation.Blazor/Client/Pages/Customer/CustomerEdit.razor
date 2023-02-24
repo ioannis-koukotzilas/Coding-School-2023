@@ -6,7 +6,6 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
 
-
 @if (Customer == null)
 {
     <Spinner />
@@ -21,30 +20,32 @@ else
     else
     {
         <PageTitle>Edit Customer @Customer.Name @Customer.Surname - Fuel Station</PageTitle>
-        <h2 class="mb-5">Edit customer: @Customer.Name @Customer.Surname {@Customer.Id}</h2>
+        <h2 class="mb-5">Edit customer @Customer.Id: @Customer.Name @Customer.Surname</h2>
     }
 
-    <button class="btn btn-warning mb-5" @onclick="GenerateNewCardNumber">Generate card number</button>
+    <button class="btn btn-warning mb-5" @onclick="GenerateNewCardNumber">Generate Card Number</button>
 
     <EditForm Model="Customer" OnValidSubmit="Save">
         <DataAnnotationsValidator />
-        <ValidationSummary />
 
         <div class="row mb-3">
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Name</label>
-                <input class="form-control" type="text" placeholder="Enter customer's name" @bind-value=@Customer.Name />
+                <label class="form-label">Customer Name</label>
+                <input class="form-control" type="text" placeholder="Enter customer name" @bind-value=@Customer.Name />
+                <ValidationMessage For="@(() => Customer.Name)" />
             </div>
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Surname</label>
-                <input class="form-control" type="text" placeholder="Enter customer's surname" @bind-value=@Customer.Surname />
+                <label class="form-label">Customer Surname</label>
+                <input class="form-control" type="text" placeholder="Enter customer surname" @bind-value=@Customer.Surname />
+                <ValidationMessage For="@(() => Customer.Surname)" />
             </div>
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Card Number</label>
-                <input class="form-control" type="text" placeholder="Click generate button to add a new card number" disabled @bind-value=@Customer.CardNumber />
+                <label class="form-label">Customer Card Number</label>
+                <input class="form-control" type="text" placeholder="Click generate button to create a new card number" disabled @bind-value=@Customer.CardNumber />
+                <ValidationMessage For="@(() => Customer.CardNumber)" />
             </div>
 
         </div>
@@ -59,7 +60,6 @@ else
         </div>
 
     </EditForm>
-
 }
 
 

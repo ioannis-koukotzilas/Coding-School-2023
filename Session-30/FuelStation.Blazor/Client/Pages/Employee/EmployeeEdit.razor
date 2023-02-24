@@ -7,7 +7,6 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
 
-
 @if (Employee == null)
 {
     <Spinner />
@@ -22,23 +21,24 @@ else
     else
     {
         <PageTitle>Edit Employee @Employee.Name @Employee.Surname - Fuel Station</PageTitle>
-        <h2 class="mb-5">Edit employee: @Employee.Name @Employee.Surname {@Employee.Id}</h2>
+        <h2 class="mb-5">Edit employee @Employee.Id: @Employee.Name @Employee.Surname</h2>
     }
 
     <EditForm Model="Employee" OnValidSubmit="Save">
         <DataAnnotationsValidator />
-        <ValidationSummary />
 
         <div class="row mb-3">
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Name</label>
-                <InputText class="form-control" type="text" placeholder="Enter employee's name" @bind-Value="Employee.Name" />
+                <label class="form-label">Employee Name</label>
+                <input class="form-control" type="text" placeholder="Enter employee's name" @bind-value="Employee.Name" />
+                <ValidationMessage For="@(() => Employee.Name)" />
             </div>
 
             <div class="col-md-6 mb-3">
-                <label class="form-label">Surname</label>
-                <InputText class="form-control" type="text" placeholder="Enter employee's surname" @bind-Value="Employee.Surname" />
+                <label class="form-label">Employee Surname</label>
+                <input class="form-control" type="text" placeholder="Enter employee's surname" @bind-value="Employee.Surname" />
+                <ValidationMessage For="@(() => Employee.Surname)" />
             </div>
 
             <div class="col-md-6 mb-3">
@@ -51,21 +51,20 @@ else
                 <input class="form-control" type="date" @bind-value="Employee.HireDateEnd" />
             </div>
 
-
             <div class="col-md-6 mb-3">
                 <label class="form-label">Salary Per Month</label>
-                <input class="form-control" type="number" @bind-value="Employee.SallaryPerMonth" />
+                <input class="form-control" type="text" @bind-value="Employee.SallaryPerMonth" />
+                <ValidationMessage For="@(() => Employee.SallaryPerMonth)" />
             </div>
 
             <div class="col-md-6 mb-3">
                 <label class="form-label">Employee Type</label>
-                <InputSelect class="form-select" @bind-Value="Employee.EmployeeType">
+                <select class="form-select" @bind="Employee.EmployeeType">
                     @foreach (var enumValue in Enum.GetValues<EmployeeType>())
                     {
                         <option value="@enumValue">@enumValue</option>
                     }
-                </InputSelect>
-
+                </select>
             </div>
 
         </div>
@@ -80,9 +79,7 @@ else
         </div>
 
     </EditForm>
-
 }
-
 
 @code {
 
