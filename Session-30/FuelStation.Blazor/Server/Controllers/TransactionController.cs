@@ -146,6 +146,7 @@ namespace FuelStation.Blazor.Server.Controllers {
 
             dbTransaction.Date = transaction.Date;
             dbTransaction.PaymentMethod = transaction.PaymentMethod;
+            //dbTransaction.TotalValue = transaction.TotalValue;
 
             //dbTransaction.TotalValue = transaction.TotalValue;
 
@@ -164,7 +165,7 @@ namespace FuelStation.Blazor.Server.Controllers {
                 { Id = transactionLine.Id }).ToList();
 
             // Calculate the total value based on the transaction lines
-            dbTransaction.TotalValue = dbTransaction.TransactionLines.Sum(tl => tl.TotalValue);
+           dbTransaction.TotalValue = dbTransaction.TransactionLines.Sum(tl => tl.TotalValue);
 
             await _transactionRepo.UpdateAsync(transaction.Id, dbTransaction);
 

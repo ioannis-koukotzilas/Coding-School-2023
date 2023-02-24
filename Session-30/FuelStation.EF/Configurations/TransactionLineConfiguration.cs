@@ -17,7 +17,7 @@ namespace FuelStation.EF.Configurations {
             builder.Property(tl => tl.DiscountPercent).IsRequired().HasPrecision(3, 2);
             builder.Property(tl => tl.DiscountValue).IsRequired().HasPrecision(10, 3);
             builder.Property(tl => tl.TotalValue).IsRequired().HasPrecision(10, 3);
-            builder.HasOne(tl => tl.Transaction).WithMany(tl => tl.TransactionLines).HasForeignKey(tl => tl.TransactionId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(tl => tl.Transaction).WithMany(tl => tl.TransactionLines).HasForeignKey(tl => tl.TransactionId);
             builder.HasOne(tl => tl.Item).WithMany(tl => tl.TransactionLines).HasForeignKey(tl => tl.ItemId).OnDelete(DeleteBehavior.Restrict);
 
         }
