@@ -103,6 +103,10 @@ namespace FuelStation.Blazor.Server.Controllers {
 
             foreach (var tl in transaction.TransactionLines) {
 
+                // TODO: Add calculation for each transaction line
+
+                // var totalValue = (tl.Quantity * tl.ItemPrice) - tl.DiscountValue;
+
                 var dbTransactionLine = new TransactionLine(
                     tl.Quantity,
                     tl.ItemPrice,
@@ -110,6 +114,8 @@ namespace FuelStation.Blazor.Server.Controllers {
                     tl.DiscountPercent,
                     tl.DiscountValue,
                     tl.TotalValue
+
+                    // totalValue
                 );
 
                 dbTransactionLine.ItemId = tl.ItemId;
