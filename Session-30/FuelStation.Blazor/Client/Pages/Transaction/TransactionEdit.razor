@@ -1,4 +1,5 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Transaction
+@using FuelStation.Blazor.Shared.DTOs.TransactionLine
 @using FuelStation.Blazor.Shared.DTOs.Customer
 @using FuelStation.Blazor.Shared.DTOs.Employee
 @using FuelStation.Blazor.Shared.DTOs.Item
@@ -9,12 +10,6 @@
 @inject HttpClient Http
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
-
-
-@*@if (Transaction == null && Transaction.Customers == null && Transaction.Employees == null && TransactionLine.Items == null)
-{
-    <Spinner />
-}*@
 
 @if (Transaction == null || Transaction.Customers == null || Transaction.Employees == null || TransactionLine?.Items == null)
 {
@@ -58,9 +53,6 @@ else
             </select>
         </div>
 
-
-
-
         <div class="col-md-6 mb-3">
             <label class="form-label">Transaction Date</label>
             <input class="form-control" type="date" @bind-value="Transaction.Date" />
@@ -78,43 +70,52 @@ else
 
         <div class="col-md-6 mb-3">
             <label class="form-label">Total Value</label>
-            <input class="form-control" type="number" @bind-value="Transaction.TotalValue" />
+            @*<input class="form-control" type="number" @bind-value="Transaction.TotalValue" />*@
+            @*<input class="form-control" type="number" value="@Transaction.TotalValue" readonly />*@
         </div>
+
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Total Value</label>
+            <h1>@Transaction.TransactionTotalValue</h1>
+        </div>
+
 
     </div>
 
 
     // Transaction Lines
 
-    <h3 class="mb-3">Transaction Lines</h3>
+    /* Business:
+    * Net Value is calculated by multiplying the quantity with the item price.
+    * Discount Value is calculated by multiplying Net Value by Discount Percent.
+    * Total Value is calculated by subtracting Discount Value from the Net Value.
+    * If a Transaction Line includes an item of the type Fuel and its NetValue is
+    * above 20 euros, then we calculate a 10% discount on that transaction line. */
+
+    <h4 class="mb-3">Transaction Lines</h4>
 
     <div class="row mb-4">
-        <div class="input-group">
 
-            <input class="form-control" @bind-value="TransQuantity" />
-            <input class="form-control" @bind-value="TransItemPrice" />
-            <input class="form-control" @bind-value="TransNetValue" />
-            <input class="form-control" @bind-value="TransDiscountPercent" />
-            <input class="form-control" @bind-value="TransDiscountValue" />
-            <input class="form-control" @bind-value="TransTotalValue" />
+        <div class="col-md-6">
+            <label class="form-label">Select Item</label>
+            <select class="form-select" @bind="TransactionLine.ItemId">
+                @foreach (var i in TransactionLine.Items)
+                {
+                    <option value="@i.Id">@i.Code @i.Price</option>
+                }
+            </select>
+        </div>
 
-            <input class="form-control" @bind-value="TransItemId" />
+        <div class="col-md-3">
+            <label class="form-label">Quantity</label>
+            <input class="form-control" type="number" @bind-value="TransQuantity" />
+        </div>
 
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label">iTEM</label>
-                <select class="form-select" @bind="TransactionLine.ItemId">
-                    @foreach (var i in TransactionLine.Items)
-                    {
-                        <option value="@i.Id">@i.Code @i.Price</option>
-                    }
-                </select>
-            </div>
-
-
-
+        <div class="col-md-3">
             <button class="btn btn-warning" @onclick="() => AddTransactionLine()">Add transaction line</button>
         </div>
+
     </div>
 
     <div class="table-responsive p-3 mb-3">
@@ -127,12 +128,10 @@ else
                     <th>Quantity</th>
                     <th>Item Price</th>
                     <th>Net Value</th>
-                    <th>Discount Percent</th>
+                    <th>Discount %</th>
                     <th>Discount Value</th>
                     <th>Total Value</th>
-
                     <th>Item Id</th>
-
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -143,17 +142,14 @@ else
                     <tr>
                         <td>@tl.Id</td>
                         <td>@tl.Quantity</td>
-                        <td>@tl.ItemPrice</td>
+                        <td>@tl.ItemPrice   </td>
                         <td>@tl.NetValue</td>
                         <td>@tl.DiscountPercent</td>
                         <td>@tl.DiscountValue</td>
                         <td>@tl.TotalValue</td>
-
                         <td>@tl.ItemId</td>
 
                         <td>
-                            @*<button class="btn btn-warning" @onclick="() => Edit(t)">Edit</button>
-                                <button class="btn btn-danger" @onclick="() => Delete(t)">Delete</button>*@
                             <button class="btn btn-danger" @onclick="() => DeleteTransactionLine(tl)">Delete</button>
                         </td>
                     </tr>
@@ -164,10 +160,6 @@ else
 
     </div>
 
-
-
-
-
     <div class="row mb-3">
         <div class="col-md-6">
             <div class="btn-group" role="group" aria-label="Actions">
@@ -177,7 +169,6 @@ else
         </div>
     </div>
 
-    @*</EditForm>*@
 }
 
 @code {
@@ -190,6 +181,10 @@ else
     TransactionLineDto? TransactionLine { get; set; }
 
 
+    TransactionEditDtoTest? TransactionTest { get; set; }
+
+
+
     protected override async Task OnInitializedAsync()
     {
 
@@ -197,11 +192,12 @@ else
         {
             Transaction = new();
 
+            TransactionTest = new();
+
             Transaction.Date = DateTime.Today;
 
             await LoadFromServer();
 
-            //Item.ItemType = ItemType.Product;
         }
         else
         {
@@ -212,31 +208,24 @@ else
 
     private async Task LoadFromServer()
     {
-        var cc = await Http.GetFromJsonAsync<List<CustomerEditDto>>("customer");
-        var ee = await Http.GetFromJsonAsync<List<EmployeeEditDto>>("employee");
-        var it = await Http.GetFromJsonAsync<List<ItemEditDto>>("item");
+        var customers = await Http.GetFromJsonAsync<List<CustomerEditDto>>("customer");
+        var employees = await Http.GetFromJsonAsync<List<EmployeeEditDto>>("employee");
+        var items = await Http.GetFromJsonAsync<List<ItemEditDto>>("item");
 
-        if (cc != null && ee != null && Transaction != null && it != null)
+        if (customers != null && employees != null && Transaction != null && items != null)
         {
-            Transaction.Customers = cc;
-            Transaction.Employees = ee;
+            Transaction.Customers = customers;
+            Transaction.Employees = employees;
 
             TransactionLine = new();
-            TransactionLine.Items = it;
+            TransactionLine.Items = items;
         }
     }
-
-
-
-
-    // OK
 
     private void Cancel()
     {
         navigationManager.NavigateTo("transactions");
     }
-
-    // OK
 
     private async Task Save()
     {
@@ -255,37 +244,54 @@ else
         navigationManager.NavigateTo("transactions");
     }
 
-    // TL TESTING
-    int TransQuantity;
-    decimal TransItemPrice;
-    decimal TransNetValue;
-    decimal TransDiscountPercent;
-    decimal TransDiscountValue;
-    decimal TransTotalValue;
 
-    int TransItemId;
+    // Transaction Lines
+
+    int TransQuantity;
 
     private void AddTransactionLine()
     {
+        var item = TransactionLine.Items.FirstOrDefault(i => i.Id == TransactionLine.ItemId);
+
+        if (item == null)
+        {
+            // Handle error: item not found
+            return;
+        }
+
+
+
+
+       
+
+
+        var netValue = TransQuantity * item.Price;
+        var discountPercent = (item.ItemType == ItemType.Fuel && netValue > 20) ? 10m : 0m;
+        var discountValue = netValue * (discountPercent / 100m);
+        discountValue = Decimal.Round(discountValue, 3);
+        var totalValue = netValue - discountValue;
+
         Transaction.TransactionLines.Add(new TransactionLineDto
         {
+            ItemId = item.Id,
             Quantity = TransQuantity,
-            ItemPrice = TransItemPrice,
-            NetValue = TransNetValue,
-            DiscountPercent = TransDiscountPercent,
-            DiscountValue = TransDiscountValue,
-            TotalValue = TransTotalValue,
-
-            ItemId = TransItemId
-
-
+            ItemPrice = item.Price,
+            NetValue = netValue,
+            DiscountPercent = discountPercent,
+            DiscountValue = discountValue,
+            TotalValue = totalValue
         });
+
+        // reset the TransQuantity
+        TransQuantity = 0;
     }
+
+    decimal TransactionTotalValue => Transaction.TransactionLines.Sum(tl => tl.TotalValue);
+
 
     private void DeleteTransactionLine(TransactionLineDto transactionLine)
     {
         Transaction.TransactionLines.Remove(transactionLine);
     }
-
 
 }

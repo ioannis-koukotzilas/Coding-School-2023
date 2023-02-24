@@ -1,7 +1,7 @@
-﻿using FuelStation.Blazor.Shared.DTOs.Employee;
-using FuelStation.Blazor.Shared.DTOs.Customer;
+﻿using FuelStation.Blazor.Shared.DTOs.Customer;
+using FuelStation.Blazor.Shared.DTOs.Employee;
+using FuelStation.Blazor.Shared.DTOs.TransactionLine;
 using FuelStation.Models.Enums;
-using FuelStation.Blazor.Shared.DTOs.Item;
 
 namespace FuelStation.Blazor.Shared.DTOs.Transaction {
 
@@ -15,26 +15,12 @@ namespace FuelStation.Blazor.Shared.DTOs.Transaction {
         public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
 
-        public List<CustomerEditDto> Customers { get; set; } = new ();
-        public List<EmployeeEditDto> Employees { get; set; } = new ();
+        public List<CustomerEditDto> Customers { get; set; } = new();
+        public List<EmployeeEditDto> Employees { get; set; } = new();
 
         public List<TransactionLineDto> TransactionLines { get; set; } = new();
 
-    }
-
-    public class TransactionLineDto {
-        public int Id { get; set; }
-        public int Quantity { get; set; }
-        public decimal ItemPrice { get; set; }
-        public decimal NetValue { get; set; }
-        public decimal DiscountPercent { get; set; }
-        public decimal DiscountValue { get; set; }
-        public decimal TotalValue { get; set; }
-
-        // Check
-        public int ItemId { get; set; }
-
-        public List<ItemEditDto> Items { get; set; } = new();
+        public decimal TransactionTotalValue => TransactionLines.Sum(tl => tl.TotalValue);
 
     }
 
