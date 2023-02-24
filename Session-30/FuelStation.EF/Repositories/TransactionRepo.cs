@@ -46,7 +46,7 @@ namespace FuelStation.EF.Repositories {
             var dbTransaction = await dbContext.Transactions
                 //.Include(t => t.Employee)
                 //.Include(t => t.Customer)
-                //.Include(t => t.TransactionLines)
+                .Include(t => t.TransactionLines)
                 .SingleOrDefaultAsync(t => t.Id == id);
 
             if (dbTransaction == null) {
@@ -56,6 +56,9 @@ namespace FuelStation.EF.Repositories {
             dbTransaction.Date = transaction.Date;
             dbTransaction.PaymentMethod = transaction.PaymentMethod;
             dbTransaction.TotalValue = transaction.TotalValue;
+
+            // Track Transaction Lines
+            dbTransaction.TransactionLines = transaction.TransactionLines;
             //dbTransaction.CustomerId = transaction.CustomerId;
             //dbTransaction.EmployeeId = transaction.EmployeeId;
         

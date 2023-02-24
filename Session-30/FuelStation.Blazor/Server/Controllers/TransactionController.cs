@@ -134,6 +134,45 @@ namespace FuelStation.Blazor.Server.Controllers {
             await _transactionRepo.AddAsync(dbTransaction);
         }
 
+
+        [HttpPut]
+        public async Task Put(TransactionEditDto transaction) {
+
+            var dbTransaction = await _transactionRepo.GetByIdAsync(transaction.Id);
+
+            if (dbTransaction == null) {
+                throw new ArgumentNullException();
+            }
+
+            dbTransaction.Date = transaction.Date;
+            dbTransaction.PaymentMethod = transaction.PaymentMethod;
+
+            //dbTransaction.TotalValue = transaction.TotalValue;
+
+            dbTransaction.CustomerId = transaction.CustomerId;
+            dbTransaction.EmployeeId = transaction.EmployeeId;
+
+            dbTransaction.TransactionLines = transaction.TransactionLines
+                .Select(transactionLine => new TransactionLine(
+                    transactionLine.Quantity,
+                    transactionLine.ItemPrice,
+                    transactionLine.NetValue,
+                    transactionLine.DiscountPercent,
+                    transactionLine.DiscountValue,
+                    transactionLine.TotalValue
+                    )
+                { Id = transactionLine.Id }).ToList();
+
+            // Calculate the total value based on the transaction lines
+            dbTransaction.TotalValue = dbTransaction.TransactionLines.Sum(tl => tl.TotalValue);
+
+            await _transactionRepo.UpdateAsync(transaction.Id, dbTransaction);
+
+        }
+
+
+
+
         [HttpDelete("{id}")]
         public async Task Delete(int id) {
             await _transactionRepo.DeleteAsync(id);
