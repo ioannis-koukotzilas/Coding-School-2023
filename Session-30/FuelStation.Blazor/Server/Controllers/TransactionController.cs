@@ -3,6 +3,7 @@ using FuelStation.EF.Repositories;
 using FuelStation.Models;
 using FuelStation.Blazor.Shared.DTOs.Transaction;
 using FuelStation.Blazor.Shared.DTOs.Customer;
+using FuelStation.Models.Enums;
 
 namespace FuelStation.Blazor.Server.Controllers {
 
@@ -13,17 +14,19 @@ namespace FuelStation.Blazor.Server.Controllers {
         private readonly IEntityRepo<Transaction> _transactionRepo;
         private readonly IEntityRepo<Customer> _customerRepo;
         private readonly IEntityRepo<Employee> _employeerRepo;
+        private readonly IEntityRepo<Item> _itemRepo;
 
         public TransactionController(
 
             IEntityRepo<Transaction> transactionRepo,
             IEntityRepo<Customer> customerRepo,
-            IEntityRepo<Employee> employeerRepo) {
+            IEntityRepo<Employee> employeerRepo,
+            IEntityRepo<Item> itemRepo) {
 
             _transactionRepo = transactionRepo;
             _customerRepo = customerRepo;
             _employeerRepo = employeerRepo;
-
+            _itemRepo = itemRepo;
         }
 
         [HttpGet]
@@ -103,24 +106,49 @@ namespace FuelStation.Blazor.Server.Controllers {
 
             foreach (var tl in transaction.TransactionLines) {
 
-                // TODO: Add calculation for each transaction line
+                /* Business:
+                 * Net Value is calculated by multiplying the quantity with the item price. 
+                 * Discount Value is calculated by multiplying Net Value by Discount Percent.
+                 * Total Value is calculated by subtracting Discount Value from the Net Value.
+                 * If a Transaction Line includes an item of the type Fuel and its NetValue is 
+                 * above 20 euros, then we calculate a 10% discount on that transaction line. */
 
-                // var totalValue = (tl.Quantity * tl.ItemPrice) - tl.DiscountValue;
+                var netValue = tl.Quantity * tl.ItemPrice;
+                var discountValue = netValue * (tl.DiscountPercent / 100m);
+                var totalValue = netValue - discountValue;
+
+                // Retrieve the Item object from the database
+                var item = await _itemRepo.GetByIdAsync(tl.ItemId);
+
+                if (item == null) {
+                    throw new NullReferenceException("Transaction Line Item is null.");
+                }
+
+                if (item.ItemType == ItemType.Fuel && netValue > 20) {
+                    var fuelDiscount = netValue * 0.1m;
+                    discountValue += fuelDiscount;
+                    totalValue -= fuelDiscount;
+                }
 
                 var dbTransactionLine = new TransactionLine(
                     tl.Quantity,
                     tl.ItemPrice,
-                    tl.NetValue,
+                    netValue,
                     tl.DiscountPercent,
-                    tl.DiscountValue,
-                    tl.TotalValue
-
-                    // totalValue
+                    discountValue,
+                    totalValue
                 );
 
                 dbTransactionLine.ItemId = tl.ItemId;
 
                 dbTransaction.TransactionLines.Add(dbTransactionLine);
+            }
+
+            /* Business: 
+             * If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash. */
+
+            if (dbTransaction.TotalValue > 50m && dbTransaction.PaymentMethod != PaymentMethod.Cash) {
+                throw new InvalidOperationException("The only acceptable payment method for a transaction with a Total Value above 50 Euros is Cash.");
             }
 
             await _transactionRepo.AddAsync(dbTransaction);
@@ -134,4 +162,5 @@ namespace FuelStation.Blazor.Server.Controllers {
     }
 
 }
+
 
