@@ -43,7 +43,7 @@ else
             <div class="row mb-5">
                 <div class="mt-3 mb-3">Customer not found in the database. Create a new one?</div>
                 <button class="btn btn-success mt-3" @onclick="CreateCustomer">Create Customer</button>
-            </div>  
+            </div>
         }
 
     </div>
@@ -51,13 +51,37 @@ else
     <div class="row mb-5">
 
         <div class="col-md-6 mb-3">
-            <label class="form-label">Customer</label>
-            <select class="form-select" disabled @bind="Transaction.CustomerId">
-                @foreach (var c in Transaction.Customers)
-                {
-                    <option value="@c.Id">@c.Name @c.Surname</option>
-                }
-            </select>
+
+
+            @if (Id == null)
+            {
+                @*<input type="hidden" @bind-value="Transaction.CustomerId" />
+                <input class="form-control" type="text" disabled value="@Transaction.FetchCustomerName @Transaction.FetchCustomerSurname">*@
+
+                <label class="form-label">Customer</label>
+
+                <select class="form-select" disabled @bind="Transaction.CustomerId">
+                    @foreach (var c in Transaction.Customers)
+                    {
+                        <option value="@c.Id">@c.Name @c.Surname</option>
+                    }
+                </select>
+            }
+            else
+            {
+                @*<input type="hidden" value="@Transaction.CustomerId" />
+                <input class="form-control" type="text" disabled value="@Transaction.FetchCustomerName @Transaction.FetchCustomerSurname">*@
+
+                <label class="form-label">Customer</label>
+
+                <select class="form-select" @bind="Transaction.CustomerId">
+                    @foreach (var c in Transaction.Customers)
+                    {
+                        <option value="@c.Id">@c.Name @c.Surname</option>
+                    }
+                </select>
+            }
+
         </div>
 
         <div class="col-md-6 mb-3">
@@ -318,6 +342,8 @@ else
         if (fetchCustomer != null)
         {
             Transaction.CustomerId = fetchCustomer.Id;
+            //Transaction.FetchCustomerName = fetchCustomer.Name;
+            //Transaction.FetchCustomerSurname = fetchCustomer.Surname;
             CustomerFound = true;
         }
         else
