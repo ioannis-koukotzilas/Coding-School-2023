@@ -1,4 +1,5 @@
-﻿using FuelStation.Blazor.Shared.DTOs.Customer;
+﻿using System.ComponentModel.DataAnnotations;
+using FuelStation.Blazor.Shared.DTOs.Customer;
 using FuelStation.Blazor.Shared.DTOs.Employee;
 using FuelStation.Blazor.Shared.DTOs.TransactionLine;
 using FuelStation.Models.Enums;
@@ -13,8 +14,10 @@ namespace FuelStation.Blazor.Shared.DTOs.Transaction {
         public decimal TotalValue { get; set; }
 
         public int EmployeeId { get; set; }
+
         public int CustomerId { get; set; }
 
+        
         public List<CustomerEditDto> Customers { get; set; } = new();
         public List<EmployeeEditDto> Employees { get; set; } = new();
 

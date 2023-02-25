@@ -21,21 +21,38 @@ else
     @if (Id == null)
     {
         <PageTitle>New Transaction - Fuel Station</PageTitle>
-        <h2 class="mb-5">Add new transaction</h2>
+        <h2 class="mb-5">New transaction</h2>
     }
     else
     {
         <PageTitle>Edit Transaction @Transaction.Id - Fuel Station</PageTitle>
-        <h2 class="mb-5">Edit transaction: (@Transaction.Id)</h2>
+        <h2 class="mb-5">Edit transaction @Transaction.Id</h2>
     }
 
     // Transaction
 
     <div class="row mb-5">
 
+        <div class="input-group">
+            <input type="text" class="form-control" @bind="CustomerCardNumber" placeholder="Enter customer card number" />
+            <button class="btn btn-primary" @onclick="FindCustomerByCardNumber">Search</button>
+        </div>
+
+        @if (CustomerFound == false)
+        {
+            <div class="row mb-5">
+                <div class="mt-3 mb-3">Customer not found in the database. Create a new one?</div>
+                <button class="btn btn-success mt-3" @onclick="CreateCustomer">Create Customer</button>
+            </div>  
+        }
+
+    </div>
+
+    <div class="row mb-5">
+
         <div class="col-md-6 mb-3">
             <label class="form-label">Customer</label>
-            <select class="form-select" @bind="Transaction.CustomerId">
+            <select class="form-select" disabled @bind="Transaction.CustomerId">
                 @foreach (var c in Transaction.Customers)
                 {
                     <option value="@c.Id">@c.Name @c.Surname</option>
@@ -68,58 +85,46 @@ else
             </select>
         </div>
 
-        <div class="col-md-6 mb-3">
-            <label class="form-label">Total Value</label>
-            <h1>@Transaction.TransactionTotalValue</h1>
-        </div>
+    </div>
 
+    <div class="row mb-5">
+        <div>Total Value</div>
+        <div class="trans-total-value">@Transaction.TransactionTotalValue</div>
     </div>
 
 
     // Transaction Lines
 
-    <h4 class="mb-3">Transaction Lines</h4>
+    <h3 class="mb-5">Transaction Lines</h3>
 
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-        </div>
-        <select class="custom-select" id="inputGroupSelect01">
-            <option selected>Choose...</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-        <input class="form-control" type="number" @bind-value="TransactionLineQuantity" />
-        <button class="btn btn-warning" @onclick="() => AddTransactionLine()">Add transaction line</button>
-    </div>
-
-
-    <div class="row mb-4">
+    <div class="row mb-5">
 
         <div class="col-md-6">
-            <label class="form-label">Select Item</label>
-            <select class="form-select" @bind="TransactionLine.ItemId">
-                @foreach (var i in TransactionLine.Items)
-                {
-                    <option value="@i.Id">@i.Code @i.Price</option>
-                }
-            </select>
+            <div class="input-group">
+                <span class="input-group-text">Select Item</span>
+                <select class="form-select" @bind="TransactionLine.ItemId">
+                    @foreach (var i in TransactionLine.Items)
+                    {
+                        <option value="@i.Id">@i.Description (@i.Price)</option>
+                    }
+                </select>
+            </div>
         </div>
 
-        <div class="col-md-3">
-            <label class="form-label">Quantity</label>
-            <input class="form-control" type="number" @bind-value="TransactionLineQuantity" />
+        <div class="col-md-2">
+            <div class="input-group">
+                <span class="input-group-text">Quantity</span>
+                <input class="form-control" type="number" @bind-value="TransactionLineQuantity" />
+            </div>
         </div>
 
-        <div class="col-md-3">
-            <button class="btn btn-warning" @onclick="() => AddTransactionLine()">Add transaction line</button>
+        <div class="col-md-4">
+            <button class="btn btn-primary" @onclick="() => AddTransactionLine()">Add Item</button>
         </div>
 
     </div>
 
-    <div class="table-responsive p-3 mb-3">
+    <div class="table-responsive p-3 mb-5">
 
         <table class="table table-dark table-striped table-hover">
 
@@ -169,6 +174,8 @@ else
             </div>
         </div>
     </div>
+
+
 
 }
 
@@ -254,7 +261,7 @@ else
 
     // Transaction Lines
 
-    int TransactionLineQuantity;
+    int TransactionLineQuantity = 1;
 
     private void AddTransactionLine()
     {
@@ -295,6 +302,33 @@ else
     private void DeleteTransactionLine(TransactionLineDto transactionLine)
     {
         Transaction.TransactionLines.Remove(transactionLine);
+    }
+
+
+    // Find customer
+
+    string CustomerCardNumber;
+
+    bool CustomerFound = true;
+
+    private void FindCustomerByCardNumber()
+    {
+        var fetchCustomer = Transaction.Customers.FirstOrDefault(c => c.CardNumber == CustomerCardNumber);
+
+        if (fetchCustomer != null)
+        {
+            Transaction.CustomerId = fetchCustomer.Id;
+            CustomerFound = true;
+        }
+        else
+        {
+            CustomerFound = false;
+        }
+    }
+
+    private void CreateCustomer()
+    {
+        navigationManager.NavigateTo("customer/new");
     }
 
 }
