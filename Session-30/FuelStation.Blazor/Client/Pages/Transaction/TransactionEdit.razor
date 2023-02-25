@@ -113,7 +113,7 @@ else
 
     <div class="row mb-5">
         <div>Total Value</div>
-        <div class="trans-total-value">@Transaction.TransactionTotalValue</div>
+        <div class="trans-total-value">@Transaction.TransactionLines.Sum(tl => tl.TotalValue)</div>
     </div>
 
 
@@ -162,6 +162,10 @@ else
                     <th>Discount Value</th>
                     <th>Total Value</th>
                     <th>Item Id</th>
+                    <th>Item Code</th>
+                    <th>Item Description</th>
+                    <th>Item Type</th>
+
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -178,7 +182,9 @@ else
                         <td>@tl.DiscountValue</td>
                         <td>@tl.TotalValue</td>
                         <td>@tl.ItemId</td>
-
+                        <td>@tl.TransactionLineItemCode</td>
+                        <td>@tl.TransactionLineItemDescription</td>
+                        <td>@tl.TransactionLineItemType</td>
                         <td>
                             <button class="btn btn-danger" @onclick="() => DeleteTransactionLine(tl)">Delete</button>
                         </td>
@@ -198,8 +204,6 @@ else
             </div>
         </div>
     </div>
-
-
 
 }
 
@@ -313,7 +317,12 @@ else
             NetValue = netValue,
             DiscountPercent = discountPercent,
             DiscountValue = discountValue,
-            TotalValue = totalValue
+            TotalValue = totalValue,
+
+            TransactionLineItemCode = item.Code,
+            TransactionLineItemDescription = item.Description,
+            TransactionLineItemType = item.ItemType
+
         });
 
         // Reset the Transaction Line Quantity
@@ -354,7 +363,7 @@ else
 
     private void CreateCustomer()
     {
-        navigationManager.NavigateTo("customer/new");
+        navigationManager.NavigateTo("customer/edit");
     }
 
 }

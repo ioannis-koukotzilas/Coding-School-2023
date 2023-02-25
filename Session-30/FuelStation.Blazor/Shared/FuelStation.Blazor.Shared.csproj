@@ -17,6 +17,7 @@
     <None Remove="Services\" />
     <None Remove="DTOs\Item\" />
     <None Remove="DTOs\TransactionLine\" />
+    <None Remove="DTOs\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\" />
@@ -26,6 +27,7 @@
     <Folder Include="Services\" />
     <Folder Include="DTOs\Item\" />
     <Folder Include="DTOs\TransactionLine\" />
+    <Folder Include="DTOs\Reports\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FuelStation.Models\FuelStation.Models.csproj" />

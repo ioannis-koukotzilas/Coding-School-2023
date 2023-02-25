@@ -154,18 +154,21 @@ namespace FuelStation.Blazor.Server.Controllers {
             dbTransaction.EmployeeId = transaction.EmployeeId;
 
             dbTransaction.TransactionLines = transaction.TransactionLines
-                .Select(transactionLine => new TransactionLine(
-                    transactionLine.Quantity,
-                    transactionLine.ItemPrice,
-                    transactionLine.NetValue,
-                    transactionLine.DiscountPercent,
-                    transactionLine.DiscountValue,
-                    transactionLine.TotalValue
+                .Select(tl => new TransactionLine(
+                    tl.Quantity,
+                    tl.ItemPrice,
+                    tl.NetValue,
+                    tl.DiscountPercent,
+                    tl.DiscountValue,
+                    tl.TotalValue
                     )
-                { Id = transactionLine.Id }).ToList();
+                {
+                    Id = tl.Id,
+
+                }).ToList();
 
             // Calculate the total value based on the transaction lines
-           dbTransaction.TotalValue = dbTransaction.TransactionLines.Sum(tl => tl.TotalValue);
+            dbTransaction.TotalValue = dbTransaction.TransactionLines.Sum(tl => tl.TotalValue);
 
             await _transactionRepo.UpdateAsync(transaction.Id, dbTransaction);
 

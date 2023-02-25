@@ -44,8 +44,8 @@ namespace FuelStation.EF.Repositories {
         public async Task UpdateAsync(int id, Transaction transaction) {
             using var dbContext = new FuelStationDbContext();
             var dbTransaction = await dbContext.Transactions
-                //.Include(t => t.Employee)
-                //.Include(t => t.Customer)
+                .Include(t => t.Employee)
+                .Include(t => t.Customer)
                 .Include(t => t.TransactionLines)
                 .SingleOrDefaultAsync(t => t.Id == id);
 
