@@ -85,7 +85,11 @@ namespace FuelStation.Blazor.Server.Controllers {
                     NetValue = tl.NetValue,
                     DiscountPercent = tl.DiscountPercent,
                     DiscountValue = tl.DiscountValue,
-                    TotalValue = tl.TotalValue
+                    TotalValue = tl.TotalValue,
+
+                    ItemId = tl.ItemId
+           
+
                 }).ToList()
 
             };
@@ -100,9 +104,9 @@ namespace FuelStation.Blazor.Server.Controllers {
             transaction.TotalValue = transaction.TransactionLines.Sum(tl => tl.TotalValue);
 
             var dbTransaction = new Transaction(
-               transaction.Date,
-               transaction.PaymentMethod,
-               transaction.TotalValue
+                transaction.Date,
+                transaction.PaymentMethod,
+                transaction.TotalValue
             );
 
             dbTransaction.CustomerId = transaction.CustomerId;
@@ -120,6 +124,7 @@ namespace FuelStation.Blazor.Server.Controllers {
                 );
 
                 dbTransactionLine.ItemId = tl.ItemId;
+               // dbTransactionLine.TransactionId = tl.TransactionId;
 
                 dbTransaction.TransactionLines.Add(dbTransactionLine);
             }
@@ -146,24 +151,24 @@ namespace FuelStation.Blazor.Server.Controllers {
 
             dbTransaction.Date = transaction.Date;
             dbTransaction.PaymentMethod = transaction.PaymentMethod;
-            //dbTransaction.TotalValue = transaction.TotalValue;
-
-            //dbTransaction.TotalValue = transaction.TotalValue;
 
             dbTransaction.CustomerId = transaction.CustomerId;
             dbTransaction.EmployeeId = transaction.EmployeeId;
 
             dbTransaction.TransactionLines = transaction.TransactionLines
+
                 .Select(tl => new TransactionLine(
+
                     tl.Quantity,
                     tl.ItemPrice,
                     tl.NetValue,
                     tl.DiscountPercent,
                     tl.DiscountValue,
                     tl.TotalValue
-                    )
-                {
+                    ) {
+
                     Id = tl.Id,
+                    ItemId = tl.ItemId
 
                 }).ToList();
 

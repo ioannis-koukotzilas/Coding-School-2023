@@ -7,6 +7,7 @@
         public string Surname { get; set; }
         public string CardNumber { get; set; }
 
+        // Navigation properties
         public List<Transaction> Transactions {get; set;}
 
         public Customer(string name, string surname, string cardNumber) {

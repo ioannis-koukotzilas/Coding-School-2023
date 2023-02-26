@@ -83,11 +83,11 @@ else
 
     private async Task LoadFromServer()
     {
-        var itemsToLoad = await Http.GetFromJsonAsync<List<CustomerListDto>>("customer");
+        var customersJson = await Http.GetFromJsonAsync<List<CustomerListDto>>("customer");
 
-        if (itemsToLoad != null)
+        if (customersJson != null)
         {
-            customers = itemsToLoad;
+            customers = customersJson;
         }
         else
         {

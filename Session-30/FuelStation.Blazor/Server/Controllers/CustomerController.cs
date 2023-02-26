@@ -17,7 +17,6 @@ namespace FuelStation.Blazor.Server.Controllers {
             _customerRepo = customerRepo;
         }
 
-        /* Get all entities in a list */
         [HttpGet]
         public async Task<IEnumerable<CustomerListDto>> GetAll() {
 
@@ -30,9 +29,11 @@ namespace FuelStation.Blazor.Server.Controllers {
                 Surname = c.Surname,
                 CardNumber = c.CardNumber,
 
-                Transactions = c.Transactions.Select(t => new TransactionDtoCustomer {
-                    Date = t.Date,
-                    TotalValue = t.TotalValue
+                Transactions = c.Transactions.Select(tc => new TransactionCustomerDto {
+                    Id = tc.Id,
+                    Date = tc.Date,
+                    PaymentMethod = tc.PaymentMethod,
+                    TotalValue = tc.TotalValue
                 }).ToList()
 
             });
@@ -40,8 +41,6 @@ namespace FuelStation.Blazor.Server.Controllers {
             return dbResponse;
 
         }
-
-        /* Get entity by ID to edit */
 
         [HttpGet("edit/{id}")]
         public async Task<CustomerEditDto> GetById(int id) {
@@ -65,10 +64,9 @@ namespace FuelStation.Blazor.Server.Controllers {
 
         }
 
-        /* Get entity by ID to list details */
-
         [HttpGet("details/{id}")]
         public async Task<CustomerDetailsDto> GetDetailsById(int id) {
+
             var dbCustomer = await _customerRepo.GetByIdAsync(id);
 
             if (dbCustomer == null) {
@@ -82,7 +80,7 @@ namespace FuelStation.Blazor.Server.Controllers {
                 Surname = dbCustomer.Surname,
                 CardNumber = dbCustomer.CardNumber,
 
-                Transactions = dbCustomer.Transactions.Select(t => new TransactionDtoCustomer {
+                Transactions = dbCustomer.Transactions.Select(t => new TransactionCustomerDto {
                     Id = t.Id,
                     Date = t.Date,
                     PaymentMethod = t.PaymentMethod,
@@ -94,22 +92,13 @@ namespace FuelStation.Blazor.Server.Controllers {
             return dbResponse;
         }
 
-        /* Add new entity */
-
         [HttpPost]
         public async Task Post(CustomerEditDto customer) {
 
-            var dbCustomer = new Customer(
-                customer.Name,
-                customer.Surname,
-                customer.CardNumber
-                );
+            var dbCustomer = new Customer(customer.Name, customer.Surname, customer.CardNumber);
 
             await _customerRepo.AddAsync(dbCustomer);
-
         }
-
-        /* Update entity */
 
         [HttpPut]
         public async Task Put(CustomerEditDto customer) {
@@ -155,6 +144,7 @@ namespace FuelStation.Blazor.Server.Controllers {
 
             // Loop runs as long as cardNumberExists is true
             while (cardNumberExists) {
+
                 cardNumber = "A" + new string(Enumerable.Repeat(numbers, 16).Select(s => s[random.Next(s.Length)]).ToArray());
 
                 // Check if the card number already exists in the database

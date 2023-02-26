@@ -10,10 +10,12 @@
         public decimal DiscountValue { get; set; }
         public decimal TotalValue { get; set; }
 
-        // Relations
+        // Foreign keys
         public int TransactionId { get; set; }
-        public Transaction Transaction { get; set; } = null!;
         public int ItemId { get; set; }
+
+        // Navigation properties
+        public Transaction Transaction { get; set; } = null!;  
         public Item Item { get; set; } = null!;
 
         public TransactionLine(int quantity, decimal itemPrice, decimal netValue, decimal discountPercent, decimal discountValue, decimal totalValue) {

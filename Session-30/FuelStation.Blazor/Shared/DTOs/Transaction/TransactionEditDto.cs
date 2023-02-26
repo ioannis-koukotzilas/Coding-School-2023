@@ -14,16 +14,16 @@ namespace FuelStation.Blazor.Shared.DTOs.Transaction {
         public decimal TotalValue { get; set; }
 
         public int EmployeeId { get; set; }
-
         public int CustomerId { get; set; }
+      
+        public List<TransactionLineDto> TransactionLines { get; set; } = new();
 
-        
         public List<CustomerEditDto> Customers { get; set; } = new();
         public List<EmployeeEditDto> Employees { get; set; } = new();
 
-        public List<TransactionLineDto> TransactionLines { get; set; } = new();
+       
 
-       //public decimal TransactionTotalValue => TransactionLines.Sum(tl => tl.TotalValue);
+        //public decimal TransactionTotalValue => TransactionLines.Sum(tl => tl.TotalValue);
 
         //public string FetchCustomerName { get; set; } = null!;
         //public string FetchCustomerSurname { get; set; } = null!;

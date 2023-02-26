@@ -10,10 +10,9 @@ namespace FuelStation.EF.Repositories {
             using var dbContext = new FuelStationDbContext();
 
             var dbCustomers = await dbContext.Customers
-                .Include(c => c.Transactions)
-                .ToListAsync();
+                .Include(c => c.Transactions).ToListAsync();
 
-            return dbCustomers;   
+            return dbCustomers;
         }
 
         public async Task<Customer?> GetByIdAsync(int id) {
@@ -57,8 +56,8 @@ namespace FuelStation.EF.Repositories {
         public async Task DeleteAsync(int id) {
             using var dbContext = new FuelStationDbContext();
 
-            var dbCustomer = await dbContext.Customers.
-                SingleOrDefaultAsync(c => c.Id == id);
+            var dbCustomer = await dbContext.Customers
+                .SingleOrDefaultAsync(c => c.Id == id);
 
             if (dbCustomer == null) {
                 throw new KeyNotFoundException($"Given ID '{id}' was not found in the database");

@@ -9,12 +9,13 @@ namespace FuelStation.Models {
         public PaymentMethod PaymentMethod { get; set; }
         public decimal TotalValue { get; set; }
 
-        public List<TransactionLine> TransactionLines { get; set; }
-
-        // Relations
+        // Foreign keys
         public int EmployeeId { get; set; }
-        public Employee Employee { get; set; } = null!;
         public int CustomerId { get; set; }
+
+        // Navigation properties
+        public List<TransactionLine> TransactionLines { get; set; }     
+        public Employee Employee { get; set; } = null!;      
         public Customer Customer { get; set; } = null!;
 
         public Transaction(DateTime date, PaymentMethod paymentMethod, decimal totalValue) {

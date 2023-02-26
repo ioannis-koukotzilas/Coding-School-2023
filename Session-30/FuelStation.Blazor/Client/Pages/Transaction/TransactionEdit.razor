@@ -56,7 +56,7 @@ else
             @if (Id == null)
             {
                 @*<input type="hidden" @bind-value="Transaction.CustomerId" />
-                <input class="form-control" type="text" disabled value="@Transaction.FetchCustomerName @Transaction.FetchCustomerSurname">*@
+                    <input class="form-control" type="text" disabled value="@Transaction.FetchCustomerName @Transaction.FetchCustomerSurname">*@
 
                 <label class="form-label">Customer</label>
 
@@ -70,7 +70,7 @@ else
             else
             {
                 @*<input type="hidden" value="@Transaction.CustomerId" />
-                <input class="form-control" type="text" disabled value="@Transaction.FetchCustomerName @Transaction.FetchCustomerSurname">*@
+                    <input class="form-control" type="text" disabled value="@Transaction.FetchCustomerName @Transaction.FetchCustomerSurname">*@
 
                 <label class="form-label">Customer</label>
 
@@ -162,10 +162,6 @@ else
                     <th>Discount Value</th>
                     <th>Total Value</th>
                     <th>Item Id</th>
-                    <th>Item Code</th>
-                    <th>Item Description</th>
-                    <th>Item Type</th>
-
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -182,9 +178,6 @@ else
                         <td>@tl.DiscountValue</td>
                         <td>@tl.TotalValue</td>
                         <td>@tl.ItemId</td>
-                        <td>@tl.TransactionLineItemCode</td>
-                        <td>@tl.TransactionLineItemDescription</td>
-                        <td>@tl.TransactionLineItemType</td>
                         <td>
                             <button class="btn btn-danger" @onclick="() => DeleteTransactionLine(tl)">Delete</button>
                         </td>
@@ -221,12 +214,9 @@ else
     {
         if (Id == null)
         {
-
             Transaction = new TransactionEditDto();
             TransactionLine = new TransactionLineDto();
-
             Transaction.Date = DateTime.Now;
-
         }
         else
         {
@@ -237,26 +227,22 @@ else
         await LoadJsonsFromServer();
 
         isLoading = false;
-
     }
 
     private async Task LoadJsonsFromServer()
     {
-        // Fetch the customers
         var customersJson = await Http.GetFromJsonAsync<List<CustomerEditDto>>("customer");
         if (customersJson != null)
         {
             Transaction.Customers = customersJson;
         }
 
-        // Fetch the employees
         var employeesJson = await Http.GetFromJsonAsync<List<EmployeeEditDto>>("employee");
         if (employeesJson != null)
         {
             Transaction.Employees = employeesJson;
         }
 
-        // Fetch the items
         var itemsJson = await Http.GetFromJsonAsync<List<ItemEditDto>>("item");
         if (itemsJson != null)
         {
@@ -297,17 +283,13 @@ else
 
         if (item == null)
         {
-            // Handle error: item not found
-            return;
+            return; // Handle error: item not found
         }
 
         var netValue = TransactionLineQuantity * item.Price;
-        var discountPercent = (item.ItemType == ItemType.Fuel && netValue > 20) ? 10m : 0m;
-        var discountValue = netValue * (discountPercent / 100m);
-
-        // TODO: fix decimal inputs
-        discountValue = Decimal.Round(discountValue, 3);
-        var totalValue = netValue - discountValue;
+        var discountPercent = (item.ItemType == ItemType.Fuel && netValue > 20) ? 10.00m : 0.00m;
+        var discountValue = Decimal.Round(netValue * (discountPercent / 100), 2);
+        var totalValue = Decimal.Round(netValue - discountValue, 2);
 
         Transaction.TransactionLines.Add(new TransactionLineDto
         {
@@ -318,29 +300,22 @@ else
             DiscountPercent = discountPercent,
             DiscountValue = discountValue,
             TotalValue = totalValue,
-
-            TransactionLineItemCode = item.Code,
-            TransactionLineItemDescription = item.Description,
-            TransactionLineItemType = item.ItemType
-
         });
 
-        // Reset the Transaction Line Quantity
+        // Reset Quantity
         TransactionLineQuantity = 1;
     }
-
-    decimal TransactionTotalValue => Transaction.TransactionLines.Sum(tl => tl.TotalValue);
-
 
     private void DeleteTransactionLine(TransactionLineDto transactionLine)
     {
         Transaction.TransactionLines.Remove(transactionLine);
     }
 
+    // Readonly
+    decimal TransactionTotalValue => Transaction.TransactionLines.Sum(tl => tl.TotalValue);
 
     // Find customer
-
-    string CustomerCardNumber;
+    string? CustomerCardNumber;
 
     bool CustomerFound = true;
 
@@ -351,8 +326,6 @@ else
         if (fetchCustomer != null)
         {
             Transaction.CustomerId = fetchCustomer.Id;
-            //Transaction.FetchCustomerName = fetchCustomer.Name;
-            //Transaction.FetchCustomerSurname = fetchCustomer.Surname;
             CustomerFound = true;
         }
         else

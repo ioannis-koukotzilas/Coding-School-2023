@@ -57,19 +57,21 @@ namespace FuelStation.EF.Repositories {
             dbTransaction.PaymentMethod = transaction.PaymentMethod;
             dbTransaction.TotalValue = transaction.TotalValue;
 
-            // Track Transaction Lines
+            // Track Transaction Lines on update
             dbTransaction.TransactionLines = transaction.TransactionLines;
-            //dbTransaction.CustomerId = transaction.CustomerId;
-            //dbTransaction.EmployeeId = transaction.EmployeeId;
-        
+            // Track Customer on update
+            dbTransaction.CustomerId = transaction.CustomerId;
+            // Track Employee on update
+            dbTransaction.EmployeeId = transaction.EmployeeId;
+
             await dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id) {
             using var dbContext = new FuelStationDbContext();
 
-            var dbTransaction = await dbContext.Transactions.
-                SingleOrDefaultAsync(t => t.Id == id);
+            var dbTransaction = await dbContext.Transactions
+                .SingleOrDefaultAsync(t => t.Id == id);
 
             if (dbTransaction == null) {
                 throw new KeyNotFoundException($"Given ID '{id}' was not found in the database");

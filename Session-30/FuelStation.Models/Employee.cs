@@ -12,6 +12,7 @@ namespace FuelStation.Models {
         public decimal SallaryPerMonth { get; set; }
         public EmployeeType EmployeeType { get; set; }
 
+        // Navigation properties
         public List<Transaction> Transactions { get; set; }
 
         public Employee(string name, string surname, DateTime hireDateStart, DateTime hireDateEnd, decimal sallaryPerMonth, EmployeeType employeeType) {
