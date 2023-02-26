@@ -41,8 +41,10 @@ else
         @if (CustomerFound == false)
         {
             <div class="row mb-5">
-                <div class="mt-3 mb-3">Customer not found in the database. Create a new one?</div>
-                <button class="btn btn-success mt-3" @onclick="CreateCustomer">Create Customer</button>
+                <div class="mt-4 mb-3">Customer not found. Create a new one?</div>
+                <div>
+                    <button class="btn btn-primary" @onclick="CreateCustomer">Create Customer</button>
+                </div>
             </div>
         }
 
@@ -55,9 +57,6 @@ else
 
             @if (Id == null)
             {
-                @*<input type="hidden" @bind-value="Transaction.CustomerId" />
-                    <input class="form-control" type="text" disabled value="@Transaction.FetchCustomerName @Transaction.FetchCustomerSurname">*@
-
                 <label class="form-label">Customer</label>
 
                 <select class="form-select" disabled @bind="Transaction.CustomerId">
@@ -69,9 +68,6 @@ else
             }
             else
             {
-                @*<input type="hidden" value="@Transaction.CustomerId" />
-                    <input class="form-control" type="text" disabled value="@Transaction.FetchCustomerName @Transaction.FetchCustomerSurname">*@
-
                 <label class="form-label">Customer</label>
 
                 <select class="form-select" @bind="Transaction.CustomerId">
@@ -257,6 +253,15 @@ else
 
     private async Task Save()
     {
+        // Business
+        Transaction.TotalValue = Transaction.TransactionLines.Sum(tl => tl.TotalValue);
+
+        if (Transaction.TotalValue > 50m && Transaction.PaymentMethod != PaymentMethod.Cash)
+        {
+            await jsRuntime.InvokeVoidAsync("alert", "Transactions with TotalValue above 50 Euros can only be paid in Cash.");
+            return;
+        }
+
         HttpResponseMessage? response = null;
 
         if (Id == null)

@@ -88,7 +88,6 @@ namespace FuelStation.Blazor.Server.Controllers {
                     TotalValue = tl.TotalValue,
 
                     ItemId = tl.ItemId
-           
 
                 }).ToList()
 
@@ -124,7 +123,6 @@ namespace FuelStation.Blazor.Server.Controllers {
                 );
 
                 dbTransactionLine.ItemId = tl.ItemId;
-               // dbTransactionLine.TransactionId = tl.TransactionId;
 
                 dbTransaction.TransactionLines.Add(dbTransactionLine);
             }
@@ -132,9 +130,9 @@ namespace FuelStation.Blazor.Server.Controllers {
             /* Business: 
              * If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash. */
 
-            //if (dbTransaction.TotalValue > 50m && dbTransaction.PaymentMethod != PaymentMethod.Cash) {
-            //    throw new InvalidOperationException("The only acceptable payment method for a transaction with a Total Value above 50 Euros is Cash.");
-            //}
+            if (dbTransaction.TotalValue > 50m && dbTransaction.PaymentMethod != PaymentMethod.Cash) {
+                throw new InvalidOperationException("The only acceptable payment method for a transaction with a Total Value above 50 Euros is Cash.");
+            }
 
             await _transactionRepo.AddAsync(dbTransaction);
         }
@@ -175,12 +173,16 @@ namespace FuelStation.Blazor.Server.Controllers {
             // Calculate the total value based on the transaction lines
             dbTransaction.TotalValue = dbTransaction.TransactionLines.Sum(tl => tl.TotalValue);
 
+            /* Business: 
+            * If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash. */
+
+            if (dbTransaction.TotalValue > 50m && dbTransaction.PaymentMethod != PaymentMethod.Cash) {
+                throw new InvalidOperationException("The only acceptable payment method for a transaction with a Total Value above 50 Euros is Cash.");
+            }
+
             await _transactionRepo.UpdateAsync(transaction.Id, dbTransaction);
 
         }
-
-
-
 
         [HttpDelete("{id}")]
         public async Task Delete(int id) {
@@ -190,5 +192,3 @@ namespace FuelStation.Blazor.Server.Controllers {
     }
 
 }
-
-
