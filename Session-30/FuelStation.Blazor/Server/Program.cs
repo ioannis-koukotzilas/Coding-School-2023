@@ -1,8 +1,8 @@
 ﻿using FuelStation.EF.Repositories;
 using FuelStation.Models;
 using Microsoft.AspNetCore.ResponseCompression;
+using FuelStation.Blazor.Shared.Services;
 using FuelStation.Blazor.Server.Services;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +16,6 @@ builder.Services.AddScoped<IEntityRepo<Employee>, EmployeeRepo>();
 builder.Services.AddScoped<IEntityRepo<Item>, ItemRepo>();
 builder.Services.AddScoped<IEntityRepo<Transaction>, TranactionRepo>();
 builder.Services.AddScoped<IEntityRepo<TransactionLine>, TranactionLineRepo>();
-
-// Add authorization policies to the container.
-var authorizationService = new AuthorizationService();
-authorizationService.AddAuthorizationPolicies(builder.Services);
 
 var app = builder.Build();
 
@@ -42,10 +38,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
 app.Run();
-

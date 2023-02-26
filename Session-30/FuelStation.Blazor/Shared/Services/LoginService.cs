@@ -18,6 +18,7 @@ namespace FuelStation.Blazor.Shared.Services {
         public EmployeeType EmployeeType { get; set; }
 
         public bool Login(string username, string password) {
+
             _username = username;
             _password = password;
 
@@ -36,6 +37,7 @@ namespace FuelStation.Blazor.Shared.Services {
             }
 
             return false;
+
         }
 
     }

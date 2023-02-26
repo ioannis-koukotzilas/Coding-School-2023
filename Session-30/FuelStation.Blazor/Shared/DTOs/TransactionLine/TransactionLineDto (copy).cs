@@ -3,7 +3,7 @@ using FuelStation.Models.Enums;
 
 namespace FuelStation.Blazor.Shared.DTOs.TransactionLine {
 
-    public class TransactionLineDto {
+    public class TransactionLineDtoTest {
 
         public int Id { get; set; }
         public int Quantity { get; set; }
@@ -16,8 +16,6 @@ namespace FuelStation.Blazor.Shared.DTOs.TransactionLine {
         public int ItemId { get; set; }
 
       
-
-     
 
         public List<ItemEditDto> Items { get; set; } = new();
 

@@ -3,12 +3,12 @@ using FuelStation.EF.Repositories;
 using FuelStation.Models;
 using FuelStation.Blazor.Shared.DTOs.Customer;
 using FuelStation.Blazor.Shared.DTOs.Transaction;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FuelStation.Blazor.Server.Controllers {
 
     [ApiController]
     [Route("[controller]")]
-    //[Authorize(Policy = "Manager")]
     public class CustomerController : ControllerBase {
 
         private readonly IEntityRepo<Customer> _customerRepo;
@@ -117,15 +117,13 @@ namespace FuelStation.Blazor.Server.Controllers {
 
         }
 
-        /* Delete Entity */
-
         [HttpDelete("{id}")]
         public async Task Delete(int id) {
             await _customerRepo.DeleteAsync(id);
         }
 
-        /* Implementation of an algorithm that generates a random card number for the customer entity, checks 
-         * if it already exists in the database, and repeats the process until a unique card number is generated. */
+        /* Generate a random card number for the customer entity, check if it already exists in the database, 
+         * and repeat the process until a unique card number is generated. */
 
         [HttpGet("card-generator")]
         public async Task<string> GenerateCardNumberAsync() {

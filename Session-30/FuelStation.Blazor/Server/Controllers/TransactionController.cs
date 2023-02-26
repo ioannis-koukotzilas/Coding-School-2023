@@ -91,7 +91,7 @@ namespace FuelStation.Blazor.Server.Controllers {
                     ItemId = tl.ItemId,
 
                     //Item = new ItemListDto {
-                    //    Id = tl.Item.Id,
+                    //    //Id = tl.Item.Id,
                     //    Code = tl.Item.Code,
                     //    Description = tl.Item.Description,
                     //    ItemType = tl.Item.ItemType,
