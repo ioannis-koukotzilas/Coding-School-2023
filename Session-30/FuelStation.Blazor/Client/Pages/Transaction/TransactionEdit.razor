@@ -29,170 +29,175 @@ else
         <h2 class="mb-5">Edit transaction @Transaction.Id</h2>
     }
 
-    // Transaction
+    @if (Id == null)
+    {
+        <div class="row mb-4">
+            <label class="form-label">Search Customer</label>
+            <div class="input-group">
+                <input type="text" class="form-control" @bind="CustomerCardNumber" placeholder="Enter customer card number" />
+                <button class="btn btn-primary" @onclick="FindCustomerByCardNumber">Search</button>
+            </div>
+        </div>
+    }
 
-    <div class="row mb-5">
 
-        <div class="input-group">
-            <input type="text" class="form-control" @bind="CustomerCardNumber" placeholder="Enter customer card number" />
-            <button class="btn btn-primary" @onclick="FindCustomerByCardNumber">Search</button>
+    @if (CustomerFound == true || Id != null)
+    {
+        <div class="row mb-5">
+
+            <div class="col-md-6 mb-3">
+
+
+                @if (Id == null)
+                {
+                    <label class="form-label">Customer</label>
+
+                    <select class="form-select" disabled @bind="Transaction.CustomerId">
+                        @foreach (var c in Transaction.Customers)
+                        {
+                            <option value="@c.Id">@c.Name @c.Surname</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <label class="form-label">Customer</label>
+
+                    <select class="form-select" @bind="Transaction.CustomerId">
+                        @foreach (var c in Transaction.Customers)
+                        {
+                            <option value="@c.Id">@c.Name @c.Surname</option>
+                        }
+                    </select>
+                }
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Employee</label>
+                <select class="form-select" @bind="Transaction.EmployeeId">
+                    @foreach (var e in Transaction.Employees)
+                    {
+                        <option value="@e.Id">@e.Name @e.Surname</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Transaction Date</label>
+                <input class="form-control" type="date" @bind-value="Transaction.Date" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select" @bind="Transaction.PaymentMethod">
+                    @foreach (var pm in Enum.GetValues<PaymentMethod>())
+                    {
+                        <option value="@pm">@pm</option>
+                    }
+                </select>
+            </div>
+
         </div>
 
-        @if (CustomerFound == false)
-        {
-            <div class="row mb-5">
-                <div class="mt-4 mb-3">Customer not found. Create a new one?</div>
-                <div>
-                    <button class="btn btn-primary" @onclick="CreateCustomer">Create Customer</button>
+        <div class="row mb-5">
+            <div>Total Value</div>
+            <div class="trans-total-value">@Transaction.TransactionLines.Sum(tl => tl.TotalValue)</div>
+        </div>
+
+
+        // Transaction Lines
+
+        <h3 class="mb-5">Transaction Lines</h3>
+
+        <div class="row mb-5">
+
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">Select Item</span>
+                    <select class="form-select" @bind="TransactionLine.ItemId">
+                        @foreach (var i in TransactionLine.Items)
+                        {
+                            <option value="@i.Id">@i.Description (@i.Price)</option>
+                        }
+                    </select>
                 </div>
             </div>
-        }
 
-    </div>
-
-    <div class="row mb-5">
-
-        <div class="col-md-6 mb-3">
-
-
-            @if (Id == null)
-            {
-                <label class="form-label">Customer</label>
-
-                <select class="form-select" disabled @bind="Transaction.CustomerId">
-                    @foreach (var c in Transaction.Customers)
-                    {
-                        <option value="@c.Id">@c.Name @c.Surname</option>
-                    }
-                </select>
-            }
-            else
-            {
-                <label class="form-label">Customer</label>
-
-                <select class="form-select" @bind="Transaction.CustomerId">
-                    @foreach (var c in Transaction.Customers)
-                    {
-                        <option value="@c.Id">@c.Name @c.Surname</option>
-                    }
-                </select>
-            }
-
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <label class="form-label">Employee</label>
-            <select class="form-select" @bind="Transaction.EmployeeId">
-                @foreach (var e in Transaction.Employees)
-                {
-                    <option value="@e.Id">@e.Name @e.Surname</option>
-                }
-            </select>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <label class="form-label">Transaction Date</label>
-            <input class="form-control" type="date" @bind-value="Transaction.Date" />
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <label class="form-label">Payment Method</label>
-            <select class="form-select" @bind="Transaction.PaymentMethod">
-                @foreach (var pm in Enum.GetValues<PaymentMethod>())
-                {
-                    <option value="@pm">@pm</option>
-                }
-            </select>
-        </div>
-
-    </div>
-
-    <div class="row mb-5">
-        <div>Total Value</div>
-        <div class="trans-total-value">@Transaction.TransactionLines.Sum(tl => tl.TotalValue)</div>
-    </div>
-
-
-    // Transaction Lines
-
-    <h3 class="mb-5">Transaction Lines</h3>
-
-    <div class="row mb-5">
-
-        <div class="col-md-6">
-            <div class="input-group">
-                <span class="input-group-text">Select Item</span>
-                <select class="form-select" @bind="TransactionLine.ItemId">
-                    @foreach (var i in TransactionLine.Items)
-                    {
-                        <option value="@i.Id">@i.Description (@i.Price)</option>
-                    }
-                </select>
+            <div class="col-md-2">
+                <div class="input-group">
+                    <span class="input-group-text">Quantity</span>
+                    <input class="form-control" type="number" @bind-value="TransactionLineQuantity" />
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-2">
-            <div class="input-group">
-                <span class="input-group-text">Quantity</span>
-                <input class="form-control" type="number" @bind-value="TransactionLineQuantity" />
+            <div class="col-md-4">
+                <button class="btn btn-primary" @onclick="() => AddTransactionLine()">Add Item</button>
             </div>
+
         </div>
 
-        <div class="col-md-4">
-            <button class="btn btn-primary" @onclick="() => AddTransactionLine()">Add Item</button>
-        </div>
+        <div class="table-responsive p-3 mb-5">
 
-    </div>
+            <table class="table table-dark table-striped table-hover">
 
-    <div class="table-responsive p-3 mb-5">
-
-        <table class="table table-dark table-striped table-hover">
-
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Quantity</th>
-                    <th>Item Price</th>
-                    <th>Net Value</th>
-                    <th>Discount %</th>
-                    <th>Discount Value</th>
-                    <th>Total Value</th>
-                    <th>Item Id</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (var tl in Transaction.TransactionLines)
-                {
+                <thead>
                     <tr>
-                        <td>@tl.Id</td>
-                        <td>@tl.Quantity</td>
-                        <td>@tl.ItemPrice   </td>
-                        <td>@tl.NetValue</td>
-                        <td>@tl.DiscountPercent</td>
-                        <td>@tl.DiscountValue</td>
-                        <td>@tl.TotalValue</td>
-                        <td>@tl.ItemId</td>
-                        <td>
-                            <button class="btn btn-danger" @onclick="() => DeleteTransactionLine(tl)">Delete</button>
-                        </td>
+                        <th>ID</th>
+                        <th>Quantity</th>
+                        <th>Item Price</th>
+                        <th>Net Value</th>
+                        <th>Discount %</th>
+                        <th>Discount Value</th>
+                        <th>Total Value</th>
+                        <th>Item Id</th>
+                        <th>Actions</th>
                     </tr>
-                }
-            </tbody>
+                </thead>
 
-        </table>
+                <tbody>
+                    @foreach (var tl in Transaction.TransactionLines)
+                    {
+                        <tr>
+                            <td>@tl.Id</td>
+                            <td>@tl.Quantity</td>
+                            <td>@tl.ItemPrice   </td>
+                            <td>@tl.NetValue</td>
+                            <td>@tl.DiscountPercent</td>
+                            <td>@tl.DiscountValue</td>
+                            <td>@tl.TotalValue</td>
+                            <td>@tl.ItemId</td>
+                            <td>
+                                <button class="btn btn-danger" @onclick="() => DeleteTransactionLine(tl)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
 
-    </div>
+            </table>
 
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <div class="btn-group" role="group" aria-label="Actions">
-                <button class="btn btn-primary" @onclick="Save">Save</button>
-                <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="btn-group" role="group" aria-label="Actions">
+                    <button class="btn btn-primary" @onclick="Save">Save</button>
+                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                </div>
             </div>
         </div>
-    </div>
+    }
+
+    else if (CustomerFound == false)
+    {
+        <div class="row mb-5">
+            <div class="mb-3">Customer not found. Create a new one?</div>
+            <div>
+                <button class="btn btn-primary" @onclick="CreateCustomer">Create Customer</button>
+            </div>
+        </div>
+    }
+
 
 }
 
@@ -337,20 +342,20 @@ else
     // Find customer
     string? CustomerCardNumber;
 
-    bool CustomerFound = true;
+    bool? CustomerFound;
 
     private void FindCustomerByCardNumber()
     {
         var fetchCustomer = Transaction.Customers.FirstOrDefault(c => c.CardNumber == CustomerCardNumber);
 
-        if (fetchCustomer != null)
+        if (fetchCustomer == null)
         {
-            Transaction.CustomerId = fetchCustomer.Id;
-            CustomerFound = true;
+            CustomerFound = false;
         }
         else
         {
-            CustomerFound = false;
+            Transaction.CustomerId = fetchCustomer.Id;
+            CustomerFound = true;
         }
     }
 
