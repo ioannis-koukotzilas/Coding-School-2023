@@ -10,7 +10,7 @@ namespace FuelStation.Blazor.Shared.DTOs.Employee {
         public string Surname { get; set; } = null!;
         public EmployeeType EmployeeType { get; set; }
 
-        public List<TransactionDtoEmployee> Transactions { get; set; } = new();
+        public List<TransactionEmployeeDto> Transactions { get; set; } = new();
 
     }
 

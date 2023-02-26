@@ -39,7 +39,6 @@ namespace FuelStation.Blazor.Server.Controllers {
             });
 
             return dbResponse;
-
         }
 
         [HttpGet("edit/{id}")]
@@ -61,7 +60,6 @@ namespace FuelStation.Blazor.Server.Controllers {
             };
 
             return dbResponse;
-
         }
 
         [HttpGet("details/{id}")]
@@ -114,16 +112,12 @@ namespace FuelStation.Blazor.Server.Controllers {
             dbCustomer.CardNumber = customer.CardNumber;
 
             await _customerRepo.UpdateAsync(customer.Id, dbCustomer);
-
         }
 
         [HttpDelete("{id}")]
         public async Task Delete(int id) {
             await _customerRepo.DeleteAsync(id);
         }
-
-        /* Generate a random card number for the customer entity, check if it already exists in the database, 
-         * and repeat the process until a unique card number is generated. */
 
         [HttpGet("card-generator")]
         public async Task<string> GenerateCardNumberAsync() {
@@ -140,9 +134,10 @@ namespace FuelStation.Blazor.Server.Controllers {
 
             bool cardNumberExists = true;
 
-            // Loop runs as long as cardNumberExists is true
+            // Loop runs as long as cardNumberExists is true and repeat the process until a unique card number is generated
             while (cardNumberExists) {
 
+                // Generate a random card number
                 cardNumber = "A" + new string(Enumerable.Repeat(numbers, 16).Select(s => s[random.Next(s.Length)]).ToArray());
 
                 // Check if the card number already exists in the database

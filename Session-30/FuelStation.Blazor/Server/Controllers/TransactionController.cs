@@ -78,7 +78,6 @@ namespace FuelStation.Blazor.Server.Controllers {
                 CustomerId = dbTransaction.CustomerId,
 
                 // Include Transaction Lines
-
                 TransactionLines = dbTransaction.TransactionLines.Select(tl => new TransactionLineDto {
                     Id = tl.Id,
                     Quantity = tl.Quantity,
@@ -89,16 +88,6 @@ namespace FuelStation.Blazor.Server.Controllers {
                     TotalValue = tl.TotalValue,
 
                     ItemId = tl.ItemId,
-
-                    //Item = new ItemListDto {
-                    //    //Id = tl.Item.Id,
-                    //    Code = tl.Item.Code,
-                    //    Description = tl.Item.Description,
-                    //    ItemType = tl.Item.ItemType,
-                    //    Price = tl.Item.Price,
-                    //    Cost = tl.Item.Cost
-
-                    //},
 
                 }).ToList()
 
@@ -111,7 +100,6 @@ namespace FuelStation.Blazor.Server.Controllers {
         public async Task Post(TransactionEditDto transaction) {
 
             // Calculate the total value based on the transaction lines
-
             transaction.TotalValue = transaction.TransactionLines.Sum(tl => tl.TotalValue);
 
             var dbTransaction = new Transaction(
@@ -139,8 +127,7 @@ namespace FuelStation.Blazor.Server.Controllers {
                 dbTransaction.TransactionLines.Add(dbTransactionLine);
             }
 
-            // Business: If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash.
-
+            // Business rule: If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash.
             if (dbTransaction.TotalValue > 50m && dbTransaction.PaymentMethod != PaymentMethod.Cash) {
                 throw new InvalidOperationException("The only acceptable payment method for a transaction with a Total Value above 50 Euros is Cash.");
             }
@@ -176,22 +163,19 @@ namespace FuelStation.Blazor.Server.Controllers {
                     ) {
 
                     Id = tl.Id,
-                    ItemId = tl.ItemId
+                    ItemId = tl.ItemId // Important!
 
                 }).ToList();
 
             // Calculate the total value based on the transaction lines
-
             dbTransaction.TotalValue = dbTransaction.TransactionLines.Sum(tl => tl.TotalValue);
 
-            // Business: If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash.
-
+            // Business rule: If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash.
             if (dbTransaction.TotalValue > 50m && dbTransaction.PaymentMethod != PaymentMethod.Cash) {
                 throw new InvalidOperationException("The only acceptable payment method for a transaction with a Total Value above 50 Euros is Cash.");
             }
 
             await _transactionRepo.UpdateAsync(transaction.Id, dbTransaction);
-
         }
 
         [HttpDelete("{id}")]

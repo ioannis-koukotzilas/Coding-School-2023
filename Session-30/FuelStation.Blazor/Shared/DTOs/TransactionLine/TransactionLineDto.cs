@@ -1,5 +1,4 @@
 ﻿using FuelStation.Blazor.Shared.DTOs.Item;
-using FuelStation.Models.Enums;
 
 namespace FuelStation.Blazor.Shared.DTOs.TransactionLine {
 
@@ -15,23 +14,7 @@ namespace FuelStation.Blazor.Shared.DTOs.TransactionLine {
 
         public int ItemId { get; set; }
 
-      
-
-     
-
         public List<ItemEditDto> Items { get; set; } = new();
-
-        //public ItemListDto Item { get; set; } = null!;
-
-        //public ItemListDto
-
-        //?
-        //  public int TransactionId { get; set; }
-
-        // Readonly
-        //public string TransactionLineItemCode { get; set; } = null!;
-        //public string TransactionLineItemDescription { get; set; } = null!;
-        //public ItemType TransactionLineItemType { get; set; }
 
     }
 

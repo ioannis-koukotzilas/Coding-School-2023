@@ -13,7 +13,7 @@ namespace FuelStation.Blazor.Shared.DTOs.Employee {
         public decimal SallaryPerMonth { get; set; }
         public EmployeeType EmployeeType { get; set; }
 
-        public List<TransactionDtoEmployee> Transactions { get; set; } = new();
+        public List<TransactionEmployeeDto> Transactions { get; set; } = new();
 
     }
 

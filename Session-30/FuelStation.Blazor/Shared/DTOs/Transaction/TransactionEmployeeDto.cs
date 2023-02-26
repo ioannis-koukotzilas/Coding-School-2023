@@ -2,7 +2,7 @@
 
 namespace FuelStation.Blazor.Shared.DTOs.Transaction {
 
-    public class TransactionDtoEmployee {
+    public class TransactionEmployeeDto {
 
         public int Id { get; set; }
         public DateTime Date { get; set; }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using FuelStation.Blazor.Shared.DTOs.Customer;
+﻿using FuelStation.Blazor.Shared.DTOs.Customer;
 using FuelStation.Blazor.Shared.DTOs.Employee;
 using FuelStation.Blazor.Shared.DTOs.TransactionLine;
 using FuelStation.Models.Enums;

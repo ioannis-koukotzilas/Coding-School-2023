@@ -15,7 +15,6 @@
 {
     <Spinner />
 }
-
 else
 {
     @if (Id == null)
@@ -40,14 +39,11 @@ else
         </div>
     }
 
-
     @if (CustomerFound == true || Id != null)
     {
         <div class="row mb-5">
 
             <div class="col-md-6 mb-3">
-
-
                 @if (Id == null)
                 {
                     <label class="form-label">Customer</label>
@@ -70,7 +66,6 @@ else
                         }
                     </select>
                 }
-
             </div>
 
             <div class="col-md-6 mb-3">
@@ -105,8 +100,7 @@ else
             <div class="trans-total-value">@Transaction.TransactionLines.Sum(tl => tl.TotalValue)</div>
         </div>
 
-
-        // Transaction Lines
+        /* Transaction Lines Start  */
 
         <h3 class="mb-5">Transaction Lines</h3>
 
@@ -158,11 +152,10 @@ else
 
                 <tbody>
                     @foreach (var tl in Transaction.TransactionLines)
-                        {
-                            var it = TransactionLine.Items.FirstOrDefault(i => i.Id == tl.ItemId);
-                            var itemCode = it != null ? it.Code : "";
-                            var itemDescription = it != null ? it.Description : "";
-
+                    {
+                        var item = TransactionLine.Items.FirstOrDefault(i => i.Id == tl.ItemId);
+                        var itemCode = item != null ? item.Code : "-";
+                        var itemDescription = item != null ? item.Description : "-";
                         <tr>
                             <td>@tl.ItemId</td>
                             <td>@itemCode</td>
@@ -205,7 +198,6 @@ else
         </div>
     }
 
-
 }
 
 @code {
@@ -215,8 +207,6 @@ else
     TransactionEditDto? Transaction { get; set; }
 
     TransactionLineDto? TransactionLine { get; set; }
-
-
 
     bool isLoading { get; set; } = true;
 
@@ -231,7 +221,6 @@ else
         else
         {
             Transaction = await Http.GetFromJsonAsync<TransactionEditDto>($"transaction/edit/{Id}");
-
         }
 
         TransactionLine = new TransactionLineDto();
@@ -270,7 +259,6 @@ else
     private async Task Save()
     {
         // Business rule
-
         Transaction.TotalValue = Transaction.TransactionLines.Sum(tl => tl.TotalValue);
 
         if (Transaction.TotalValue > 50m && Transaction.PaymentMethod != PaymentMethod.Cash)
@@ -294,8 +282,7 @@ else
         navigationManager.NavigateTo("transactions");
     }
 
-
-    // Transaction Lines
+    /* Transaction Lines  */
 
     int TransactionLineQuantity = 1;
 
@@ -309,7 +296,6 @@ else
         }
 
         // Business rule
-
         if (item.ItemType == ItemType.Fuel)
         {
             // Check if the transaction already has an item of Fuel type
@@ -320,6 +306,7 @@ else
             }
         }
 
+        // Calculations
         var netValue = TransactionLineQuantity * item.Price;
         var discountPercent = (item.ItemType == ItemType.Fuel && netValue > 20) ? 10.00m : 0.00m;
         var discountValue = Decimal.Round(netValue * (discountPercent / 100), 2);
@@ -349,8 +336,8 @@ else
     // Readonly
     decimal TransactionTotalValue => Transaction.TransactionLines.Sum(tl => tl.TotalValue);
 
+    /* Search Customer */
 
-    // Find customer
     string? CustomerCardNumber;
 
     bool? CustomerFound;
@@ -376,6 +363,3 @@ else
     }
 
 }
-
-
-

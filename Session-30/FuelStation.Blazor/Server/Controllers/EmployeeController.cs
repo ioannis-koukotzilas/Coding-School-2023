@@ -28,7 +28,7 @@ namespace FuelStation.Blazor.Server.Controllers {
                 Surname = e.Surname,
                 EmployeeType = e.EmployeeType,
 
-                Transactions = e.Transactions.Select(t => new TransactionDtoEmployee {
+                Transactions = e.Transactions.Select(t => new TransactionEmployeeDto {
                     Id = t.Id,
                     Date = t.Date,
                     PaymentMethod = t.PaymentMethod,
@@ -82,7 +82,7 @@ namespace FuelStation.Blazor.Server.Controllers {
                 SallaryPerMonth = dbEmployee.SallaryPerMonth,
                 EmployeeType = dbEmployee.EmployeeType,
               
-                Transactions = dbEmployee.Transactions.Select(t => new TransactionDtoEmployee {
+                Transactions = dbEmployee.Transactions.Select(t => new TransactionEmployeeDto {
                     Id = t.Id,
                     Date = t.Date,
                     PaymentMethod = t.PaymentMethod,
