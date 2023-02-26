@@ -211,14 +211,16 @@ else
         if (Id == null)
         {
             Transaction = new TransactionEditDto();
-            TransactionLine = new TransactionLineDto();
+
             Transaction.Date = DateTime.Now;
         }
         else
         {
             Transaction = await Http.GetFromJsonAsync<TransactionEditDto>($"transaction/edit/{Id}");
-            TransactionLine = new TransactionLineDto();
+
         }
+
+        TransactionLine = new TransactionLineDto();
 
         await LoadJsonsFromServer();
 
@@ -253,7 +255,8 @@ else
 
     private async Task Save()
     {
-        // Business
+        // Business rule
+
         Transaction.TotalValue = Transaction.TransactionLines.Sum(tl => tl.TotalValue);
 
         if (Transaction.TotalValue > 50m && Transaction.PaymentMethod != PaymentMethod.Cash)
@@ -288,7 +291,19 @@ else
 
         if (item == null)
         {
-            return; // Handle error: item not found
+            return;
+        }
+
+        // Business rule
+
+        if (item.ItemType == ItemType.Fuel)
+        {
+            // Check if the transaction already has an item of Fuel type
+            if (Transaction.TransactionLines.Any(tl => TransactionLine.Items.FirstOrDefault(i => i.Id == tl.ItemId)?.ItemType == ItemType.Fuel))
+            {
+                jsRuntime.InvokeVoidAsync("alert", "A transaction can have only one item of Fuel type.");
+                return;
+            }
         }
 
         var netValue = TransactionLineQuantity * item.Price;

@@ -15,6 +15,7 @@ builder.Services.AddScoped<IEntityRepo<Customer>, CustomerRepo>();
 builder.Services.AddScoped<IEntityRepo<Employee>, EmployeeRepo>();
 builder.Services.AddScoped<IEntityRepo<Item>, ItemRepo>();
 builder.Services.AddScoped<IEntityRepo<Transaction>, TranactionRepo>();
+builder.Services.AddScoped<IEntityRepo<TransactionLine>, TranactionLineRepo>();
 
 // Add authorization policies to the container.
 var authorizationService = new AuthorizationService();

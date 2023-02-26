@@ -18,10 +18,9 @@ namespace FuelStation.EF.Repositories {
         public async Task<TransactionLine?> GetByIdAsync(int id) {
             using var dbContext = new FuelStationDbContext();
             var dbTransactionLine = await dbContext.TransactionLines
-                .Where(tl => tl.Id == id)
                 .Include(tl => tl.Item)
                 .Include(tl => tl.Transaction)
-                .SingleOrDefaultAsync();
+                .SingleOrDefaultAsync(tl => tl.Id == id);
             return dbTransactionLine;
         }
 

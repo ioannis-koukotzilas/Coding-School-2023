@@ -100,6 +100,7 @@ namespace FuelStation.Blazor.Server.Controllers {
         public async Task Post(TransactionEditDto transaction) {
 
             // Calculate the total value based on the transaction lines
+
             transaction.TotalValue = transaction.TransactionLines.Sum(tl => tl.TotalValue);
 
             var dbTransaction = new Transaction(
@@ -127,8 +128,7 @@ namespace FuelStation.Blazor.Server.Controllers {
                 dbTransaction.TransactionLines.Add(dbTransactionLine);
             }
 
-            /* Business: 
-             * If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash. */
+            // Business: If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash.
 
             if (dbTransaction.TotalValue > 50m && dbTransaction.PaymentMethod != PaymentMethod.Cash) {
                 throw new InvalidOperationException("The only acceptable payment method for a transaction with a Total Value above 50 Euros is Cash.");
@@ -136,7 +136,6 @@ namespace FuelStation.Blazor.Server.Controllers {
 
             await _transactionRepo.AddAsync(dbTransaction);
         }
-
 
         [HttpPut]
         public async Task Put(TransactionEditDto transaction) {
@@ -171,10 +170,10 @@ namespace FuelStation.Blazor.Server.Controllers {
                 }).ToList();
 
             // Calculate the total value based on the transaction lines
+
             dbTransaction.TotalValue = dbTransaction.TransactionLines.Sum(tl => tl.TotalValue);
 
-            /* Business: 
-            * If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash. */
+            // Business: If the TotalValue of the transaction is above 50 Euros, the only acceptable payment method is Cash.
 
             if (dbTransaction.TotalValue > 50m && dbTransaction.PaymentMethod != PaymentMethod.Cash) {
                 throw new InvalidOperationException("The only acceptable payment method for a transaction with a Total Value above 50 Euros is Cash.");
