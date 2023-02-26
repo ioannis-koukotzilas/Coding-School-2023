@@ -19,6 +19,10 @@ namespace FuelStation.Blazor.Shared.DTOs.TransactionLine {
 
         public List<ItemEditDto> Items { get; set; } = new();
 
+        //public ItemListDto Item { get; set; } = null!;
+
+        //public ItemListDto
+
         //?
         //  public int TransactionId { get; set; }
 

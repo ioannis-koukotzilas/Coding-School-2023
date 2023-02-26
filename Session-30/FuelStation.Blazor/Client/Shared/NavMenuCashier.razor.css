@@ -1,0 +1,20 @@
+﻿.page-title {
+    background-color: #161b22;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-gap: 1rem;
+}
+
+    .grid .btn {
+        display: block;
+    }
+
+/*.oi {
+    width: 10rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}*/

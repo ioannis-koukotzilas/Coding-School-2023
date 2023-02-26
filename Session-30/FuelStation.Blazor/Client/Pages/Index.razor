@@ -1,6 +1,67 @@
-﻿@page "/"
+﻿@using FuelStation.Blazor.Shared.Services
+
+@inject ILoginService loginService
+
+@inject NavigationManager navigationManager
+
+@page "/"
 
 <PageTitle>Fuel Station Solution</PageTitle>
 
-<p><small>Running on .NET with Blazor WebAssembly — Data provided by a local database. App designed and developed by Ioannis Koukotzilas for Epsilon Net Coding School 2023. Thanks for checking this out.</small></p>
+<div class="row py-5 mb-5">
+    <div class="col-md-4 mb-4">
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" @bind-value="username">
+            <div class="form-text">Demo users: manager, cashier, staff</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" @bind-value="password">
+            <div class="form-text">Demo password: codingschool2023</div>
+        </div>
+        <button class="btn btn-primary" @onclick="Login">Login</button>
+    </div>
 
+    @if (loginStatus == false)
+    {
+        <div class="text-danger">
+            @loginFailedMessage
+        </div>
+    }
+
+</div>
+
+@*<p><small>Running on .NET with Blazor WebAssembly — Data provided by a local database. App designed and developed by Ioannis Koukotzilas for Epsilon Net Coding School 2023. Thanks for checking this out.</small></p>*@
+
+@code {
+    private string username;
+    private string password;
+    private string? loginFailedMessage;
+    bool? loginStatus;
+
+    private void Login()
+    {
+        if (loginService.Login(username, password))
+        {
+            if (loginService.Role == "Manager")
+            {
+                navigationManager.NavigateTo("/manager");
+            }
+            else if (loginService.Role == "Cashier")
+            {
+                navigationManager.NavigateTo("/cashier");
+            }
+            else if (loginService.Role == "Staff")
+            {
+                navigationManager.NavigateTo("/staff");
+            }
+        }
+        else
+        {
+            loginStatus = false;
+
+            loginFailedMessage = "Login failed. Please try again.";
+        }
+    }
+}

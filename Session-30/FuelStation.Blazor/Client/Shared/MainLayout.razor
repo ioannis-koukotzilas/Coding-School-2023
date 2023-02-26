@@ -1,9 +1,30 @@
-﻿@inherits LayoutComponentBase
+﻿@using FuelStation.Blazor.Shared.Services
+
+@inherits LayoutComponentBase
+
+@inject ILoginService loginService
 
 <div class="page">
 
     <header class="page-header">
-        <NavMenu />
+
+        @if (loginService.Role == "Manager")
+        {
+            <NavMenuManager />
+        }
+        else if (loginService.Role == "Cashier")
+        {
+            <NavMenuCashier />
+        }
+        else if (loginService.Role == "Staff")
+        {
+            <NavMenuStaff />
+        }
+        else
+        {
+            <NavMenu />
+        }
+
     </header>
 
     <main class="page-main">

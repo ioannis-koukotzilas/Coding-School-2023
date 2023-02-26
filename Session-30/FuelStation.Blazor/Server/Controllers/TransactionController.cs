@@ -4,6 +4,7 @@ using FuelStation.Models;
 using FuelStation.Blazor.Shared.DTOs.Transaction;
 using FuelStation.Blazor.Shared.DTOs.Customer;
 using FuelStation.Blazor.Shared.DTOs.TransactionLine;
+using FuelStation.Blazor.Shared.DTOs.Item;
 using FuelStation.Models.Enums;
 
 namespace FuelStation.Blazor.Server.Controllers {
@@ -87,7 +88,17 @@ namespace FuelStation.Blazor.Server.Controllers {
                     DiscountValue = tl.DiscountValue,
                     TotalValue = tl.TotalValue,
 
-                    ItemId = tl.ItemId
+                    ItemId = tl.ItemId,
+
+                    //Item = new ItemListDto {
+                    //    Id = tl.Item.Id,
+                    //    Code = tl.Item.Code,
+                    //    Description = tl.Item.Description,
+                    //    ItemType = tl.Item.ItemType,
+                    //    Price = tl.Item.Price,
+                    //    Cost = tl.Item.Cost
+
+                    //},
 
                 }).ToList()
 
