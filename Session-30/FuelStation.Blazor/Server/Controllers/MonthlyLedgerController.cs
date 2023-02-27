@@ -21,23 +21,12 @@ namespace FuelStation.Web.Blazor.Server.Controllers {
         [HttpGet]
         public async Task<IEnumerable<MonthlyLedgerDto>> Get() {
 
-            List<MonthlyLedgerDto> monthlyLedgers = new();
+            List<MonthlyLedgerDto> monthlyLedgers = new ();
 
             var dbTransactions = await _transactionRepo.GetAllAsync();
-
             var dbEmployees = await _employeeRepo.GetAllAsync();
 
-            decimal totalTransactions = 0;
-            decimal totalSallaries = 0;
             decimal rent = 5000m;
-
-            foreach (var t in dbTransactions) {
-                totalTransactions += t.TotalValue;
-            }
-
-            foreach (var e in dbEmployees) {
-                totalSallaries += e.SallaryPerMonth;
-            }
 
             var groupTransactions = dbTransactions
 
@@ -49,16 +38,16 @@ namespace FuelStation.Web.Blazor.Server.Controllers {
                 .Select(group => new MonthlyLedgerDto {
                     Year = group.Key.Year,
                     Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(group.Key.Month),
-                    Income = totalTransactions,
-                    Expenses = totalSallaries + rent,
-                    Total = totalTransactions - (totalSallaries + rent)
+                    Income = group.Sum(t => t.TotalValue),
+                    Expenses = dbEmployees.Sum(e => e.SallaryPerMonth) + rent,
+                    Total = group.Sum(t => t.TotalValue) - (dbEmployees.Sum(e => e.SallaryPerMonth) + rent)
                 });
 
             foreach (var grouped in groupTransactions) {
                 monthlyLedgers.Add(grouped);
             }
 
-            return groupTransactions;
+            return monthlyLedgers;
         }
 
     }
