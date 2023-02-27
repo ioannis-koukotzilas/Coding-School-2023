@@ -22,12 +22,12 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
     @if (Id == null)
     {
         <PageTitle>New Transaction - Fuel Station</PageTitle>
-        <h2 class="mb-5">New transaction</h2>
+        <h2 class="mb-5"><span class="oi oi-cart"></span> New transaction</h2>
     }
     else
     {
         <PageTitle>Edit Transaction @Transaction.Id - Fuel Station</PageTitle>
-        <h2 class="mb-5">Edit transaction @Transaction.Id</h2>
+        <h2 class="mb-5"><span class="oi oi-cart"></span> Edit transaction @Transaction.Id</h2>
     }
 
     @if (Id == null)
@@ -104,7 +104,7 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
 
         /* Transaction Lines Start  */
 
-        <h3 class="mb-5">Transaction Lines</h3>
+        <h3 class="mb-5"><span class="oi oi-spreadsheet"></span> Transaction lines</h3>
 
         <div class="row mb-5">
 
@@ -114,7 +114,7 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
                     <select class="form-select" @bind="TransactionLine.ItemId">
                         @foreach (var i in TransactionLine.Items)
                         {
-                            <option value="@i.Id">@i.Description (@i.Price)</option>
+                            <option value="@i.Id">@i.Description</option>
                         }
                     </select>
                 </div>
@@ -141,11 +141,12 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
                     <tr>
                         <th>Item Id</th>
                         <th>Item Code</th>
-                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Item Description</th>
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Net Value</th>
-                        <th>Discount (%)</th>
+                        <th>Discount %</th>
                         <th>Discount Value</th>
                         <th>Total Value</th>
                         <th>Actions</th>
@@ -158,9 +159,12 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
                         var item = TransactionLine.Items.FirstOrDefault(i => i.Id == tl.ItemId);
                         var itemCode = item != null ? item.Code : "-";
                         var itemDescription = item != null ? item.Description : "-";
+                        var itemType = item != null ? item.ItemType.ToString() : "-";
+
                         <tr>
                             <td>@tl.ItemId</td>
                             <td>@itemCode</td>
+                            <td>@itemType</td>
                             <td>@itemDescription</td>
                             <td>@tl.Quantity</td>
                             <td>@tl.ItemPrice   </td>
@@ -168,7 +172,6 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
                             <td>@tl.DiscountPercent</td>
                             <td>@tl.DiscountValue</td>
                             <td>@tl.TotalValue</td>
-                            <td>@tl.ItemId</td>
                             <td>
                                 <button class="btn btn-danger" @onclick="() => DeleteTransactionLine(tl)">Delete</button>
                             </td>
@@ -183,8 +186,8 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="btn-group" role="group" aria-label="Actions">
-                    <button class="btn btn-primary" @onclick="Save">Save</button>
-                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    <button class="btn btn-primary" @onclick="Cancel">Cancel</button>
+                    <button class="btn btn-success" @onclick="Save">Save</button>
                 </div>
             </div>
         </div>

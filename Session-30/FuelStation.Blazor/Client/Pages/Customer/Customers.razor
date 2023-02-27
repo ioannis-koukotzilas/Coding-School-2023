@@ -16,7 +16,7 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
 {
     <PageTitle>Customers - Fuel Station</PageTitle>
 
-    <h1 class="mb-5">Customers</h1>
+    <h1 class="mb-5"><span class="oi oi-people"></span> Customers</h1>
 
     <button class="btn btn-primary mb-5" @onclick="Add">Add New Customer</button>
 
@@ -56,8 +56,8 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
                         }
                         <td>
                             <div class="btn-group" role="group" aria-label="Actions">
-                                <button class="btn btn-info" @onclick="() => DetailCustomer(c)">Details</button>
-                                <button class="btn btn-success" @onclick="() => Edit(c)">Edit</button>
+                                <button class="btn btn-primary" @onclick="() => Edit(c)">Edit</button>
+                                <button class="btn btn-primary" @onclick="() => DetailCustomer(c)">Details</button>
                                 <button class="btn btn-danger" @onclick="() => Delete(c)">Delete</button>
                             </div>
                         </td>

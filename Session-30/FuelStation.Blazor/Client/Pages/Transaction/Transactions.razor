@@ -16,7 +16,7 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
 {
     <PageTitle>Transactions - Fuel Station</PageTitle>
 
-    <h1 class="mb-5">Transactions</h1>
+    <h1 class="mb-5"><span class="oi oi-spreadsheet"></span> Transactions</h1>
 
     <button class="btn btn-primary mb-5" @onclick="Add">Add new transaction</button>
 
@@ -26,12 +26,12 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
 
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Employee</th>
-                    <th>Customer</th>
+                    <th>Transaction ID</th>
+                    <th>Transaction Date</th>
                     <th>Total Value</th>
                     <th>Payment Method</th>
+                    <th>Customer</th>
+                    <th>Employee</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -42,13 +42,15 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
                     <tr>
                         <td>@t.Id</td>
                         <td>@t.Date</td>
-                        <td>@t.EmployeeName @t.EmployeeSurname (@t.EmployeeId) (@t.EmployeeType)</td>
-                        <td>@t.CustomerName @t.CustomerSurname (@t.CustomerId)</td>
                         <td>@t.TotalValue</td>
                         <td>@t.PaymentMethod</td>
+                        <td>@t.CustomerName @t.CustomerSurname</td>
+                        <td>@t.EmployeeName @t.EmployeeSurname (@t.EmployeeType)</td>
                         <td>
-                            <button class="btn btn-warning" @onclick="() => Edit(t)">Edit</button>
-                            <button class="btn btn-danger" @onclick="() => Delete(t)">Delete</button>
+                            <div class="btn-group" role="group" aria-label="Actions">
+                                <button class="btn btn-primary" @onclick="() => Edit(t)">Edit</button>
+                                <button class="btn btn-danger" @onclick="() => Delete(t)">Delete</button>
+                            </div>
                         </td>
                     </tr>
                 }

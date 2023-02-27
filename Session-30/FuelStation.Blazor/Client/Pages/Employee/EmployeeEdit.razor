@@ -20,12 +20,12 @@ else if (loginService.Role == "Manager")
     @if (Id == null)
     {
         <PageTitle>New Employee - Fuel Station</PageTitle>
-        <h2 class="mb-5">Add new employee</h2>
+        <h2 class="mb-5"><span class="oi oi-person"></span> Add new employee</h2>
     }
     else
     {
         <PageTitle>Edit Employee @Employee.Name @Employee.Surname - Fuel Station</PageTitle>
-        <h2 class="mb-5">Edit employee @Employee.Id: @Employee.Name @Employee.Surname</h2>
+        <h2 class="mb-5"><span class="oi oi-person"></span> Edit employee @Employee.Id: @Employee.Name @Employee.Surname</h2>
     }
 
     <EditForm Model="Employee" OnValidSubmit="Save">
@@ -76,8 +76,8 @@ else if (loginService.Role == "Manager")
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="btn-group" role="group" aria-label="Actions">
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    <button class="btn btn-primary" @onclick="Cancel">Cancel</button>
+                    <button class="btn btn-success" type="submit">Save</button>
                 </div>
             </div>
         </div>

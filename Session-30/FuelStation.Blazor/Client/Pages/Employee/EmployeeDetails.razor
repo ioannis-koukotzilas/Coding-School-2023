@@ -14,7 +14,7 @@
 else if (loginService.Role == "Manager")
 {
     <PageTitle>Employee: @Employee.Name @Employee.Surname - Fuel Station</PageTitle>
-    <h2 class="mb-5">Details for employee: @Employee.Name @Employee.Surname</h2>
+    <h2 class="mb-5"><span class="oi oi-person"></span> Details for employee: @Employee.Name @Employee.Surname</h2>
 
     <div class="row mb-5">
         <div class="col-md-6">
@@ -29,13 +29,13 @@ else if (loginService.Role == "Manager")
     </div>
 
     <div class="btn-group mb-5" role="group" aria-label="Actions">
-        <button class="btn btn-secondary" @onclick="Cancel">Back</button>
+        <button class="btn btn-primary" @onclick="Cancel">Back</button>
         <button class="btn btn-primary" @onclick="Edit">Edit Employee</button>
     </div>
 
     @if (Employee.Transactions.Any())
     {
-        <h3 class="mb-3">Transactions</h3>
+        <h3 class="mb-3"><span class="oi oi-spreadsheet"></span> Transactions</h3>
 
         <div class="table-responsive p-3 mb-5">
 

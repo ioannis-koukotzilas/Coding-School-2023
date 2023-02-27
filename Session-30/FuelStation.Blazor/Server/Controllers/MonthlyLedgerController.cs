@@ -39,8 +39,14 @@ namespace FuelStation.Web.Blazor.Server.Controllers {
                     Year = group.Key.Year,
                     Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(group.Key.Month),
                     Income = group.Sum(t => t.TotalValue),
-                    Expenses = dbEmployees.Sum(e => e.SallaryPerMonth) + rent,
-                    Total = group.Sum(t => t.TotalValue) - (dbEmployees.Sum(e => e.SallaryPerMonth) + rent)
+
+                    Expenses = dbEmployees.Where(e => e.HireDateStart <= new DateTime(group.Key.Year, group.Key.Month, 1)
+                            && e.HireDateEnd >= new DateTime(group.Key.Year, group.Key.Month, DateTime.DaysInMonth(group.Key.Year, group.Key.Month)))
+                            .Sum(e => e.SallaryPerMonth) + rent,
+
+                    Total = group.Sum(t => t.TotalValue) - (dbEmployees.Where(e => e.HireDateStart <= new DateTime(group.Key.Year, group.Key.Month, 1)
+                            && e.HireDateEnd >= new DateTime(group.Key.Year, group.Key.Month, DateTime.DaysInMonth(group.Key.Year, group.Key.Month)))
+                            .Sum(e => e.SallaryPerMonth) + rent)
                 });
 
             foreach (var grouped in groupTransactions) {

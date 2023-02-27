@@ -19,12 +19,12 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier" || log
     @if (Id == null)
     {
         <PageTitle>New Item - Fuel Station</PageTitle>
-        <h2 class="mb-5">Add new item</h2>
+        <h2 class="mb-5"><span class="oi oi-tag"></span> Add new item</h2>
     }
     else
     {
         <PageTitle>Edit Item @Item.Description - Fuel Station</PageTitle>
-        <h2 class="mb-5">Edit item @Item.Id: @Item.Description</h2>
+        <h2 class="mb-5"><span class="oi oi-tag"></span> Edit item @Item.Id: @Item.Description</h2>
     }
 
     <EditForm Model="Item" OnValidSubmit="Save">
@@ -71,8 +71,8 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier" || log
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="btn-group" role="group" aria-label="Actions">
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    <button class="btn btn-primary" @onclick="Cancel">Cancel</button>
+                    <button class="btn btn-success" type="submit">Save</button>
                 </div>
             </div>
         </div>

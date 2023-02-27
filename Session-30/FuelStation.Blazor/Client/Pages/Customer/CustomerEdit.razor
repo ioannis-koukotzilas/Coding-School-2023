@@ -17,15 +17,15 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
     @if (Id == null)
     {
         <PageTitle>New Customer - Fuel Station</PageTitle>
-        <h2 class="mb-5">Add new customer</h2>
+        <h2 class="mb-5"><span class="oi oi-person"></span> Add new customer</h2>
     }
     else
     {
         <PageTitle>Edit Customer @Customer.Name @Customer.Surname - Fuel Station</PageTitle>
-        <h2 class="mb-5">Edit customer @Customer.Id: @Customer.Name @Customer.Surname</h2>
+        <h2 class="mb-5"><span class="oi oi-person"></span> Edit customer @Customer.Id: @Customer.Name @Customer.Surname</h2>
     }
 
-    <button class="btn btn-warning mb-5" @onclick="GenerateNewCardNumber">Generate Card Number</button>
+    <button class="btn btn-primary mb-5" @onclick="GenerateNewCardNumber"><span class="oi oi-key"></span> Generate Card Number</button>
 
     <EditForm Model="Customer" OnValidSubmit="Save">
         <DataAnnotationsValidator />
@@ -55,8 +55,8 @@ else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
         <div class="row mb-3">
             <div class="col-md-6">
                 <div class="btn-group" role="group" aria-label="Actions">
-                    <button class="btn btn-primary" type="submit">Save</button>
-                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    <button class="btn btn-primary" @onclick="Cancel">Cancel</button>
+                    <button class="btn btn-success" type="submit">Save</button>
                 </div>
             </div>
         </div>
