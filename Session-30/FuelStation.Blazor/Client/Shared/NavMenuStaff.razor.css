@@ -4,17 +4,10 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     grid-gap: 1rem;
 }
 
     .grid .btn {
         display: block;
     }
-
-/*.oi {
-    width: 10rem;
-    font-size: 1.1rem;
-    vertical-align: text-top;
-    top: -2px;
-}*/

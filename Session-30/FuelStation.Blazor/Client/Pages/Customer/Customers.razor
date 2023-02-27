@@ -1,8 +1,10 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Customer
+@using FuelStation.Blazor.Shared.Services
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
+@inject ILoginService loginService
 
 @page "/customers"
 
@@ -10,7 +12,7 @@
 {
     <Spinner />
 }
-else
+else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
 {
     <PageTitle>Customers - Fuel Station</PageTitle>
 
@@ -66,6 +68,11 @@ else
         </table>
 
     </div>
+}
+else
+{
+    <PageTitle>Access Denied - Fuel Station</PageTitle>
+    <AccessDenied />
 }
 
 @code {

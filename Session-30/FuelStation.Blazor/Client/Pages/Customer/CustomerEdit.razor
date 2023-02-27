@@ -1,16 +1,18 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Customer
+@using FuelStation.Blazor.Shared.Services
 
 @page "/customer/edit/{Id:int?}"
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
+@inject ILoginService loginService
 
 @if (Customer == null)
 {
     <Spinner />
 }
-else
+else if (loginService.Role == "Manager" || loginService.Role == "Cashier")
 {
     @if (Id == null)
     {
@@ -60,6 +62,11 @@ else
         </div>
 
     </EditForm>
+}
+else
+{
+    <PageTitle>Access Denied - Fuel Station</PageTitle>
+    <AccessDenied />
 }
 
 

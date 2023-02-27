@@ -1,0 +1,84 @@
+﻿@using FuelStation.Blazor.Shared.DTOs.Reports
+@using FuelStation.Blazor.Shared.Services
+
+@inject HttpClient Http
+@inject ILoginService loginService
+
+@page "/ledger"
+
+@if (isLoading)
+{
+    <Spinner />
+}
+else if (loginService.Role == "Manager")
+{
+    <PageTitle>Monthly Ledger - Fuel Station</PageTitle>
+
+    <h1 class="mb-5">Monthly Ledger</h1>
+
+    <div class="table-responsive p-3">
+
+        <table class="table table-dark table-striped table-hover">
+
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th>Income</th>
+                    <th>Expenses</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var ml in monthlyLedger)
+                {
+                    <tr>
+                        <td>@ml.Year</td>
+                        <td>@ml.Month</td>
+                        <td>@ml.Income</td>
+                        <td>@ml.Expenses</td>
+                        <td>@ml.Total</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+}
+else
+{
+    <PageTitle>Access Denied - Fuel Station</PageTitle>
+    <AccessDenied />
+}
+
+@code {
+
+    private List<MonthlyLedgerDto> monthlyLedger = new();
+
+    bool isLoading { get; set; } = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadItemsFromServer();
+
+        isLoading = false;
+    }
+
+    private async Task LoadItemsFromServer()
+    {
+        var ledgerJson = await Http.GetFromJsonAsync<List<MonthlyLedgerDto>>("monthlyledger");
+
+        if (ledgerJson != null)
+        {
+            monthlyLedger = ledgerJson;
+        }
+        else
+        {
+            throw new ArgumentNullException();
+        }
+    }
+
+}

@@ -1,18 +1,20 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Item
 @using FuelStation.Models.Enums
+@using FuelStation.Blazor.Shared.Services
 
 @page "/item/edit/{Id:int?}"
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
 @inject IJSRuntime jsRuntime
+@inject ILoginService loginService
 
 
 @if (Item == null)
 {
     <Spinner />
 }
-else
+else if (loginService.Role == "Manager" || loginService.Role == "Cashier" || loginService.Role == "Staff")
 {
     @if (Id == null)
     {
@@ -76,6 +78,11 @@ else
         </div>
 
     </EditForm>
+}
+else
+{
+    <PageTitle>Access Denied - Fuel Station</PageTitle>
+    <AccessDenied />
 }
 
 @code {

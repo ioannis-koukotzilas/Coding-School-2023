@@ -1,15 +1,17 @@
 ﻿@using FuelStation.Blazor.Shared.DTOs.Employee
+@using FuelStation.Blazor.Shared.Services
 
 @page "/employee/details/{Id:int?}"
 
 @inject HttpClient Http
 @inject NavigationManager navigationManager
+@inject ILoginService loginService
 
 @if (Employee == null)
 {
     <Spinner />
 }
-else
+else if (loginService.Role == "Manager")
 {
     <PageTitle>Employee: @Employee.Name @Employee.Surname - Fuel Station</PageTitle>
     <h2 class="mb-5">Details for employee: @Employee.Name @Employee.Surname</h2>
@@ -66,7 +68,11 @@ else
     }
 
 }
-
+else
+{
+    <PageTitle>Access Denied - Fuel Station</PageTitle>
+    <AccessDenied />
+}
 
 @code {
 
@@ -77,7 +83,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         Employee = await Http.GetFromJsonAsync<EmployeeDetailsDto>($"employee/details/{Id}");
-
     }
 
     private void Cancel()
@@ -91,7 +96,6 @@ else
         {
             navigationManager.NavigateTo($"employee/edit/{Employee.Id}");
         }
-
     }
 
 }
